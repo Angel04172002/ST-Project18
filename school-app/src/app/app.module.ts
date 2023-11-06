@@ -21,6 +21,7 @@ import { RegisterComponent } from './register/register.component';
 import { StudentComponent } from './student/student.component';
 import { SubjectComponent } from './subject/subject.component';
 import { TeacherComponent } from './teacher/teacher.component';
+import { GradeTeacherComponent } from './grade-teacher/grade-teacher.component';
 
 @NgModule({
   declarations: [
@@ -42,7 +43,8 @@ import { TeacherComponent } from './teacher/teacher.component';
     RegisterComponent,
     StudentComponent,
     SubjectComponent,
-    TeacherComponent
+    TeacherComponent,
+    GradeTeacherComponent
   ],
   imports: [
     BrowserModule,
