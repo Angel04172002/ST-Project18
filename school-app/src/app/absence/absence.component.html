@@ -1,1 +1,32 @@
 <p>absence works!</p>
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="styles-absence.css">
+    <title>Отсъствия</title>
+</head>
+
+<body>
+    <div class="container">
+        <h1>Отсъствия</h1>
+        <form id="absence-form">
+            <label for="date">Дата:</label>
+            <input type="date" id="date" name="date" required><br>
+
+            <label for="excused">Извинено:</label>
+            <input type="checkbox" id="excused" name="excused"><br>
+
+            <label for="reason">Причина (ако е извинено):</label>
+            <input type="text" id="reason" name="reason"><br>
+
+            <button type="submit">Въведи отсъствие</button>
+        </form>
+    </div>
+
+    <script src="absences.js" defer></script>
+</body>
+
+</html>
