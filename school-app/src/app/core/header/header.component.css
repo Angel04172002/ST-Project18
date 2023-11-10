@@ -1,3 +1,7 @@
+div {
+    display: inline;
+}
+
 .header {
     background-color: #333;
     color: white;
@@ -20,3 +24,4 @@
 .navbar a:hover {
     text-decoration: underline;
 }
+

@@ -1,28 +1,40 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
+import { User } from '../types/User';
 
 @Injectable({
   providedIn: 'root'
 })
 export class UserService {
 
-  user: any | undefined;
+  user: User | undefined;
 
-  constructor(private http: HttpClient) {
+  constructor() {
 
-    const lstUser = localStorage.getItem('user');
-    this.user = lstUser;
+    const lstUser = localStorage.getItem('user') || undefined;
 
+    if (lstUser) {
+      this.user = JSON.parse(lstUser);
+    }
   }
 
   isLoggedIn() {
     return !!this.user;
   }
 
-  login(username: string, password: string): void {
+  login(email: string, password: string): void {
 
-    const userToBeLoggedIn : any = { username: username, password: password };
-    localStorage.setItem('user', userToBeLoggedIn);
+    //TODO: Validations 
+
+    const userToBeLoggedIn: User = { 
+      id: 'aaa-bbb-ccc',
+      firstName: 'Peter',
+      lastName: 'Ivanov',
+      email: email,
+      password: password
+    };
+
+    localStorage.setItem('user', JSON.stringify(userToBeLoggedIn));
 
   }
 

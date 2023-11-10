@@ -24,6 +24,10 @@ import { GradesComponent } from './grades/grades.component';
 import { RouterModule } from '@angular/router';
 import { CoreModule } from './core/core.module';
 import { HttpClientModule } from '@angular/common/http';
+import { LoginComponent } from './user/login/login.component';
+import { RegisterComponent } from './user/register/register.component';
+import { UserModule } from './user/user.module';
+import { UserRoutingModule } from './user/user-routing.module';
 
 @NgModule({
   declarations: [
@@ -43,14 +47,18 @@ import { HttpClientModule } from '@angular/common/http';
     TeacherComponent,
     GradeTeacherComponent,
     HomeComponent,
-    GradesComponent
+    GradesComponent,
+    LoginComponent,
+    RegisterComponent,
+    HomeComponent
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
     RouterModule,
     CoreModule,
-    HttpClientModule
+    HttpClientModule,
+    UserModule
   ],
   providers: [],
   bootstrap: [AppComponent]

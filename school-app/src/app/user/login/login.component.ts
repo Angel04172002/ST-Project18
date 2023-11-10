@@ -13,6 +13,7 @@ export class LoginComponent {
 
   login(username: string, password: string): void {
     this.userService.login(username, password);
+    this.router.navigate(['/home']);
   }
 
   logout() {

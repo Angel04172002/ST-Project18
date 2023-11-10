@@ -5,6 +5,7 @@ import { HeaderComponent } from './header/header.component';
 import { FooterComponent } from './footer/footer.component';
 import { NavigationComponent } from './navigation/navigation.component';
 import { CoreRoutingModule } from './core-routing.module';
+import { AppRoutingModule } from '../app-routing.module';
 
 
 
@@ -13,7 +14,7 @@ import { CoreRoutingModule } from './core-routing.module';
   imports: [
     CommonModule,
     RouterModule,
-    CoreRoutingModule
+    AppRoutingModule
   ]
 })
 export class CoreModule { }
