@@ -5,23 +5,25 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { JitsiComponent } from './jitsi/jitsi.component';
 import { AbsenceComponent } from './absence/absence.component';
-import { AdminComponent } from './admin/admin.component';
+import { AdminComponent } from './user/admin/admin.component';
 import { CalendarComponent } from './calendar/calendar.component';
-import { ChatComponent } from './chat/chat.component';
 import { FeedbackComponent } from './feedback/feedback.component';
-import { FooterComponent } from './footer/footer.component';
-import { ForumComponent } from './forum/forum.component';
-import { HeaderComponent } from './header/header.component';
-import { LoginComponent } from './login/login.component';
-import { NavigationComponent } from './navigation/navigation.component';
+import { FooterComponent } from './core/footer/footer.component';
+import { HeaderComponent } from './core/header/header.component';
+
+import { NavigationComponent } from './core/navigation/navigation.component';
 import { NotificationComponent } from './notification/notification.component';
-import { ParentComponent } from './parent/parent.component';
-import { ProfileComponent } from './profile/profile.component';
-import { RegisterComponent } from './register/register.component';
-import { StudentComponent } from './student/student.component';
+import { ParentComponent } from './user/parent/parent.component';
+
+import { StudentComponent } from './user/student/student.component';
 import { SubjectComponent } from './subject/subject.component';
-import { TeacherComponent } from './teacher/teacher.component';
-import { GradeTeacherComponent } from './grade-teacher/grade-teacher.component';
+import { TeacherComponent } from './user/teacher/teacher.component';
+import { GradeTeacherComponent } from './user/grade-teacher/grade-teacher.component';
+import { HomeComponent } from './home/home.component';
+import { GradesComponent } from './grades/grades.component';
+import { RouterModule } from '@angular/router';
+import { CoreModule } from './core/core.module';
+import { HttpClientModule } from '@angular/common/http';
 
 @NgModule({
   declarations: [
@@ -30,25 +32,25 @@ import { GradeTeacherComponent } from './grade-teacher/grade-teacher.component';
     AbsenceComponent,
     AdminComponent,
     CalendarComponent,
-    ChatComponent,
     FeedbackComponent,
     FooterComponent,
-    ForumComponent,
     HeaderComponent,
-    LoginComponent,
     NavigationComponent,
     NotificationComponent,
     ParentComponent,
-    ProfileComponent,
-    RegisterComponent,
     StudentComponent,
     SubjectComponent,
     TeacherComponent,
-    GradeTeacherComponent
+    GradeTeacherComponent,
+    HomeComponent,
+    GradesComponent
   ],
   imports: [
     BrowserModule,
-    AppRoutingModule
+    AppRoutingModule,
+    RouterModule,
+    CoreModule,
+    HttpClientModule
   ],
   providers: [],
   bootstrap: [AppComponent]
