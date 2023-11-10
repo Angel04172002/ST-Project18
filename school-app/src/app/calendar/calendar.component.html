@@ -1,1 +1,33 @@
-<p>calendar works!</p>
+<!DOCTYPE html>
+<html lang="bg">
+<head>
+  <meta charset="UTF-8">
+  <title>Календар</title>
+  <link rel="stylesheet" href="calendar.css">
+</head>
+<body>
+  <div class="container">
+    <div class="calendar">
+      <table>
+        <thead>
+          <tr>
+            <th>Дата</th>
+            <th>Наименование</th>
+            <th>Час</th>
+            <th>Действие</th>
+          </tr>
+        </thead>
+        <tbody>
+        </tbody>
+      </table>
+    </div>
+    <div class="add-event">
+      <input type="text" id="event-name" placeholder="Наименование">
+      <input type="date" id="event-date" placeholder="Дата">
+      <input type="time" id="event-time" placeholder="Час">
+      <button id="add-event-button" onclick="addEvent()">Добави събитие</button>
+    </div>
+  </div>
+  <script src="calendar.js"></script>
+</body>
+</html>

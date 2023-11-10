@@ -1,21 +1,27 @@
-import { ComponentFixture, TestBed } from '@angular/core/testing';
+document.addEventListener("DOMContentLoaded", () => {
+  const gradeForm = document.getElementById("grade-form");
 
-import { GradeTeacherComponent } from './grade-teacher.component';
+  gradeForm.addEventListener("submit", function(event) {
+      event.preventDefault();
 
-describe('GradeTeacherComponent', () => {
-  let component: GradeTeacherComponent;
-  let fixture: ComponentFixture<GradeTeacherComponent>;
+      const student = document.getElementById("student").value;
+      const subject = document.getElementById("subject").value;
+      const grade = document.getElementById("grade").value;
 
-  beforeEach(() => {
-    TestBed.configureTestingModule({
-      declarations: [GradeTeacherComponent]
-    });
-    fixture = TestBed.createComponent(GradeTeacherComponent);
-    component = fixture.componentInstance;
-    fixture.detectChanges();
-  });
-
-  it('should create', () => {
-    expect(component).toBeTruthy();
+      // Изпратка на данните към сървъра за запис в базата данни
+      fetch("/save-grade", {
+          method: "POST",
+          headers: {
+              "Content-Type": "application/json"
+          },
+          body: JSON.stringify({ student, subject, grade })
+      })
+      .then(response => response.json())
+      .then(data => {
+          console.log("Оценката беше записана успешно:", data);
+      })
+      .catch(error => {
+          console.error("Грешка при записване на оценката:", error);
+      });
   });
 });

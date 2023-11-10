@@ -1,21 +1,12 @@
-import { ComponentFixture, TestBed } from '@angular/core/testing';
+document.getElementById('absence-form').addEventListener('submit', function(event) {
+  event.preventDefault();
+  var date = document.getElementById('date').value;
+  var excused = document.getElementById('excused').checked;
+  var reason = document.getElementById('reason').value;
 
-import { AbsenceComponent } from './absence.component';
-
-describe('AbsenceComponent', () => {
-  let component: AbsenceComponent;
-  let fixture: ComponentFixture<AbsenceComponent>;
-
-  beforeEach(() => {
-    TestBed.configureTestingModule({
-      declarations: [AbsenceComponent]
-    });
-    fixture = TestBed.createComponent(AbsenceComponent);
-    component = fixture.componentInstance;
-    fixture.detectChanges();
-  });
-
-  it('should create', () => {
-    expect(component).toBeTruthy();
-  });
+  if (excused) {
+      console.log('Отсъствието на ' + date + ' е извинено.');
+  } else {
+      console.log('Отсъствието на ' + date + ' не е извинено. Причина: ' + reason);
+  }
 });

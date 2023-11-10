@@ -1,0 +1,32 @@
+.grade-teacher {
+    padding: 20px;
+}
+
+.student-list {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.student {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.grade-input {
+    width: 70px;
+    padding: 5px;
+}
+
+.grade-button {
+    padding: 5px 10px;
+    background-color: #4caf50;
+    color: white;
+    border: none;
+    cursor: pointer;
+}
+
+.grade-button:hover {
+    background-color: #45a049;
+}
