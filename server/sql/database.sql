@@ -1,6 +1,6 @@
 CREATE TABLE PROFILE (
 	Id VARCHAR(40),
-	creator_id VARCHAR(40) NOT NULL,
+	creator_id VARCHAR(40),
 	first_name VARCHAR(20) NOT NULL,
 	last_name VARCHAR(20) NOT NULL,
 	email VARCHAR(40) NOT NULL,

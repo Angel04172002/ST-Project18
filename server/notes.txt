@@ -1,0 +1,15 @@
+Here you can read some simple notes about the server!
+
+* express: The node.js library for HTTP 
+
+* nodemon: 
+    - Used for cold relaoding.
+    - Added nodemon.json file for config.
+    - Added "start:dev" script to run nodemon.
+
+* pg: Library for PostgreSQL connection
+
+* How to run:
+    - dev mode: npm run start:dev
+    - normal: node src/server.js
+
