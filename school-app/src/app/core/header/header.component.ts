@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { ChangeDetectorRef, Component } from '@angular/core';
 import { Router } from '@angular/router';
 import { UserService } from 'src/app/user/user.service';
 
@@ -11,10 +11,16 @@ import { UserService } from 'src/app/user/user.service';
 
 export class HeaderComponent {
 
-  constructor(private userService: UserService, private router : Router) { }
+  constructor(
+    private userService: UserService, private router : Router, private cd : ChangeDetectorRef
+    ) { }
+
+  ngOnInit() {
+    this.cd.detectChanges();
+  }
 
   isLoggedIn() {
-    return this.userService.isLoggedIn();
+    return this.userService.isLogged();
   }
 
   logout(): void {

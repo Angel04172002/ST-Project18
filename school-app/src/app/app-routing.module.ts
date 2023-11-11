@@ -7,6 +7,8 @@ import { ChatComponent } from './chat/chat/chat.component';
 import { StudentComponent } from './user/student/student.component';
 import { LoginComponent } from './user/login/login.component';
 import { RegisterComponent } from './user/register/register.component';
+import { AbsenceComponent } from './absence/absence.component';
+import { NoteComponent } from './note/note.component';
 
 const routes: Routes = [
   {
@@ -17,6 +19,14 @@ const routes: Routes = [
   {
       path: 'home',
       component: HomeComponent
+  },
+  {
+    path: 'absence',
+    component: AbsenceComponent
+  },
+  {
+    path: 'note',
+    component: NoteComponent
   },
   {
       path: 'calendar',

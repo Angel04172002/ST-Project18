@@ -3,7 +3,6 @@ import { BrowserModule } from '@angular/platform-browser';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
-import { JitsiComponent } from './jitsi/jitsi.component';
 import { AbsenceComponent } from './absence/absence.component';
 import { AdminComponent } from './user/admin/admin.component';
 import { CalendarComponent } from './calendar/calendar.component';
@@ -28,11 +27,11 @@ import { LoginComponent } from './user/login/login.component';
 import { RegisterComponent } from './user/register/register.component';
 import { UserModule } from './user/user.module';
 import { UserRoutingModule } from './user/user-routing.module';
+import { NoteComponent } from './note/note.component';
 
 @NgModule({
   declarations: [
     AppComponent,
-    JitsiComponent,
     AbsenceComponent,
     AdminComponent,
     CalendarComponent,
@@ -50,16 +49,17 @@ import { UserRoutingModule } from './user/user-routing.module';
     GradesComponent,
     LoginComponent,
     RegisterComponent,
-    HomeComponent
-  ],
+    HomeComponent,
+    NoteComponent
+    ],
   imports: [
     BrowserModule,
     AppRoutingModule,
     RouterModule,
     CoreModule,
     HttpClientModule,
-    UserModule
-  ],
+    UserModule,
+    ],
   providers: [],
   bootstrap: [AppComponent]
 })

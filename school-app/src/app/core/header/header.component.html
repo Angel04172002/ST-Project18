@@ -19,8 +19,10 @@
                 <a routerLink="/home">Начало</a>
 
                 <div *ngIf="isLoggedIn()">
-                    <a routerLink="/calendar">Календар</a>
                     <a routerLink="/grades">Оценки</a>
+                    <a routerLink="/absence">Отсъствия</a>
+                    <a routerLink="/note">Забележки</a>
+                    <a routerLink="/calendar">Календар</a>
                     <a routerLink="/chat">Чат</a>
                     <a routerLink="/student-profile">Профил на ученик</a>
                     <a (click) = "logout()">Изход</a>
