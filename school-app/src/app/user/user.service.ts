@@ -1,13 +1,14 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { User } from '../types/User';
+import { Profile } from '../types/Profile';
+import { Observable } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
 })
 export class UserService {
 
-  user: User | undefined;
+  user: Profile | undefined;
 
   constructor() {
 
@@ -22,12 +23,13 @@ export class UserService {
     return !!this.user;
   }
 
-  login(email: string, password: string): void {
+  login(email: string, password: string) {
 
     //TODO: Validations 
 
-    const userToBeLoggedIn: User = { 
-      id: 'aaa-bbb-ccc',
+    const userToBeLoggedIn: Profile = { 
+      id: 87,
+      creatorId: 1,
       firstName: 'Peter',
       lastName: 'Ivanov',
       email: email,

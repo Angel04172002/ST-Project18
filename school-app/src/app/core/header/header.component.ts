@@ -12,12 +12,10 @@ import { UserService } from 'src/app/user/user.service';
 export class HeaderComponent {
 
   constructor(
-    private userService: UserService, private router : Router, private cd : ChangeDetectorRef
+    private userService: UserService, private router : Router
     ) { }
 
-  ngOnInit() {
-    this.cd.detectChanges();
-  }
+    
 
   isLoggedIn() {
     return this.userService.isLogged();

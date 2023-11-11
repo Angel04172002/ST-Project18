@@ -4,8 +4,7 @@ import { CurrentMessageComponent } from './current-message/current-message.compo
 import { NewMessageComponent } from './new-message/new-message.component';
 import { GroupChatComponent } from './group-chat/group-chat.component';
 import { ChatComponent } from './chat/chat.component';
-import { JitsiComponent } from '../jitsi/jitsi.component';
-import { VideochatModule } from '../videochat/videochat.module';
+import { JitsiComponent } from './jitsi/jitsi.component';
 
 
 
@@ -14,10 +13,11 @@ import { VideochatModule } from '../videochat/videochat.module';
     CurrentMessageComponent,
     NewMessageComponent,
     GroupChatComponent,
-    ChatComponent  
+    ChatComponent,
+    JitsiComponent
   ],
   imports: [
     CommonModule
-    ]
+  ]
 })
 export class ChatModule { }

@@ -59,6 +59,7 @@ import { NoteComponent } from './note/note.component';
     CoreModule,
     HttpClientModule,
     UserModule,
+    UserRoutingModule
     ],
   providers: [],
   bootstrap: [AppComponent]

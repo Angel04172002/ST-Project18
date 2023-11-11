@@ -23,7 +23,7 @@
                 <label for="password">Парола:</label>
                 <input type="password" name="password" #password required><br>
 
-                <button type="submit" (click)="login(username.value, password.value)">Вход</button>
+                <button (click) = "login(username.value, password.value)">Вход</button>
             </form>
         </main>
 
