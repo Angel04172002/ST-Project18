@@ -1,6 +1,7 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { AppLoaderComponent } from './app-loader/app-loader.component';
+import { RouterModule } from '@angular/router';
 
 
 
@@ -9,7 +10,11 @@ import { AppLoaderComponent } from './app-loader/app-loader.component';
     AppLoaderComponent
   ],
   imports: [
-    CommonModule
+    CommonModule,
+    RouterModule
+  ],
+  exports: [
+    AppLoaderComponent
   ]
 })
 export class SharedModule { }

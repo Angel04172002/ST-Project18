@@ -15,8 +15,6 @@ export class HeaderComponent {
     private userService: UserService, private router : Router
     ) { }
 
-    
-
   isLoggedIn() {
     return this.userService.isLogged();
   }

@@ -18,6 +18,12 @@
             <nav class="navbar">
                 <a routerLink="/home">Начало</a>
 
+
+                <div *ngIf="!isLoggedIn()">
+                    <a routerLink="/login">Вход</a>
+                    <a routerLink="/register">Регистрация</a>
+                </div>
+
                 <div *ngIf="isLoggedIn()">
                     <a routerLink="/grades">Оценки</a>
                     <a routerLink="/absence">Отсъствия</a>
@@ -28,11 +34,6 @@
                     <a (click) = "logout()">Изход</a>
                 </div>
 
-
-                <div *ngIf="!isLoggedIn()">
-                    <a routerLink="/login">Вход</a>
-                    <a routerLink="/register">Регистрация</a>
-                </div>
 
             </nav>
 

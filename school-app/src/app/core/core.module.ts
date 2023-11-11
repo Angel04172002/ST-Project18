@@ -10,11 +10,16 @@ import { AppRoutingModule } from '../app-routing.module';
 
 
 @NgModule({
-  declarations: [],
+  declarations: [HeaderComponent, FooterComponent, NavigationComponent],
   imports: [
     CommonModule,
     RouterModule,
     AppRoutingModule
+  ],
+  exports: [
+    HeaderComponent,
+    FooterComponent,
+    NavigationComponent
   ]
 })
 export class CoreModule { }
