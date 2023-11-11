@@ -1,6 +1,6 @@
 CREATE TABLE PROFILE (
-	Id INTEGER,
-	creator_id INTEGER NOT NULL,
+	Id VARCHAR(40),
+	creator_id VARCHAR(40) NOT NULL,
 	first_name VARCHAR(20) NOT NULL,
 	last_name VARCHAR(20) NOT NULL,
 	email VARCHAR(40) NOT NULL,
@@ -11,28 +11,26 @@ CREATE TABLE PROFILE (
 		FOREIGN KEY(creator_id)
 			REFERENCES PROFILE(Id),
 	
-	CONSTRAINT fk_admin_profile_creator
-		FOREIGN KEY(creator_id)
-			REFERENCES ADMINISTRATOR(Id)
 )
 
 
 CREATE TABLE GRADE_TEACHER (
-	Id INTEGER,
-	grade_Id INTEGER NOT NULL,
-	subject_Id INTEGER NOT NULL,
+	Id VARCHAR(40),
+	PRIMARY KEY(Id),
 	
 	CONSTRAINT fk_grade_teacher
-		FOREIGN KEY(grade_Id)
-			REFERENCES GRADE(Id),
+		FOREIGN KEY(Id)
+			REFERENCES PROFILE(Id)
 
-	PRIMARY KEY(Id)
 )
 
 
+
+
 CREATE TABLE TEACHER (
-	Id INTEGER UNIQUE,
+	Id VARCHAR(40) UNIQUE,
 	PRIMARY KEY(Id),
+	
 	CONSTRAINT fk_teacher
 		FOREIGN KEY(Id)
 			REFERENCES PROFILE(Id)
@@ -40,7 +38,7 @@ CREATE TABLE TEACHER (
 )
 
 CREATE TABLE PARENT (
-	Id INTEGER UNIQUE,
+	Id VARCHAR(40) UNIQUE,
 	PRIMARY KEY(Id),
 	CONSTRAINT fk_parent
 		FOREIGN KEY(Id)
@@ -48,7 +46,7 @@ CREATE TABLE PARENT (
 )
 
 CREATE TABLE STUDENT (
-	Id INTEGER UNIQUE,
+	Id VARCHAR(40) UNIQUE,
 	PRIMARY KEY(Id),
 	grade_id INTEGER,
 	
@@ -65,7 +63,7 @@ CREATE TABLE STUDENT (
 
 
 CREATE TABLE ADMINISTRATOR (
-	Id INTEGER UNIQUE,
+	Id VARCHAR(40) UNIQUE,
 	PRIMARY KEY(Id),
 	CONSTRAINT fk_admin
 		FOREIGN KEY(Id)
@@ -75,8 +73,8 @@ CREATE TABLE ADMINISTRATOR (
 
 
 CREATE TABLE SUBJECT (
-	Id INTEGER,
-	creator_id INTEGER NOT NULL,
+	Id VARCHAR(40),
+	creator_id VARCHAR(40) NOT NULL,
 	Name VARCHAR(20) NOT NULL,
 	PRIMARY KEY(Id),
 	
@@ -88,9 +86,16 @@ CREATE TABLE SUBJECT (
 
 
 CREATE TABLE GRADE (
-	Id INTEGER,
+	Id VARCHAR(40),
 	Value INTEGER NOT NULL,
 	Year INTEGER NOT NULL,
+	PRIMARY KEY(Id)
+)
+
+
+CREATE TABLE GRADE_DIVISION (
+	Id VARCHAR(40),
+	Division CHAR(1) NOT NULL,
 	PRIMARY KEY(Id)
 )
 
@@ -99,11 +104,19 @@ CREATE TABLE GRADE (
 
 
 CREATE TABLE ABSENCE (
-	Id INTEGER,
-	creator_Id INTEGER NOT NULL,
-	Type VARCHAR(20) NOT NULL,
-	Reason VARCHAR(50) NOT NULL,
+	Id VARCHAR(40),
+	creator_Id VARCHAR(40) NOT NULL,
+	absence_type_id VARCHAR(40) NOT NULL,
+	absence_reason_id VARCHAR(40) NOT NULL,
 	PRIMARY KEY(Id),
+	
+	CONSTRAINT fk_absence_type
+		FOREIGN KEY(absence_type_id)
+			REFERENCES ABSENCE_TYPES(Id),
+	
+	CONSTRAINT fk_absence_reason
+		FOREIGN KEY(absence_reason_id)
+			REFERENCES ABSENCE_REASONS(Id),
 	
 	CONSTRAINT fk_absence_teacher
 		FOREIGN KEY(creator_Id)
@@ -115,14 +128,24 @@ CREATE TABLE ABSENCE (
 	
 )
 
+CREATE TABLE ABSENCE_TYPES (
+	absence_type_id  VARCHAR(40) NOT NULL,
+	Type VARCHAR(50) NOT NULL
+)
 
-CREATE TABLE ABSENCE_REASON (
-	Id INTEGER,
-	creator_Id INTEGER NOT NULL,
+CREATE TABLE ABSENCE_REASONS (
+	absence_reason_id VARCHAR(40) NOT NULL,
+	Reason VARCHAR(50) NOT NULL
+)
+
+
+CREATE TABLE ABSENCE_EXCUSE-REASON (
+	Id VARCHAR(40),
+	creator_Id VARCHAR(40) NOT NULL,
 	Reason VARCHAR(50) NOT NULL,
 	PRIMARY KEY(Id),
 	
-	CONSTRAINT fk_absence_reason
+	CONSTRAINT fk_absence_excuse-reason
 		FOREIGN KEY(creator_Id)
 			REFERENCES PARENT(Id)
 )
@@ -130,35 +153,32 @@ CREATE TABLE ABSENCE_REASON (
 
 
 
-CREATE TABLE MARK (
-	Id INTEGER,	
-	Value INTEGER NOT NULL,
-	Year INTEGER NOT NULL,
-	subject_Id INTEGER NOT NULL,
-	teacher_Id INTEGER NOT NULL,
+CREATE TABLE STUDENT_MARK (
+	Id VARCHAR(40),	
+	
+	subject_id VARCHAR(40) NOT NULL,
+	mark_id VARCHAR(40) NOT NULL,
+	
 	PRIMARY KEY(Id),
 	
 	CONSTRAINT fk_mark_subject
-		FOREIGN KEY(subject_Id)
-			REFERENCES SUBJECT(Id),
-	
-	CONSTRAINT fk_mark_teacher
-		FOREIGN KEY(teacher_Id)
-			REFERENCES TEACHER(Id),
-	
-	CONSTRAINT fk_mark_grade_teacher
-		FOREIGN KEY(teacher_Id)
-			REFERENCES GRADE_TEACHER(Id)
-	
+		FOREIGN KEY(subject_id)
+			REFERENCES SUBJECT(Id)
+
+)
+
+
+CREATE TABLE MARKS(
+	mark_id INTEGER NOT NULL,
+	mark INTEGER NOT NULL
 )
 
 
 
 
-
 CREATE TABLE EVENT (
-	Id INTEGER,
-	creator_Id INTEGER NOT NULL,
+	Id VARCHAR(40),
+	creator_Id VARCHAR(40) NOT NULL,
 	title VARCHAR(20) NOT NULL,
 	description VARCHAR(50) NOT NULL,
 	"date" DATE NOT NULL,
@@ -183,8 +203,8 @@ CREATE TABLE EVENT (
 
 
 CREATE TABLE FEEDBACK (
-	Id INTEGER,
-	creator_Id INTEGER NOT NULL,
+	Id VARCHAR(40),
+	creator_Id VARCHAR(40) NOT NULL,
 	title VARCHAR(20) NOT NULL,
 	description VARCHAR(50) NOT NULL,
 	"date" DATE NOT NULL,
@@ -205,8 +225,8 @@ CREATE TABLE FEEDBACK (
 
 
 CREATE TABLE MESSAGE (
-	Id INTEGER,
-	creator_Id INTEGER,
+	Id VARCHAR(40),
+	creator_Id VARCHAR(40),
 	messageText VARCHAR(100) NOT NULL,
 	PRIMARY KEY(Id),
 	
@@ -229,13 +249,16 @@ CREATE TABLE MESSAGE (
 	CONSTRAINT fk_student_message
 		FOREIGN KEY(creator_Id)
 			REFERENCES STUDENT(Id)
+	
 )
 
 
 
+
+
 CREATE TABLE CHAT (
-	Id INTEGER,
-	creator_Id INTEGER,
+	Id VARCHAR(40),
+	creator_Id VARCHAR(40),
 	PRIMARY KEY(Id),
 	
 	CONSTRAINT fk_admin_chat
@@ -262,8 +285,8 @@ CREATE TABLE CHAT (
 
 
 CREATE TABLE GROUP_CHAT (
-	Id INTEGER,
-	creator_Id INTEGER,
+	Id VARCHAR(40),
+	creator_Id VARCHAR(40),
 	PRIMARY KEY(Id),
 	
 	CONSTRAINT fk_admin_group_chat
@@ -289,8 +312,8 @@ CREATE TABLE GROUP_CHAT (
 
 
 CREATE TABLE PARENT_MEETING (
-	Id INTEGER,
-	creator_Id INTEGER,
+	Id VARCHAR(40),
+	creator_Id VARCHAR(40),
 	PRIMARY KEY(Id),
 	
 	CONSTRAINT fk_admin_parent_meeting
@@ -307,8 +330,8 @@ CREATE TABLE PARENT_MEETING (
 )
 
 CREATE TABLE FORUM (
-	Id INTEGER,
-	creator_Id INTEGER,
+	Id VARCHAR(40),
+	creator_Id VARCHAR(40),
 	PRIMARY KEY(Id),
 	
 	CONSTRAINT fk_admin_forum
@@ -324,63 +347,168 @@ CREATE TABLE FORUM (
 			REFERENCES GRADE_TEACHER(Id)
 )
 
-
-
-
-
-CREATE TABLE grades_subjects (
-	grade_id INTEGER REFERENCES GRADE(Id),
-	subject_id INTEGER REFERENCES SUBJECT(Id),
-	CONSTRAINT grades_subjects_pk PRIMARY KEY(grade_id, subject_id)
+CREATE TABLE POST (
+	Id VARCHAR(40),
+	creator_Id VARCHAR(40),
+	PRIMARY KEY(Id),
+	
+	CONSTRAINT fk_admin_post
+		FOREIGN KEY(creator_Id)
+			REFERENCES ADMINISTRATOR(Id),
+	
+	CONSTRAINT fk_teacher_post
+		FOREIGN KEY(creator_Id)
+			REFERENCES TEACHER(Id),
+	
+	CONSTRAINT fk_grade-teacher_post
+		FOREIGN KEY(creator_Id)
+			REFERENCES GRADE_TEACHER(Id)
 )
 
 
-CREATE TABLE teachers_subjects (
-	teacher_id INTEGER REFERENCES TEACHER(Id),
-	subject_id INTEGER REFERENCES SUBJECT(Id),
-	CONSTRAINT teachers_subjects_pk PRIMARY KEY(teacher_id, subject_id)
+CREATE TABLE COMMENT (
+	Id VARCHAR(40),
+	creator_Id VARCHAR(40),
+	PRIMARY KEY(Id),
+	
+	CONSTRAINT fk_admin_comment
+		FOREIGN KEY(creator_Id)
+			REFERENCES ADMINISTRATOR(Id),
+	
+	CONSTRAINT fk_teacher_comment
+		FOREIGN KEY(creator_Id)
+			REFERENCES TEACHER(Id),
+	
+	CONSTRAINT fk_grade_teacher_comment
+		FOREIGN KEY(creator_Id)
+			REFERENCES GRADE_TEACHER(Id),
+	
+	CONSTRAINT fk_parent_comment
+		FOREIGN KEY(creator_Id)
+			REFERENCES PARENT(Id),
+	
+	CONSTRAINT fk_student_comment
+		FOREIGN KEY(creator_Id)
+			REFERENCES STUDENT(Id)
+	
 )
 
 
-CREATE TABLE teachers_grades (
-	teacher_id INTEGER REFERENCES TEACHER(Id),
-	grade_id INTEGER REFERENCES GRADE(Id),
-	CONSTRAINT teachers_grades_pk PRIMARY KEY(teacher_id, grade_id)
+CREATE TABLE CHATS_MESSAGES (
+	chat_id VARCHAR(40) REFERENCES CHAT(Id),
+	message_id VARCHAR(40) REFERENCES MESSAGE(Id),
+	
+	CONSTRAINT chats_messages_pk PRIMARY KEY(chat_id, message_id)
 )
+
+
+CREATE TABLE GROUP_CHATS_MESSAGES (
+	group_chat_id VARCHAR(40) REFERENCES GROUP_CHAT(Id),
+	message_id VARCHAR(40) REFERENCES MESSAGE(Id),
+	
+	CONSTRAINT group_chats_messages_pk PRIMARY KEY(group_chat_id, message_id)
+)
+
+
+CREATE TABLE FORUMS_POSTS (
+	forum_id VARCHAR(40) REFERENCES FORUM(Id),
+	post_id VARCHAR(40) REFERENCES POST(Id),
+	
+	CONSTRAINT forums_posts_pk PRIMARY KEY(forum_id, post_id)
+)
+
+
+
+CREATE TABLE POSTS_COMMENTS (
+	post_id VARCHAR(40) REFERENCES POST(Id),
+	comment_id VARCHAR(40) REFERENCES COMMENT(Id),
+	
+	CONSTRAINT posts_comments_pk PRIMARY KEY(post_id, comment_id)
+)
+
+
+
+CREATE TABLE students_grades (
+	student_id VARCHAR(40) REFERENCES STUDENT(Id),
+	grade_id VARCHAR(40) REFERENCES GRADE(Id),
+
+    CONSTRAINT students_grades_pk PRIMARY KEY(student_id, grade_id)
+)
+
+
+CREATE TABLE students_grade-divisions (
+	student_id VARCHAR(40) REFERENCES STUDENT(Id),
+	grade-division_id VARCHAR(40) REFERENCES GRADE_DIVISION(Id),
+	CONSTRAINT students_grade-divisions_pk PRIMARY KEY(student_id, grade-division_id )
+)
+
+
 
 
 CREATE TABLE students_absences (
-	student_id INTEGER REFERENCES STUDENT(Id),
-	absence_id INTEGER REFERENCES ABSENCE(Id),
+	student_id VARCHAR(40) REFERENCES STUDENT(Id),
+	absence_id VARCHAR(40) REFERENCES ABSENCE(Id),
 	CONSTRAINT students_absences_pk PRIMARY KEY(student_id, absence_id)
 )
 
 
-CREATE TABLE students_marks (
-	student_id INTEGER REFERENCES STUDENT(Id),
-	mark_id INTEGER REFERENCES MARK(Id),
-	CONSTRAINT students_marks_pk PRIMARY KEY(student_id, mark_id)
+CREATE TABLE students_student-marks (
+	student_id VARCHAR(40) REFERENCES STUDENT(Id),
+	student-mark_id VARCHAR(40) REFERENCES STUDENT_MARK(Id),
+	CONSTRAINT students_marks_pk PRIMARY KEY(student_id, student-mark_id)
 )
 
-CREATE TABLE absences_reasons (
-	absence_id INTEGER REFERENCES ABSENCE(Id),
-	reason_id INTEGER REFERENCES ABSENCE_REASON(Id),
+CREATE TABLE absences_excuse-reasons (
+	absence_id VARCHAR(40) REFERENCES ABSENCE(Id),
+	excuse-reason_id VARCHAR(40) REFERENCES ABSENCE_EXCUSE-REASON(Id),
 	CONSTRAINT absences_reasons_pk PRIMARY KEY(absence_id, reason_id)
 )
 
 
 CREATE TABLE grades_subjects (
-	grade_id INTEGER REFERENCES GRADE(Id),
-	subject_id INTEGER REFERENCES SUBJECT(Id),
+	grade_id VARCHAR(40) REFERENCES GRADE(Id),
+	subject_id VARCHAR(40) REFERENCES SUBJECT(Id),
 	CONSTRAINT grades_subjects_pk PRIMARY KEY(grade_id, subject_id)
 )
 
 
 
+CREATE TABLE teachers_grades (
+	teacher_id VARCHAR(40) REFERENCES TEACHER(Id),
+	grade_id VARCHAR(40) REFERENCES GRADE(Id),
+	CONSTRAINT teachers_grades_pk PRIMARY KEY(teacher_id, grade_id)
+)
 
 
+CREATE TABLE teachers_grade-divisions (
+	teacher_id VARCHAR(40) REFERENCES TEACHER(Id),
+	grade-divison_id VARCHAR(40) REFERENCES GRADE_DIVISION(Id),
+	CONSTRAINT teachers_grade-divisions_pk PRIMARY KEY(teacher_id, grade-divison_id)
+)
 
 
+CREATE TABLE teachers_subjects (
+	teacher_id VARCHAR(40) REFERENCES TEACHER(Id),
+	subject_id VARCHAR(40) REFERENCES SUBJECT(Id),
+	CONSTRAINT teachers_subjects_pk PRIMARY KEY(teacher_id, subject_id)
+)
 
-	   
 
+CREATE TABLE grade-teachers_grades (
+	grade-teacher_id VARCHAR(40) REFERENCES GRADE_TEACHER(Id),
+	grade_id VARCHAR(40) REFERENCES GRADE(Id),
+	CONSTRAINT grade-teachers_grades_pk PRIMARY KEY(grade-teacher_id, grade_id)
+)
+
+
+CREATE TABLE grade-teachers_grade-divisions (
+	grade-teacher_id VARCHAR(40) REFERENCES GRADE_TEACHER(Id),
+	grade-division_id VARCHAR(40) REFERENCES GRADE_DIVISION(Id),
+	CONSTRAINT grade-teachers_grade-divisions_pk PRIMARY KEY(grade-teacher_id, grade-division_id)
+)
+
+CREATE TABLE grade-teachers_subjects (
+	grade-teacher_id VARCHAR(40) REFERENCES GRADE_TEACHER(Id),
+	subject_id VARCHAR(40) REFERENCES SUBJECT(Id),
+	CONSTRAINT grade-teachers_subjects_pk PRIMARY KEY(grade-teacher_id, subject_id)
+)
