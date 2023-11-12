@@ -5,6 +5,37 @@
     border: 1px solid #ccc;
 }
 
+table {
+    width: 50%;
+}
+
+table {
+    border: 2px solid #CCC;
+    border-collapse: collapse;
+}
+
+table thead th {
+    background: #DDD;
+}
+
+table, th, td {
+    border: 1px solid #CCC;
+}
+
+th, td {
+    padding: 0.5em 0.7em;
+}
+
+table tbody tr:nth-child(even) {
+    background: #CCC;
+}
+
+
+
+
+
+
+
 form {
     display: flex;
     flex-direction: column;
