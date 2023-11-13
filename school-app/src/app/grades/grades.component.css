@@ -1,4 +1,5 @@
-.grades, .grades-term {
+.grades,
+.grades-term {
     display: inline-block;
 
 }
@@ -25,7 +26,24 @@ td.inner-cell {
 }
 
 
+.inline {
+    display: inline;
+}
 
+
+.grades-row .subjects .subject p {
+    display: block;
+    position: relative;
+    right: 1em;
+}
+
+
+
+.grades-row .subjects .subject-marks {
+    position: relative;
+    left: 14em;
+    bottom: 2.3em;
+}
 
 
 .grades-table,
@@ -35,7 +53,8 @@ td.inner-cell {
 
 
 
-.grades-table .first-term {
+.grades-table .first-term,
+.grades-table .second-term {
     border-spacing: 1em;
 }
 
@@ -46,9 +65,13 @@ td.inner-cell {
 
 .term-grade {
     padding: 0.2em;
-    margin: 2em 1em;
+  
 }
 
+.subject-marks {
+    position: relative;
+    left: 5em;
+}
 
 .subjects {
     padding-top: 1em;
@@ -56,12 +79,17 @@ td.inner-cell {
 
 
 
+.inner-cell-second {
+    display: block;
+    position: relative;
+    left: 3em;
+}
 
 
 
 .poor {
     background: red;
-} 
+}
 
 
 .middle {
@@ -78,18 +106,44 @@ td.inner-cell {
 
 .excellent {
     background: lightgreen;
-} 
+}
+
+.term-final {
+    display: block;
+    position: relative;
+    left: 5.5em;
+}
 
 
+.final-grade {
+    position: relative;
+    right: 1.5em;
+    top: 2em;
+}
+
+.second-term {
+    display: block;
+    position: relative;
+    right: 2em;
+}
 
 
 .term-data {
     border: none;
-} 
+}
 
 
 
 .main-table {
     position: relative;
 }
- 
+
+.first-term, .second-term {
+    margin-bottom: 0.4em;
+   
+} 
+
+
+.term-grades-subject td {
+    padding: 0.2em;
+}
