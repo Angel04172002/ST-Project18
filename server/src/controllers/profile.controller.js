@@ -34,8 +34,8 @@ createProfile = async (request, response) => {
 
 auth = async (request, response) => {
     try{
-        const email = request.body.email;
-        const password = request.body.password;
+        const email = request.body?.email;
+        const password = request.body?.password;
         if (!email) {
             return response.status(500).json({
                 message: "email should be provided in request body",
