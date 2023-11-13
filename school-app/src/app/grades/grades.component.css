@@ -1,0 +1,95 @@
+.grades, .grades-term {
+    display: inline-block;
+
+}
+
+td.inner-cell {
+    margin: 0 2em;
+}
+
+.flex-main-container {
+    display: flex;
+    flex-wrap: wrap;
+    flex-direction: row;
+}
+
+
+
+
+.flex-item-1 {
+    flex: 1;
+}
+
+.flex-item-2 {
+    flex: 1;
+}
+
+
+
+
+
+.grades-table,
+.terms-table {
+    width: 100%;
+}
+
+
+
+.grades-table .first-term {
+    border-spacing: 1em;
+}
+
+
+.term-grades-subject {
+    margin: 3em 0;
+}
+
+.term-grade {
+    padding: 0.2em;
+    margin: 2em 1em;
+}
+
+
+.subjects {
+    padding-top: 1em;
+}
+
+
+
+
+
+
+.poor {
+    background: red;
+} 
+
+
+.middle {
+    background: orange;
+}
+
+.good {
+    background: yellow;
+}
+
+.very-good {
+    background: lightblue;
+}
+
+.excellent {
+    background: lightgreen;
+} 
+
+
+
+
+.term-data {
+    border: none;
+} 
+
+
+
+.main-table {
+    position: relative;
+}
+ 

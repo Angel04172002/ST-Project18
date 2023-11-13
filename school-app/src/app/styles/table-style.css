@@ -1,0 +1,45 @@
+* {
+    box-sizing: border-box;
+}
+
+
+.main-table {
+    margin: 0 auto;
+    width: 70%;
+}
+
+
+.main-table > thead th,
+.grades thead th,
+.first-term thead th
+
+
+tbody {
+    background: #DDD;
+}
+
+
+
+.grades-row {
+    background: #DDD;
+}
+
+
+
+.main-table td:not(.inner-cell),
+.grades td:not(.inner-cell),
+.first-term td:not(.inner-cell),
+.grades-table td:not(.inner-cell) {
+    padding: 2em;
+}
+
+
+
+.main-table th,
+.main-table tbody td:not(.term-data),
+.first-term th,
+table th,
+table tbody td {
+    padding: 0.4em 0.7em;
+}
+
