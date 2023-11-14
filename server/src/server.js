@@ -34,7 +34,4 @@ app.listen(port, () => {
 
 
 
-//teacherid
-[
- 
-]
+
