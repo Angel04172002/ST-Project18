@@ -6,11 +6,13 @@ import { FooterComponent } from './footer/footer.component';
 import { NavigationComponent } from './navigation/navigation.component';
 import { CoreRoutingModule } from './core-routing.module';
 import { AppRoutingModule } from '../app-routing.module';
+import { AdminHeaderComponent } from './admin-header/admin-header.component';
+import { AdminComponent } from '../user/admin/admin.component';
 
 
 
 @NgModule({
-  declarations: [HeaderComponent, FooterComponent, NavigationComponent],
+  declarations: [HeaderComponent, FooterComponent, NavigationComponent, AdminHeaderComponent],
   imports: [
     CommonModule,
     RouterModule,

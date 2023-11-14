@@ -9,6 +9,7 @@ import { LoginComponent } from './user/login/login.component';
 import { RegisterComponent } from './user/register/register.component';
 import { AbsenceComponent } from './absence/absence.component';
 import { NoteComponent } from './note/note.component';
+import { AdminComponent } from './user/admin/admin.component';
 
 const routes: Routes = [
   {
@@ -43,6 +44,10 @@ const routes: Routes = [
   {
       path: 'student-profile',
       component: StudentComponent
+  },
+  {
+    path: 'admin-students',
+    component: AdminComponent
   }
 ];
 

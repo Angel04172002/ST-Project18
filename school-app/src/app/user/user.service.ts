@@ -1,16 +1,21 @@
 import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Profile } from '../types/Profile';
 import { Observable } from 'rxjs';
+
+const BASE_URL = 'http://localhost:3000'
 
 @Injectable({
   providedIn: 'root'
 })
 export class UserService {
 
+
+
+
   user: Profile | undefined;
 
-  constructor() {
+  constructor(private http: HttpClient) {
 
     const lstUser = localStorage.getItem('user') || undefined;
 
@@ -25,18 +30,19 @@ export class UserService {
 
   login(email: string, password: string) {
 
-    //TODO: Validations 
+    let headers = new HttpHeaders({
+      'content-type': 'application/json'
+    });
 
-    const userToBeLoggedIn: Profile = { 
-      id: 87,
-      creatorId: 1,
-      firstName: 'Peter',
-      lastName: 'Ivanov',
+    const user = {
       email: email,
       password: password
     };
+    //TODO: Validations 
 
-    localStorage.setItem('user', JSON.stringify(userToBeLoggedIn));
+    this.http.post(`${BASE_URL}/profile/auth`, user, { headers })
+      .subscribe(data => console.log(data));
+      
 
   }
 
