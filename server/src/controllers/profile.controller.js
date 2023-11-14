@@ -11,23 +11,25 @@ createProfile = async (request, response) => {
         if(password == undefined)return response.status(500).send("password not provided!")
 
 
+        const { rows } = await pool.query("SELECT * FROM PROFILE WHERE email = $1", [email])
+        if(rows.length > 0){
+            return response.status(500).send(`User with email: ${email} already exists!`);
+        }
+    
+
         // ujas ;(
         const id = utils.generateRandomString(40)
 
-        pool.query(
+        await pool.query(
             'INSERT INTO PROFILE (id, creator_id, first_name, last_name, email, password) VALUES ($1, $2, $3, $4, $5, $6) RETURNING *',
-            [id, creatorId, firstName, lastName, email, password],
-            (error, results) => {
-            if (error) {
-                throw error;
-            }
-            return response.status(201).send(`User added with ID: ${id}`);
-            }
-        );
+            [id, creatorId, firstName, lastName, email, password]
+        )
+
+         return response.status(201).send(`User added with ID: ${id}`);
     }
     catch(err){
         console.error(err.message)
-        response.status(500).send(err.message)
+        return response.status(500).send(err.message)
     }
 }
 
@@ -71,5 +73,29 @@ auth = async (request, response) => {
 }
 
 
+getProfileById = async (request, response) => {
+    try{
+        const id = request.body?.id;
+        console.log(request.body)
+        if (!id) {
+            return response.status(500).json({
+                message: "profile id should be provided in request body",
+            });
+        }
 
-module.exports ={ createProfile, auth }
+        const { rows } = await pool.query("SELECT * FROM PROFILE WHERE id = $1", [id])
+        if(rows.length < 1){
+            return response.status(500).send(`User with id: ${id} not found`);
+        }
+      
+        return response.status(200).json(rows[0])
+
+    }
+    catch(err){
+        console.error(err.message)
+        response.status(500).send(err.message)
+    }
+}
+
+
+module.exports = {createProfile, auth, getProfileById}
