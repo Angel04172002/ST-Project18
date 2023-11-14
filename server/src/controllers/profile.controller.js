@@ -76,6 +76,7 @@ auth = async (request, response) => {
 getProfileById = async (request, response) => {
     try{
         const id = request.body?.id;
+        console.log(request.body)
         if (!id) {
             return response.status(500).json({
                 message: "profile id should be provided in request body",
