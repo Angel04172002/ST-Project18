@@ -1,16 +1,36 @@
-<!-- This is not the register template -->
-
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="register.component.css">
 </head>
-
 <body>
-   <p>register works</p>
-</body>
+    <form id="registrationForm">
+        <label for="firstName">Име:</label>
+        <input type="text" id="firstName" name="firstName" required>
 
+        <label for="lastName">Фамилия:</label>
+        <input type="text" id="lastName" name="lastName" required>
+
+        <label for="email">Имейл:</label>
+        <input type="email" id="email" name="email" required>
+
+        <label for="password">Парола:</label>
+        <input type="password" id="password" name="password" required>
+
+        <label for="confirmPassword">Потвърди парола:</label>
+        <input type="password" id="confirmPassword" name="confirmPassword" required>
+
+        <label for="userType">Тип на профила:</label>
+        <select id="userType" name="userType" required>
+            <option value="student">Ученик</option>
+            <option value="parent">Родител</option>
+        </select>
+
+        <button type="button" onclick="register()">Регистрация</button>
+    </form>
+
+    <script src="register.component.ts"></script>
+</body>
 </html>
