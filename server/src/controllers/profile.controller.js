@@ -56,10 +56,6 @@ createProfile = async (request, response) => {
 
 
 
-
-    }
-
-
 return response.status(201).send(`User added with ID: ${id}`);
 }
     catch (err) {
