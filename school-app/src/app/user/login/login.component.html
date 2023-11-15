@@ -1,40 +1,22 @@
-<!DOCTYPE html>
-<html lang="en">
+<div class="login-container">
+	<div class="login-content">
+		<mat-toolbar class="login-toolbar">Вход</mat-toolbar>
+		<mat-card>
 
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="login.component.css">
-    <title>Вход</title>
-</head>
+			<form>
+				<mat-form-field>
+					<mat-icon matPrefix>person_outline</mat-icon>
+					<input autofocus type="text" matInput placeholder="Потребителско име" name="username" #username>
+				</mat-form-field>
 
-<body>
-    <div class="container">
-        <header>
+				<mat-form-field>
+					<mat-icon matPrefix>lock_outline</mat-icon>
+					<input type="password" autocomplete="false" matInput placeholder="Парола" name="password" #password>
+				</mat-form-field>
 
-        </header>
+                <button style="width:50%" type="submit" mat-raised-button (click) = "login(username.value, password.value)">Вход</button>
+			</form>
+		</mat-card>
+	</div>
+</div>
 
-        <main class="login-container">
-            <h1>Вход</h1>
-            <form>
-                <label for="username">Потребителско име:</label>
-                <input type="text" name="username" #username required><br>
-
-                <label for="password">Парола:</label>
-                <input type="password" name="password" #password required><br>
-
-                <button (click) = "login(username.value, password.value)">Вход</button>
-            </form>
-        </main>
-
-        <footer>
-
-        </footer>
-    </div>
-    <!-- <div class="register-form">
-        <a href = "register.html"> <button src = button>Регистрация</button></a>
-
-    </div> -->
-</body>
-
-</html>

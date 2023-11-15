@@ -21,7 +21,7 @@ import { AppRoutingModule } from '../app-routing.module';
     UserRoutingModule,
     RouterModule,
     AppRoutingModule,
-   // LoginComponent, 
+    LoginComponent, 
     RegisterComponent,
   ]
 })

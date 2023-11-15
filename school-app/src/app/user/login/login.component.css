@@ -1,28 +1,31 @@
 .login-container {
-    max-width: 300px;
-    margin: 0 auto;
-    padding: 20px;
-    border: 1px solid #ccc;
-}
-
-form {
+    margin-top: 50px;
+    height: 100%;
+    width: 100%;
+    align-items: center;
+    display: flex;
+  }
+  
+  form {
+    width: 100%;
+    align-items: center;
     display: flex;
     flex-direction: column;
-}
+    background-color: #333;
+    padding-top: 20px;
+    padding-bottom: 20px;
+  }
+  
+  .login-content {
+    width: 400px;
+    margin: 0 auto;
+  }
+  
+  .login-toolbar {
+    justify-content: center;
+  }
 
-label,
-input {
-    margin-bottom: 10px;
-}
+  mat-form-field{
+    width: 90%;
+  }
 
-button {
-    padding: 10px 20px;
-    background-color: #4caf50;
-    color: white;
-    border: none;
-    cursor: pointer;
-}
-
-button:hover {
-    background-color: #45a049;
-}
