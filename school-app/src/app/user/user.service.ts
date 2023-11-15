@@ -36,15 +36,12 @@ export class UserService {
 
   login(email: string, password: string) {
 
-    let headers = new HttpHeaders({
-      'content-type': 'application/json'
-    });
-
     const user = {
       email: email,
       password: password
     };
-    //TODO: Validations 
+
+    localStorage.setItem('user', JSON.stringify(user));
 
     this.http.post(`${BASE_URL}/profile/auth`, user, { headers: this.headers })
       .subscribe(data => console.log(data));
@@ -53,10 +50,7 @@ export class UserService {
 
 
 
-
-
   register(firstName: string, lastName: string, email: string, password: string, confirmPassword: string, type: string) {
-
 
 
     const user = {
@@ -67,7 +61,7 @@ export class UserService {
       type: type
     };
 
-    //TODO: Validations 
+    localStorage.setItem('user', JSON.stringify(user));
 
     this.http.post(`${BASE_URL}/profile/create`, user, { headers: this.headers })
       .subscribe(data => console.log(data));
@@ -77,7 +71,7 @@ export class UserService {
 
 
   validateUser(user: Profile): boolean {
-    return Boolean(emailPattern.exec(user.email) && passwordPattern.exec(user.password));
+    return true && Boolean(passwordPattern.exec(user.password));
 
   }
 
