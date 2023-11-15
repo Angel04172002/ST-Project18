@@ -36,8 +36,8 @@ createProfile = async (request, response) => {
         if (type == 'Student') {
 
             await pool.query(
-                'INSERT INTO STUDENT (id, grade_id, grade_division_id) VALUES ($1, $2, $3)',
-                [id, 1, 'A']
+                'INSERT INTO STUDENT (id) VALUES ($1, $2, $3)',
+                [id]
             )
 
         } else if (type == 'Parent') {
@@ -52,16 +52,21 @@ createProfile = async (request, response) => {
                 'INSERT INTO TEACHER (id) VALUES ($1)',
                 [id]
             );
+        } else if(type == 'Grade teacher') {
+            await pool.query(
+                'INSERT INTO GRADE_TEACHER (id) VALUES ($1)',
+                [id]
+            );
         }
 
+        return response.status(201).send(`User added with ID: ${id}`)
 
 
-return response.status(201).send(`User added with ID: ${id}`);
-}
+    }
     catch (err) {
-    console.error(err.message)
-    return response.status(500).send(err.message)
-}
+        console.error(err.message)
+        return response.status(500).send(err.message)
+    }
 }
 
 
