@@ -21,13 +21,13 @@ import { NoteComponent } from './note/note.component';
 import { ChatModule } from './chat/chat.module';
 import { SharedModule } from './shared/shared.module';
 import { AdminComponent } from './user/admin/admin.component';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 
 @NgModule({
   declarations: [
     AppComponent,
     AdminComponent,
-    AbsenceComponent,
     CalendarComponent,
     FeedbackComponent,
     NotificationComponent,
@@ -44,7 +44,8 @@ import { AdminComponent } from './user/admin/admin.component';
     HttpClientModule,
     UserModule,
     ChatModule,
-    SharedModule
+    SharedModule,
+    BrowserAnimationsModule
   ],
   providers: [],
   bootstrap: [AppComponent]
