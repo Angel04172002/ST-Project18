@@ -1,11 +1,12 @@
 import { Injectable } from '@angular/core';
 import { Student } from 'src/app/types/Student';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { ExcelService } from '../excel.service';
+import { Profile } from 'src/app/types/Profile';
+import { log } from 'console';
 
-import * as XLSX from 'xlsx';
-import * as Papa from 'papaparse';
-import { UserModule } from '../user.module';
-import * as FileSaver from 'file-saver';
 
+const BASE_URL = 'http://localhost:3000';
 
 @Injectable({
   providedIn: 'root'
@@ -13,53 +14,61 @@ import * as FileSaver from 'file-saver';
 
 export class AdminService {
 
-  constructor() { }
+  urlHeaders = new HttpHeaders({
+    'content-type': 'application/json'
+  });
 
-  adminData = [];
+  constructor(private http: HttpClient, private excelService: ExcelService) { }
+
+  //TODO: Request to server
+  adminData: Profile[] = [
+    {
+      id: "aaaa-bbbb-cccc",
+      firstName: "Pesho",
+      lastName: "Georgiev",
+      email: "pesho.georgiev@abv.bg",
+      grade: 5,
+      gradeDivision: "B"
+    },
+    {
+      id: "bban-cccc-vvvv",
+      firstName: "Misho",
+      lastName: "Ivanov",
+      email: "misho.ivanov@gmail.com",
+      grade: 12,
+      gradeDivision: "C"
+    }
+  ];
 
   headers = ['Student id', 'First name', 'Last name', 'Email', 'Grade', 'Grade division'];
 
-  //TODO: Make request to server to {{baseUrl}}/students to get all students
 
+  generateStudentsAndGrades() {
+    //TODO: Request to server for admin data
+    this.excelService.downloadXLSX(this.adminData, this.headers);
+  }
 
-  convertCSVtoXLSX(csvData: string) {
+  sendJsonData(files : FileList | null) {
+   
+    if (files && files.length > 0) {
+      const file = files[0];
 
-    debugger;
-
-    const parsedData = Papa.parse(csvData, { header: true });
-
-    const worksheet = XLSX.utils.json_to_sheet(parsedData.data);
-    const workbook = XLSX.utils.book_new();
-    XLSX.utils.book_append_sheet(workbook, worksheet, 'Sheet1');
-
-    const excelBuffer = XLSX.write(workbook, { bookType: 'xlsx', type: 'array' });
-
-    const blob = new Blob([excelBuffer], { type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet' });
-
-    FileSaver.saveAs(blob, 'output.xlsx');
-
-
+      this.excelService.readXLSXFile(file)
+        .then((jsonData) => {
+          console.log('JSON Data:', jsonData);
+          //TODO: Request to server
+        })
+        .catch((error) => {
+          console.error(error.message);
+        });
+    } else {
+      console.error('No file selected.');
+    }
   }
 
 
-  downloadCSV(data: Student[]): void {
-
-    const csvData = Papa.unparse(data);
-
-
-    const blob = new Blob([csvData], { type: 'text/csv' });
-
-    const a = document.createElement('a');
-    a.href = URL.createObjectURL(blob);
-    a.download = 'output.csv';
-    document.body.appendChild(a);
-    a.click();
-
-    document.body.removeChild(a);
-
-
-    this.convertCSVtoXLSX(csvData);
-
+  submitJsonData() {
+    this.http.post(`${BASE_URL}/admin/submit`, JSON.stringify(this.adminData), { headers: this.urlHeaders });
   }
 
 }

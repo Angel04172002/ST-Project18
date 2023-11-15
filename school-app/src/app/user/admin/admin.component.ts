@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, ViewChild, ElementRef } from '@angular/core';
 import { Student } from 'src/app/types/Student';
 import { AdminService } from './admin.service';
 
@@ -10,32 +10,17 @@ import { AdminService } from './admin.service';
 
 export class AdminComponent {
 
-  //TODO: Request to server
-  adminData: Student[] = [
-    {
-      id: "aaaa-bbbb-cccc",
-      firstName: "Pesho",
-      lastName: "Georgiev",
-      email: "pesho.georgiev@abv.bg",
-      grade: 5,
-      gradeDivision: "B"
-    },
-    {
-      id: "bban-cccc-vvvv",
-      firstName: "Misho",
-      lastName: "Ivanov",
-      email: "misho.ivanov@gmail.com",
-      grade: 12,
-      gradeDivision: "C"
-    }
-  ];
+  @ViewChild('fileInput') fileInput!: ElementRef;
 
-
-  constructor(private adminService : AdminService) {
-
-  }
+  constructor(private adminService: AdminService) { }
 
   downloadCSVFile() {
-    this.adminService.downloadCSV(this.adminData);
+    this.adminService.generateStudentsAndGrades();
+  }
+
+  sendJson() {
+
+    this.adminService.sendJsonData(this.fileInput.nativeElement.files);
+
   }
 }

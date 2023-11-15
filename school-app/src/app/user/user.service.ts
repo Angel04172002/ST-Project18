@@ -70,9 +70,8 @@ export class UserService {
 
 
 
-  validateUser(user: Profile): boolean {
+  validateUser(user: any): boolean {
     return true && Boolean(passwordPattern.exec(user.password));
-
   }
 
   logout() {
