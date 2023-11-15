@@ -55,7 +55,7 @@ export class UserService {
 
 
 
-  register(firstName: string, lastName: string, email: string, password: string, type: string) {
+  register(firstName: string, lastName: string, email: string, password: string, confirmPassword: string, type: string) {
 
 
 
