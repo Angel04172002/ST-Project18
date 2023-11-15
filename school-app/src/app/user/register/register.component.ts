@@ -20,15 +20,19 @@ export class RegisterComponent {
 
   constructor(private userService: UserService, private router: Router) {
 
-   
+    const lstUser = localStorage.getItem('user') || undefined;
+
+    if (lstUser) {
+      this.user = JSON.parse(lstUser);
+    }
   }
 
 
-  register(firstName: string, lastName: string, email: string, password: string, type: strong) {
+  register(firstName: string, lastName: string, email: string, password: string, confirmPassword : string, type: string) {
 
 
 
-    this.userService.register(firstName, lastName, email, password, type);
+    this.userService.register(firstName, lastName, email, password, confirmPassword, type);
 
     this.router.navigate(['/home']);
     setTimeout(() => {
