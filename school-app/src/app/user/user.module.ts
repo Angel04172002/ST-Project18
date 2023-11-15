@@ -13,14 +13,16 @@ import { AppRoutingModule } from '../app-routing.module';
 
 
 @NgModule({
-  declarations: [GradeTeacherComponent, LoginComponent, RegisterComponent,
+  declarations: [GradeTeacherComponent,
     ParentComponent, StudentComponent, TeacherComponent],
 
   imports: [
     CommonModule,
     UserRoutingModule,
     RouterModule,
-    AppRoutingModule
+    AppRoutingModule,
+   // LoginComponent, 
+    RegisterComponent,
   ]
 })
 export class UserModule { }

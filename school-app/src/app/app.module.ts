@@ -45,7 +45,8 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
     UserModule,
     ChatModule,
     SharedModule,
-    BrowserAnimationsModule
+    BrowserAnimationsModule,
+    AbsenceComponent
   ],
   providers: [],
   bootstrap: [AppComponent]

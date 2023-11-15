@@ -1,36 +1,46 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="register.component.css">
-</head>
-<body>
-    <form id="registrationForm">
-        <label for="firstName">Име:</label>
-        <input type="text" #firstName name="firstName" required>
+<div class="register-container">
+	<div class="register-content">
+		<mat-toolbar class="register-toolbar">Регистрация</mat-toolbar>
+		<mat-card>
 
-        <label for="lastName">Фамилия:</label>
-        <input type="text" #lastName name="lastName" required>
+			<form>
+				<mat-form-field>
+					<mat-icon matPrefix>person_outline</mat-icon>
+					<input autofocus type="text" matInput placeholder="Име" name="firstName" #firstName>
+				</mat-form-field>
 
-        <label for="email">Имейл:</label>
-        <input type="email" #email name="email" required>
+                <mat-form-field>
+                    <mat-icon matPrefix>person_outline</mat-icon>
+                    <input autofocus type="text" matInput placeholder="Фамилия" name="lastName" #lastName>
+				</mat-form-field>
+                
+                <mat-form-field>
+					<mat-icon matPrefix>email</mat-icon>
+					<input autofocus type="email" matInput placeholder="Имейл" name="email" #email>
+				</mat-form-field>
 
-        <label for="password">Парола:</label>
-        <input type="password" #password name="password" required>
+				<mat-form-field>
+					<mat-icon matPrefix>lock_outline</mat-icon>
+					<input type="password" autocomplete="false" matInput placeholder="Парола" name="password" #password>
+				</mat-form-field>
 
-        <label for="confirmPassword">Потвърди парола:</label>
-        <input type="password" #confirmPassword name="confirmPassword" required>
+                <mat-form-field>
+					<mat-icon matPrefix>lock_outline</mat-icon>
+					<input type="password" autocomplete="false" matInput placeholder="Потвърди парола" name="confirmPassword" #confirmPassword>
+				</mat-form-field>
 
-        <label for="userType">Тип на профила:</label>
-        <select #userType name="userType" required>
-            <option value="student">Ученик</option>
-            <option value="parent">Родител</option>
-        </select>
+                <mat-form-field>
+                    <mat-label>Тип на профила</mat-label>
+                    <mat-select name="userType" #userType>
+                        <mat-option value="admin">Администратор</mat-option>
+                        <mat-option value="student">Ученик</mat-option>
+                        <mat-option value="parent">Учител</mat-option>
+                    </mat-select>
+                </mat-form-field>
 
-        <button type="button" (click) = "register(firstName.value, lastName.value, email.value, password.value, confirmPassword.value, userType.value)">Регистрация</button>
-    </form>
+                <button style="width:50%" type="submit" mat-raised-button (click) = "register(firstName.value, lastName.value, email.value, password.value, confirmPassword.value, userType.value)">Регистрация</button>
+			</form>
+		</mat-card>
+	</div>
+</div>
 
-    <script src="register.component.ts"></script>
-</body>
-</html>
