@@ -22,6 +22,9 @@ export class HeaderComponent {
   logout(): void {
     this.userService.logout();
     this.router.navigate(['/home']);
+    setTimeout(()=>{
+      location.reload();
+    }, 100);
   }
 
 }
