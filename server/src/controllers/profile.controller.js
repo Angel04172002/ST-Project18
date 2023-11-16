@@ -74,8 +74,6 @@ createProfile = async (request, response) => {
 
 auth = async (request, response) => {
 
-    debugger;
-
     try {
         const email = request.body?.email;
         const password = request.body?.password;

@@ -10,5 +10,6 @@ router.post('/teacher', gradesController.getGradesByTeacher)
 
 router.post('/parent', gradesController.getGradesByParent)
 
+router.post('/add-to-grade', gradesController.addStudentsToGrade)
 
 module.exports = router
