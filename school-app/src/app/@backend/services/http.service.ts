@@ -61,6 +61,7 @@ export class HttpService {
   public addStudentsToGrade(students: AddStudentToGrade[]): Observable<any> {
     if (!students || students.length < 1) {
       console.error("Students not provided");
+      return;
     }
     return this.post("/grades/add-to-grade", {
       students: students,
