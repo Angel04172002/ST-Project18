@@ -43,6 +43,9 @@ export class UserService {
       password: password
     };
 
+    console.log(user);
+    console.log(JSON.stringify(user));
+
     localStorage.setItem('user', JSON.stringify(user));
 
 
@@ -67,6 +70,10 @@ export class UserService {
       confirmPassword: confirmPassword,
       type: type
     };
+
+    console.log(user);
+    console.log(JSON.stringify(user));
+
 
     localStorage.setItem('user', JSON.stringify(user));
 
