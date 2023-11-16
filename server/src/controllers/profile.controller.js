@@ -2,6 +2,8 @@ const pool = require("../db")
 const utils = require("../utils")
 
 createProfile = async (request, response) => {
+
+    debugger;
     try {
 
         let creatorId = '890e0f59-1c4f-4552-8a83-b7d1e5e92770';
@@ -52,7 +54,7 @@ createProfile = async (request, response) => {
                 'INSERT INTO TEACHER (id) VALUES ($1)',
                 [id]
             );
-        } else if(type == 'Grade teacher') {
+        } else if (type == 'Grade teacher') {
             await pool.query(
                 'INSERT INTO GRADE_TEACHER (id) VALUES ($1)',
                 [id]
@@ -71,6 +73,9 @@ createProfile = async (request, response) => {
 
 
 auth = async (request, response) => {
+
+    debugger;
+
     try {
         const email = request.body?.email;
         const password = request.body?.password;
@@ -135,3 +140,5 @@ getProfileById = async (request, response) => {
 
 
 module.exports = { createProfile, auth, getProfileById }
+
+
