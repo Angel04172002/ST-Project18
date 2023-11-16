@@ -34,7 +34,6 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
     SubjectComponent,
     HomeComponent,
     GradesComponent,
-    NoteComponent
   ],
   imports: [
     BrowserModule,
@@ -46,7 +45,8 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
     ChatModule,
     SharedModule,
     BrowserAnimationsModule,
-    AbsenceComponent
+    AbsenceComponent,
+    NoteComponent
   ],
   providers: [],
   bootstrap: [AppComponent]

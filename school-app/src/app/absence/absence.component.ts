@@ -5,6 +5,7 @@ import { MatTableDataSource } from '@angular/material/table';
 import {MatSelectModule} from '@angular/material/select';
 import {MatInputModule} from '@angular/material/input';
 import {MatFormFieldModule} from '@angular/material/form-field';
+import {MatButtonModule} from '@angular/material/button';
 
 export interface Student {
   firstName: string,
@@ -25,7 +26,8 @@ const ELEMENT_DATA: Student[] = [
     MatCheckboxModule,
     MatSelectModule,
     MatInputModule,
-    MatFormFieldModule
+    MatFormFieldModule,
+    MatButtonModule
   ],
   standalone: true
 })
