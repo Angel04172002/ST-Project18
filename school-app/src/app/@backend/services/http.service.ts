@@ -1,6 +1,6 @@
 import { HttpClient, HttpHeaders } from "@angular/common/http";
 import { Injectable } from "@angular/core";
-import { Observable } from "rxjs";
+import { Observable, empty, of } from "rxjs";
 import { AddStudentToGrade } from "../models/add-student-to-grade.model";
 
 @Injectable({
@@ -61,7 +61,7 @@ export class HttpService {
   public addStudentsToGrade(students: AddStudentToGrade[]): Observable<any> {
     if (!students || students.length < 1) {
       console.error("Students not provided");
-      return;
+      return of({}); // empty observable so you don't get errors when subsribing to undefined
     }
     return this.post("/grades/add-to-grade", {
       students: students,
