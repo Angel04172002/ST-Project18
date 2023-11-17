@@ -3,6 +3,7 @@ import { Injectable } from "@angular/core";
 import { Observable, empty, of } from "rxjs";
 import { AddStudentToGrade } from "../models/add-student-to-grade.model";
 import { ProfileTypes } from "../enums/profile-types.enum";
+import { AddSubjectsToGrade } from "../models/add-subjects-to-grade.model";
 
 @Injectable({
   providedIn: "root",
@@ -68,6 +69,16 @@ export class HttpService {
     }
     return this.post("/grades/add-to-grade", {
       students: students,
+    });
+  }
+
+  public addSubjectsToGrade(subjects: AddSubjectsToGrade[]): Observable<any> {
+    if (!subjects || subjects.length < 1) {
+      console.error("Subjects not provided");
+      return of({}); // empty observable so you don't get errors when subsribing to undefined
+    }
+    return this.post("/grades/add-subjects-to-grade", {
+      subjects: subjects,
     });
   }
 }

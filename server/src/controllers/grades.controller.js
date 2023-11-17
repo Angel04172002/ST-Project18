@@ -147,4 +147,45 @@ addStudentsToGrade = async (request, response) => {
 }
 
 
-module.exports = { getGradesByStudent, getGradesByTeacher, getGradesByParent, addStudentsToGrade}
+addSubjectsToGrade = async (request, response) => {
+    try{
+        const subjects = request.body?.subjects;
+        
+        if(!subjects){
+            return response.status(500).send(`Subjects array not provided`);
+        }
+
+        if(!Array.isArray(subjects)){
+            return response.status(500).send(`Subjects data of wrong type`);
+        }
+
+        if(subjects.length < 1){
+            return response.status(200).send("Data is empty. No subjects added")
+        }
+
+        for(let subject of subjects){
+            await pool.query(
+                'insert into  grades_subjects (grade_id, subject_id) VALUES ($1, $2)',
+                [subject.grade_id, subject.subject_name]
+            )
+        }
+
+        return response.status(200).send("Added successfully!")
+    }
+    catch(err){
+        console.error(err.message)
+        response.status(500).send(err.message)
+    }
+
+}
+
+
+
+
+module.exports = { 
+    getGradesByStudent,
+    getGradesByTeacher,
+    getGradesByParent, 
+    addStudentsToGrade,
+    addSubjectsToGrade
+}
