@@ -3,18 +3,20 @@ const utils = require("../utils")
 
 createProfile = async (request, response) => {
 
-    debugger;
+
     try {
 
         let creatorId = '890e0f59-1c4f-4552-8a83-b7d1e5e92770';
 
-        const { firstName, lastName, email, password, type } = request.body;
+        const { firstName, lastName, email, password, type, creator_id } = request.body;
 
         if (firstName == undefined) return response.status(500).send("firstName not provided!")
         if (lastName == undefined) return response.status(500).send("lastName not provided!")
         if (email == undefined) return response.status(500).send("email not provided!")
         if (password == undefined) return response.status(500).send("password not provided!")
-
+        if (creator_id != undefined){
+            creatorId = creator_id
+        } 
 
         const { rows } = await pool.query("SELECT * FROM PROFILE WHERE email = $1", [email])
         if (rows.length > 0) {
@@ -25,10 +27,6 @@ createProfile = async (request, response) => {
         // ujas ;(
         const id = utils.generateRandomString(40)
 
-        if (type === 'Student' || type == 'Parent') {
-            creatorId = id;
-        };
-
         await pool.query(
             'INSERT INTO PROFILE (id, creator_id, first_name, last_name, email, password, type) VALUES ($1, $2, $3, $4, $5, $6, $7) RETURNING *',
             [id, creatorId, firstName, lastName, email, password, type]
@@ -38,7 +36,7 @@ createProfile = async (request, response) => {
         if (type == 'Student') {
 
             await pool.query(
-                'INSERT INTO STUDENT (id) VALUES ($1, $2, $3)',
+                'INSERT INTO STUDENT (id) VALUES ($1)',
                 [id]
             )
 

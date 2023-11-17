@@ -2,6 +2,7 @@ import { HttpClient, HttpHeaders } from "@angular/common/http";
 import { Injectable } from "@angular/core";
 import { Observable, empty, of } from "rxjs";
 import { AddStudentToGrade } from "../models/add-student-to-grade.model";
+import { ProfileTypes } from "../enums/profile-types.enum";
 
 @Injectable({
   providedIn: "root",
@@ -38,6 +39,7 @@ export class HttpService {
     lastName: string,
     email: string,
     password: string,
+    type: ProfileTypes,
     creatorId?: string
   ): Observable<any> {
     return this.post("/profile/create", {
@@ -46,6 +48,7 @@ export class HttpService {
       lastName: lastName,
       email: email,
       password: password,
+      type: type,
     });
   }
 
