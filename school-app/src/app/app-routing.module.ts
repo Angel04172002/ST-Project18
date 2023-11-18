@@ -10,16 +10,17 @@ import { RegisterComponent } from './user/register/register.component';
 import { AbsenceComponent } from './absence/absence.component';
 import { NoteComponent } from './note/note.component';
 import { AdminComponent } from './user/admin/admin.component';
+import { GroupChatComponent } from './chat/group-chat/group-chat.component';
 
 const routes: Routes = [
   {
-      path: '',
-      pathMatch: 'full',
-      redirectTo: 'home'
+    path: '',
+    pathMatch: 'full',
+    redirectTo: 'home'
   },
   {
-      path: 'home',
-      component: HomeComponent
+    path: 'home',
+    component: HomeComponent
   },
   {
     path: 'absence',
@@ -30,20 +31,24 @@ const routes: Routes = [
     component: NoteComponent
   },
   {
-      path: 'calendar',
-      component: CalendarComponent   
+    path: 'calendar',
+    component: CalendarComponent
   },
   {
-      path: 'grades',
-      component: GradesComponent
+    path: 'grades',
+    component: GradesComponent
   },
   {
-      path: 'chat',
-      component: ChatComponent
+    path: 'chat',
+    component: ChatComponent
   },
   {
-      path: 'student-profile',
-      component: StudentComponent
+    path: 'group-chat',
+    component: GroupChatComponent
+  },
+  {
+    path: 'student-profile',
+    component: StudentComponent
   },
   {
     path: 'admin-students',
