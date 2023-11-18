@@ -7,5 +7,6 @@ router.post('/create', profileController.createProfile)
 
 router.post('/auth', profileController.auth)
 
+router.post('/', profileController.getProfileById)
 
 module.exports = router

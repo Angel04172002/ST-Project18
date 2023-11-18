@@ -1,28 +1,16 @@
-<!-- За ученик -->
-<!DOCTYPE html>
-<html lang="en">
-
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="header.component.css">
-    <title>Онлайн дневник</title>
-</head>
-
-<body>
-    <div class="container">
-        <header class="header">
-            <h1>Онлайн Дневник</h1>
+<div class="container">
+    <header class="header">
+        <h1>Онлайн Дневник</h1>
 
 
-            <nav class="navbar">
-                <a routerLink="/home">Начало</a>
+        <nav class="navbar">
+            <a routerLink="/home">Начало</a>
 
 
-                <div *ngIf="!isLoggedIn()">
-                    <a routerLink="/login">Вход</a>
-                    <a routerLink="/register">Регистрация</a>
-                </div>
+            <div *ngIf="!isLoggedIn()">
+                <a routerLink="/login">Вход</a>
+                <a routerLink="/register">Регистрация</a>
+            </div>
 
                 <div *ngIf="isLoggedIn()">
                     <a routerLink="/grades">Оценки</a>
@@ -32,49 +20,23 @@
                     <a routerLink="/chat">Чат</a>
                     <a routerLink="/group-chat">Групов чат</a>
                     <a routerLink="/student-profile">Профил на ученик</a>
+                    <a routerLink="/admin-students">Администраторски панел</a>
                     <a (click) = "logout()">Изход</a>
                 </div>
 
 
-            </nav>
+        </nav>
 
+    </header>
+    <footer>
+    </footer>
+</div>
 
-        </header>
-        <footer>
-        </footer>
-    </div>
-</body>
-
-<!-- За учител
-</html>
-<!DOCTYPE html>
-<html lang="en">
-
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="header.component.css">
-    <title>Онлайн дневник</title>
-</head>
-
-<body>
-    <div class="container">
-        <header class="header">
-            <h1>Онлайн Дневник</h1>
-            <nav class="navbar">
-                <a href="#">Начало</a>
-                <a href="absence.html">Отсъствия</a>
-                <a href="grades.html">Оценки</a>
-                <a href="calendar.html">Каледар</a>
-                <a href="teacher.html">Профил на учителя</a>
-                <li><a href="#">Обратна връзка</a></li>
-            </nav>
-        </header>
-
-        <!-- Останалата част от вашия контент тук -->
-
-
-<!-- </div>
-</body>
-
-</html> --> -->
+<!-- <nav class="navbar">
+    <a href="#">Начало</a>
+    <a href="absence.html">Отсъствия</a>
+    <a href="grades.html">Оценки</a>
+    <a href="calendar.html">Каледар</a>
+    <a href="teacher.html">Профил на учителя</a>
+    <li><a href="#">Обратна връзка</a></li>
+</nav> -->

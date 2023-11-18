@@ -1,10 +1,10 @@
 export interface Profile {
-    id: number,
-    creatorId: number,
+    id: string,
     firstName: string,
     lastName: string,
     email: string,
-    password: string
+    grade : number,
+    gradeDivision : string
 }
 
 

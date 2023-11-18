@@ -12,7 +12,7 @@ const routes: Routes = [
     },
     {
         path: 'login',
-        component: LoginComponent    
+        component: LoginComponent
     },
     {
         path: 'register',
@@ -23,7 +23,7 @@ const routes: Routes = [
 ];
 
 @NgModule({
-  imports: [RouterModule.forChild(routes), CommonModule],
-  exports: [RouterModule]
+    imports: [RouterModule.forChild(routes), CommonModule],
+    exports: [RouterModule]
 })
 export class UserRoutingModule { }
