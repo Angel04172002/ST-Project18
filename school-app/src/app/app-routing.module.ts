@@ -10,6 +10,7 @@ import { RegisterComponent } from './user/register/register.component';
 import { AbsenceComponent } from './absence/absence.component';
 import { NoteComponent } from './note/note.component';
 import { AdminComponent } from './user/admin/admin.component';
+import { GroupChatComponent } from './chat/group-chat/group-chat.component';
 
 const routes: Routes = [
   {
