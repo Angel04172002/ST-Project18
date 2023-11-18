@@ -14,7 +14,7 @@
 					<input type="password" autocomplete="false" matInput placeholder="Парола" name="password" #password>
 				</mat-form-field>
 
-                <button style="width:50%" type="submit" mat-raised-button (click) = "login(username.value, password.value)">Вход</button>
+                <button style="width:50%" type="submit" mat-raised-button (click) = "login($event, username.value, password.value)">Вход</button>
 			</form>
 		</mat-card>
 	</div>

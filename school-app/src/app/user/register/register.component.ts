@@ -3,13 +3,13 @@ import { Component } from '@angular/core';
 import { Profile } from 'src/app/types/Profile';
 import { UserService } from '../user.service';
 import { Route, Router } from '@angular/router';
-import {MatSelectModule} from '@angular/material/select';
-import {MatInputModule} from '@angular/material/input';
-import {MatFormFieldModule} from '@angular/material/form-field';
-import {MatCardModule} from '@angular/material/card';
-import {MatToolbarModule} from '@angular/material/toolbar';
-import {MatIconModule} from '@angular/material/icon';
-import {MatButtonModule} from '@angular/material/button';
+import { MatSelectModule } from '@angular/material/select';
+import { MatInputModule } from '@angular/material/input';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatCardModule } from '@angular/material/card';
+import { MatToolbarModule } from '@angular/material/toolbar';
+import { MatIconModule } from '@angular/material/icon';
+import { MatButtonModule } from '@angular/material/button';
 
 
 const BASE_URL = 'http://localhost:3000';
@@ -43,20 +43,23 @@ export class RegisterComponent {
   }
 
 
-  register(firstName: string, lastName: string, email: string, password: string, confirmPassword : string, type: string) {
+  register(e: Event, firstName: string, lastName: string, email: string, password: string, confirmPassword: string, type: string) {
 
-    this.userService.register(firstName, lastName, email, password, confirmPassword, type);
+    e.preventDefault();
 
-    if(type === "admin"){
-      this.router.navigate(['/admin-students']);
-    } else {
-      this.router.navigate(['/home']);
-    }
-    
-    setTimeout(() => {
-      location.reload();
-    }, 100);
 
+    this.userService.register(firstName, lastName, email, password, confirmPassword, type)
+      .then(() => {
+
+        setTimeout(() => {
+          location.reload();
+        }, 100);
+
+        this.router.navigate(['/home']);
+      })
+      .catch(err => {
+        alert(err.error);
+      });
   }
 
 }

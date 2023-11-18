@@ -2,13 +2,13 @@ import { AfterViewInit, ChangeDetectorRef, Component, DoCheck, EventEmitter, Inp
 import { UserService } from '../user.service';
 import { Router } from '@angular/router';
 import { ChangeDetectionStrategy } from '@angular/core';
-import {MatSelectModule} from '@angular/material/select';
-import {MatInputModule} from '@angular/material/input';
-import {MatFormFieldModule} from '@angular/material/form-field';
-import {MatCardModule} from '@angular/material/card';
-import {MatToolbarModule} from '@angular/material/toolbar';
-import {MatIconModule} from '@angular/material/icon';
-import {MatButtonModule} from '@angular/material/button';
+import { MatSelectModule } from '@angular/material/select';
+import { MatInputModule } from '@angular/material/input';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatCardModule } from '@angular/material/card';
+import { MatToolbarModule } from '@angular/material/toolbar';
+import { MatIconModule } from '@angular/material/icon';
+import { MatButtonModule } from '@angular/material/button';
 
 @Component({
   selector: 'app-login',
@@ -33,13 +33,23 @@ export class LoginComponent {
   ) { }
 
 
-  login(username: string, password: string): void {
-    this.userService.login(username, password);
-    
-    this.router.navigate(['/home']);
-    setTimeout(()=>{
-      location.reload();
-    }, 100);
+  login(e: Event, username: string, password: string): void {
+
+    e.preventDefault();
+
+    this.userService.login(username, password)
+      .then(() => {
+
+        // setTimeout(() => {
+        //   location.reload();
+        // }, 100);
+
+        this.router.navigate(['/home']);
+      })
+      .catch(err => {
+        alert(err.error);
+      });
+
   }
 
   logout() {

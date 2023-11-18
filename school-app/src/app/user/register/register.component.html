@@ -34,11 +34,11 @@
                     <mat-select name="userType" #userType>
                         <!-- <mat-option value="admin">Администратор</mat-option> -->
                         <mat-option value="student">Ученик</mat-option>
-                        <mat-option value="parent">Учител</mat-option>
+                        <mat-option value="parent">Родител</mat-option>
                     </mat-select>
                 </mat-form-field>
 
-                <button style="width:50%" type="submit" mat-raised-button (click) = "register(firstName.value, lastName.value, email.value, password.value, confirmPassword.value, userType.value)">Регистрация</button>
+                <button style="width:50%" type="submit" mat-raised-button (click) = "register($event, firstName.value, lastName.value, email.value, password.value, confirmPassword.value, userType.value)">Регистрация</button>
 			</form>
 		</mat-card>
 	</div>

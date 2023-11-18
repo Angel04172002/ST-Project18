@@ -1,8 +1,10 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Profile } from '../types/Profile';
-import { Observable } from 'rxjs';
+import { Observable, catchError, firstValueFrom, throwError } from 'rxjs';
 import { HttpService } from '../@backend/services/http.service';
+import { ProfileTypes } from '../@backend/enums/profile-types.enum';
+import { MatCardLgImage } from '@angular/material/card';
 
 const BASE_URL = 'http://localhost:3000';
 const emailPattern = new RegExp('^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$');
@@ -22,7 +24,7 @@ export class UserService {
 
   user: Profile | undefined;
 
-  constructor(private http: HttpClient, private httpService : HttpService) {
+  constructor(private http: HttpClient, private api: HttpService) {
 
     const lstUser = localStorage.getItem('user') || undefined;
 
@@ -35,32 +37,30 @@ export class UserService {
     return !!this.user;
   }
 
-  login(email: string, password: string) {
-
-
-    const user = {
-      email: email,
-      password: password
-    };
-
-    console.log(user);
-    console.log(JSON.stringify(user));
-
-    localStorage.setItem('user', JSON.stringify(user));
 
 
 
-    this.http.post(`${BASE_URL}/profile/auth`, user, { headers: this.headers })
-      .subscribe(data => console.log(data))
+  async login(email: string, password: string) {
 
+
+    const user = { email, password };
+
+    const req = this.api.login(email, password);
+
+    await firstValueFrom(req)
+      .then((data) => {
+        console.log(data);
+        localStorage.setItem('user', JSON.stringify(user));
+      })
+      .catch(err => {
+        throw err;
+      });
 
   }
 
 
 
-  register(firstName: string, lastName: string, email: string, password: string, confirmPassword: string, type: string) {
-
-
+  async register(firstName: string, lastName: string, email: string, password: string, confirmPassword: string, type: string) {
 
     const user = {
       firstName: firstName,
@@ -71,15 +71,24 @@ export class UserService {
       type: type
     };
 
-    console.log(user);
-    console.log(JSON.stringify(user));
+    let profileType = ProfileTypes.Student;
+
+    if (type == 'Parent') {
+      profileType = ProfileTypes.Parent;
+    };
 
 
-    localStorage.setItem('user', JSON.stringify(user));
+    const req = this.api.createProfile(firstName, lastName, email, password, profileType);
 
-   this.httpService.createProfile(firstName, lastName, email, password)
-    .subscribe(data => console.log(data));
 
+    await firstValueFrom(req)
+      .then((data) => {
+        console.log(data);
+        localStorage.setItem('user', JSON.stringify(user));
+      })
+      .catch(err => {
+        throw err;
+      });
   }
 
 

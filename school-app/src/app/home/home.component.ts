@@ -1,6 +1,7 @@
 import { Component } from "@angular/core";
 import { HttpService } from "../@backend/services/http.service";
 import { firstValueFrom } from "rxjs";
+import { ProfileTypes } from "../@backend/enums/profile-types.enum";
 
 @Component({
   selector: "app-home",
@@ -21,7 +22,8 @@ export class HomeComponent {
       "ime1",
       "posledno ime",
       "email234@gmail.com",
-      "pas123"
+      "pas123",
+      ProfileTypes.Student
     );
     await firstValueFrom(req).then((data) => {
       console.log(data);

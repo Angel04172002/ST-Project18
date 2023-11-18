@@ -14,11 +14,10 @@ createProfile = async (request, response) => {
         if (lastName == undefined) return response.status(500).send("lastName not provided!")
         if (email == undefined) return response.status(500).send("email not provided!")
         if (password == undefined) return response.status(500).send("password not provided!")
-        if (creator_id != undefined){
-            creatorId = creator_id
-        } 
 
-        const { rows } = await pool.query("SELECT * FROM PROFILE WHERE email = $1", [email])
+
+        let { rows } = await pool.query("SELECT * FROM PROFILE WHERE email = $1", [email])
+
         if (rows.length > 0) {
             return response.status(500).send(`User with email: ${email} already exists!`);
         }
@@ -26,6 +25,15 @@ createProfile = async (request, response) => {
 
         // ujas ;(
         const id = utils.generateRandomString(40)
+
+
+        
+        if(type == 'Parent' || type == 'Student') {
+            creatorId = id;
+        }
+
+
+
 
         await pool.query(
             'INSERT INTO PROFILE (id, creator_id, first_name, last_name, email, password, type) VALUES ($1, $2, $3, $4, $5, $6, $7) RETURNING *',
@@ -59,8 +67,17 @@ createProfile = async (request, response) => {
             );
         }
 
-        return response.status(201).send(`User added with ID: ${id}`)
+    
 
+        return response.status(201).json({
+            id,
+            creatorId,
+            firstName,
+            lastName,
+            email,
+            password,
+            type
+        })
 
     }
     catch (err) {
