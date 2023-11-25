@@ -27,4 +27,8 @@ export class HeaderComponent {
     }, 100);
   }
 
+  userType(){
+    return this.userService.user?.type;
+  }
+
 }

@@ -20,7 +20,7 @@
                     <a routerLink="/chat">Чат</a>
                     <a routerLink="/group-chat">Групов чат</a>
                     <a routerLink="/student-profile">Профил на ученик</a>
-                    <a routerLink="/admin-students">Администраторски панел</a>
+                    <a routerLink="/admin-students" *ngIf="userType() === 'Admin'">Администраторски панел</a>
                     <a (click) = "logout()">Изход</a>
                 </div>
 

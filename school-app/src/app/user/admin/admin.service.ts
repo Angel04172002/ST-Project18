@@ -3,6 +3,7 @@ import { Student } from 'src/app/types/Student';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { ExcelService } from '../excel.service';
 import { Profile } from 'src/app/types/Profile';
+import { ProfileTypes } from 'src/app/@backend/enums/profile-types.enum';
 import { log } from 'console';
 
 
@@ -28,7 +29,8 @@ export class AdminService {
       lastName: "Georgiev",
       email: "pesho.georgiev@abv.bg",
       grade: 5,
-      gradeDivision: "B"
+      gradeDivision: "B",
+      type: ProfileTypes.Student
     },
     {
       id: "bban-cccc-vvvv",
@@ -36,7 +38,8 @@ export class AdminService {
       lastName: "Ivanov",
       email: "misho.ivanov@gmail.com",
       grade: 12,
-      gradeDivision: "C"
+      gradeDivision: "C",
+      type: ProfileTypes.Student
     }
   ];
 
