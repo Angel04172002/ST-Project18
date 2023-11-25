@@ -4,6 +4,7 @@ import { Observable, empty, of } from "rxjs";
 import { AddStudentToGrade } from "../models/add-student-to-grade.model";
 import { ProfileTypes } from "../enums/profile-types.enum";
 import { AddSubjectsToGrade } from "../models/add-subjects-to-grade.model";
+import { AddMarksByTeacher } from "../models/add-marks-by-teacher";
 
 @Injectable({
   providedIn: "root",
@@ -79,6 +80,30 @@ export class HttpService {
     }
     return this.post("/grades/add-subjects-to-grade", {
       subjects: subjects,
+    });
+  }
+
+  // Marks methods
+
+  public addMarksByTeacher(marks: AddMarksByTeacher[]): Observable<any> {
+    if (!marks || marks.length < 1) {
+      console.error("Marks not provided");
+      return of({}); // empty observable so you don't get errors when subsribing to undefined
+    }
+    return this.post("/marks/teacher/add", {
+      marks: marks,
+    });
+  }
+
+  public getMarksByTeacher(teacherId: string): Observable<any> {
+    return this.post("/marks/teacher", {
+      teacherId: teacherId,
+    });
+  }
+
+  public getMarksByClassTeacher(teacherId: string): Observable<any> {
+    return this.post("/marks/teacher/class", {
+      teacherId: teacherId,
     });
   }
 }
