@@ -42,15 +42,14 @@ export class UserService {
 
   async login(email: string, password: string) {
 
-
-    const user = { email, password };
+   // const user = { email, password };
 
     const req = this.api.login(email, password);
 
     await firstValueFrom(req)
       .then((data) => {
         console.log(data);
-        localStorage.setItem('user', JSON.stringify(user));
+        localStorage.setItem('user', JSON.stringify(data));
       })
       .catch(err => {
         throw err;

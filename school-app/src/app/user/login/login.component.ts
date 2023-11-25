@@ -33,16 +33,16 @@ export class LoginComponent {
   ) { }
 
 
-  login(e: Event, username: string, password: string): void {
+  login(e: Event, email: string, password: string): void {
 
     e.preventDefault();
 
-    this.userService.login(username, password)
+    this.userService.login(email, password)
       .then(() => {
 
-        // setTimeout(() => {
-        //   location.reload();
-        // }, 100);
+        setTimeout(() => {
+          location.reload();
+        }, 100);
 
         this.router.navigate(['/home']);
       })
