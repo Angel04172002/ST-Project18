@@ -4,6 +4,7 @@ const router = express.Router();
 const profileRoute = require('./profile.route')
 const gradesRoute = require('./grades.route')
 const chatRote = require('./chat.route')
+const marksRoute = require('./marks.route')
 
 // Add profile routing
 router.use('/profile', profileRoute);
@@ -12,5 +13,7 @@ router.use('/profile', profileRoute);
 router.use('/grades', gradesRoute)
 
 router.use('/chat', chatRote)
+
+router.use('/marks', marksRoute)
 
 module.exports = router
