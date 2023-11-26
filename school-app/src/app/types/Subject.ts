@@ -1,6 +1,5 @@
 
 export interface Subject {
-    id: number,
-    creatorId: number,
-    name: string
+    subjectName : string
+    creatorId: number
 }

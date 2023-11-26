@@ -1,4 +1,4 @@
 export interface Comment {
-    id: number,
-    creatorId: number
+    id: string,
+    creatorId: string
 }

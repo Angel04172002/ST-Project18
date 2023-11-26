@@ -1,4 +1,4 @@
 export interface Forum {
-    id: number,
-    creatorId: number
+    id: string,
+    creatorId: string
 }

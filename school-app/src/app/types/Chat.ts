@@ -1,4 +1,8 @@
 export interface Chat {
-    id: number,
-    creatorId: number
+    id: string,
+    studentCreatorId: string,
+    parentCreatorId: string,
+    teacherCreatorId: string,
+    gradeTeacherCreatorId: string,
+    adminCreatorId: string
 }
