@@ -4,4 +4,5 @@ import { Profile } from "./Profile"
 export interface Student extends Profile {
     grade : number,
     gradeDivision : string,
+    parentId : string
 }

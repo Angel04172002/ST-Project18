@@ -22,9 +22,10 @@ export class AdminService {
   constructor(private http: HttpClient, private excelService: ExcelService) { }
 
   //TODO: Request to server
-  adminData: Profile[] = [
+  adminData: Student[] = [
     {
       id: "aaaa-bbbb-cccc",
+      parentId: 'ccc',
       firstName: "Pesho",
       lastName: "Georgiev",
       email: "pesho.georgiev@abv.bg",
@@ -34,6 +35,7 @@ export class AdminService {
     },
     {
       id: "bban-cccc-vvvv",
+      parentId: 'ccc',
       firstName: "Misho",
       lastName: "Ivanov",
       email: "misho.ivanov@gmail.com",

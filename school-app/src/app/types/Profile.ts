@@ -5,8 +5,6 @@ export interface Profile {
     firstName: string,
     lastName: string,
     email: string,
-    grade : number,
-    gradeDivision : string,
     type: ProfileTypes
 }
 

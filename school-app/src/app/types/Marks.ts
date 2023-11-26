@@ -1,4 +1,4 @@
-export interface Mark {
+export interface Marks {
     markId: number,
     mark : string
 }
