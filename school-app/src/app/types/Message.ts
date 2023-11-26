@@ -1,6 +1,10 @@
-
 export interface Message {
-    id: number,
-    creatorId: number,
-    messageText: string
+    id: string,
+    studentCreatorId: string,
+    parentCreatorId: string,
+    teacherCreatorId: string,
+    gradeTeacherCreatorId: string,
+    adminCreatorId: string,
+    messageText: string,
+    date : Date
 }

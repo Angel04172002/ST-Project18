@@ -1,5 +1,8 @@
 
 export interface GroupChat {
-    id: number,
-    creatorId: number
+    id: string,
+    parentCreatorId: string,
+    teacherCreatorId: string,
+    gradeTeacherCreatorId: string,
+    adminCreatorId: string
 }

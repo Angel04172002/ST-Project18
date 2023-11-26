@@ -1,6 +1,6 @@
 export interface Feedback {
-    id: number,
-    creatorId: number,
+    id: string,
+    creatorId: string,
     title: string,
     description: string,
     date: Date,

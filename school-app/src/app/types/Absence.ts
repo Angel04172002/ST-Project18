@@ -1,6 +1,10 @@
+import { AbsenceExcuseReason } from "./AbsenceExcuseReason";
+import { AbsenceReasons } from "./AbsenceReasons";
+import { AbsenceTypes } from "./AbsenceTypes";
+
 export interface Absence {
-    id: number,
-    creatorId: number,
-    absenceTypeId: number,
-    absenceReasonId: number
+    id: string,
+    creatorId: string,
+    absenceTypeId: AbsenceTypes,
+    absenceReasonId: AbsenceExcuseReason
 }
