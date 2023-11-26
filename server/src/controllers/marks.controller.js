@@ -67,12 +67,8 @@ getMarksByClassTeacher = async (request, response) => {
             });
         }
 
-        console.log(teacherId);
-        console.log(marksQueries.getMarksByClassTeacherQuery)
-
         let { rows } = await pool.query(marksQueries.getMarksByClassTeacherQuery, [teacherId])
 
-        rows = "kur"
         return response.status(200).json(rows)
     }
     catch(err){
@@ -83,10 +79,51 @@ getMarksByClassTeacher = async (request, response) => {
 }
 
 
+getMarksByStudent = async (request, response) => {
+    try{
+        const studentId = request.body?.studentId;
+        if (!studentId) {
+            return response.status(500).json({
+                message: "student id should be provided in request body",
+            });
+        }
+
+        let { rows } = await pool.query(marksQueries.getMarksByStudentQuery, [studentId])
+        return response.status(200).json(rows)
+    }
+    catch(err){
+        console.error(err.message)
+        response.status(500).send(err.message)
+    }
+}
+
+getMarksByParent = async (request, response) => {
+    try{
+        const parentId = request.body?.parentId;
+        if (!parentId) {
+            return response.status(500).json({
+                message: "parent id should be provided in request body",
+            });
+        }
+
+        let { rows } = await pool.query(marksQueries.getMarksByParentQuery, [parentId])
+
+        return response.status(200).json(rows)
+    }
+    catch(err){
+        console.error(err.message)
+        response.status(500).send(err.message)
+    }
+}
+
+
+
 
 
 module.exports = { 
     addMarksByTeacher,
     getMarksByTeacher,
-    getMarksByClassTeacher
+    getMarksByClassTeacher,
+    getMarksByStudent,
+    getMarksByParent
 }

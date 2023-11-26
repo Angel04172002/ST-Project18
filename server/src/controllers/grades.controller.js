@@ -1,5 +1,7 @@
 const pool = require("../db")
 
+const gradesQueries = require('../database/grades.queries')
+
 
 const mockDataStudent = [
     {
@@ -128,12 +130,8 @@ addStudentsToGrade = async (request, response) => {
 
         for(let student of students){
             await pool.query(
-                'insert into students_grades (student_id, grade_id) VALUES ($1, $2)',
-                [student.student_id, student.grade_id]
-            )
-            await pool.query(
-                'insert students_grade_divisions (student_id, grade_division_id) VALUES ($1, $2)',
-                [student.student_id, grade_division_id]
+                'insert into student (student_id, grade_id, grade_division_id) VALUES ($1, $2, $3)',
+                [student.student_id, student.grade_id, student.grade_division_id]
             )
         }
 
@@ -180,12 +178,36 @@ addSubjectsToGrade = async (request, response) => {
 }
 
 
+getStudentsWithGradeAndDivison = async (request, response) => {
+    try{
+        let { rows } = await pool.query(gradesQueries.getStudentsWithGradeAndDivisonQuery)
 
+        return response.status(200).json(rows)
+    }
+    catch(err){
+        console.error(err.message)
+        response.status(500).send(err.message)
+    }
+}
+
+getAllSubjects = async (request, response) => {
+    try{
+        let { rows } = await pool.query('select * from grades_subjects')
+
+        return response.status(200).json(rows)
+    }
+    catch(err){
+        console.error(err.message)
+        response.status(500).send(err.message)
+    }
+}
 
 module.exports = { 
     getGradesByStudent,
     getGradesByTeacher,
     getGradesByParent, 
     addStudentsToGrade,
-    addSubjectsToGrade
+    addSubjectsToGrade,
+    getStudentsWithGradeAndDivison,
+    getAllSubjects
 }

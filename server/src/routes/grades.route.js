@@ -14,4 +14,8 @@ router.post('/add-to-grade', gradesController.addStudentsToGrade)
 
 router.post('/add-subjects-to-grade', gradesController.addSubjectsToGrade)
 
+router.post('/all', gradesController.getStudentsWithGradeAndDivison)
+
+router.post('/subjects/all', gradesController.getAllSubjects)
+
 module.exports = router

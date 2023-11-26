@@ -5,6 +5,7 @@ import { AddStudentToGrade } from "../models/add-student-to-grade.model";
 import { ProfileTypes } from "../enums/profile-types.enum";
 import { AddSubjectsToGrade } from "../models/add-subjects-to-grade.model";
 import { AddMarksByTeacher } from "../models/add-marks-by-teacher";
+import { AddSubjectsAndGradesToTeacherModel } from "../models/add-subjects-and-grades-to-teacher.model";
 
 @Injectable({
   providedIn: "root",
@@ -83,6 +84,14 @@ export class HttpService {
     });
   }
 
+  public getStudentsWithGradeAndDivison(): Observable<any> {
+    return this.post("/grades/all", {});
+  }
+
+  public getAllSubjects(): Observable<any> {
+    return this.post("/subjects/all", {});
+  }
+
   // Marks methods
 
   public addMarksByTeacher(marks: AddMarksByTeacher[]): Observable<any> {
@@ -104,6 +113,32 @@ export class HttpService {
   public getMarksByClassTeacher(teacherId: string): Observable<any> {
     return this.post("/marks/teacher/class", {
       teacherId: teacherId,
+    });
+  }
+
+  public getMarksByStudent(studentId: string): Observable<any> {
+    return this.post("/marks/student", {
+      studentId: studentId,
+    });
+  }
+
+  public getMarksByClassParent(parentId: string): Observable<any> {
+    return this.post("/marks/parent/", {
+      parentId: parentId,
+    });
+  }
+
+  // Teachers methods
+
+  public addSubjectsAndGradesToTeacher(
+    subjects: AddSubjectsAndGradesToTeacherModel[]
+  ): Observable<any> {
+    if (!subjects || subjects.length < 1) {
+      console.error("Marks not provided");
+      return of({}); // empty observable so you don't get errors when subsribing to undefined
+    }
+    return this.post("/teacher/add/subjects-and-grades", {
+      subjects: subjects,
     });
   }
 }
