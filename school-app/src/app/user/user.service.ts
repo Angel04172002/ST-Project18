@@ -74,6 +74,8 @@ export class UserService {
 
     if (type == 'Parent') {
       profileType = ProfileTypes.Parent;
+    }else if(type == 'Teacher'){
+      profileType = ProfileTypes.Teacher
     };
 
 

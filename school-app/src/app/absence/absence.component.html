@@ -1,51 +1,98 @@
-<h1 class="title">Отсъствия</h1>
+<div class="teacherview" *ngIf="userType() === 'Teacher'">
+    <h1 class="title">Отсъствия</h1>
 
-<div class="grade">
-    <mat-form-field>
-        <mat-label>Избери клас:</mat-label>
-        <mat-select>
-            <mat-option value="eight">8</mat-option>
-            <mat-option value="nine">9</mat-option>
-            <mat-option value="ten">10</mat-option>
-            <mat-option value="eleven">11</mat-option>
-            <mat-option value="twelve">12</mat-option>
-        </mat-select>
-    </mat-form-field>
+    <div class="grade">
+        <mat-form-field>
+            <mat-label>Избери клас:</mat-label>
+            <mat-select>
+                <mat-option value="eight">8</mat-option>
+                <mat-option value="nine">9</mat-option>
+                <mat-option value="ten">10</mat-option>
+                <mat-option value="eleven">11</mat-option>
+                <mat-option value="twelve">12</mat-option>
+            </mat-select>
+        </mat-form-field>
 
-    <mat-form-field>
-        <mat-label>Избери паралелка:</mat-label>
-        <mat-select>
-            <mat-option value="a">А</mat-option>
-            <mat-option value="b">Б</mat-option>
-            <mat-option value="c">В</mat-option>
-        </mat-select>
-    </mat-form-field>
+        <mat-form-field>
+            <mat-label>Избери паралелка:</mat-label>
+            <mat-select>
+                <mat-option value="a">А</mat-option>
+                <mat-option value="b">Б</mat-option>
+                <mat-option value="c">В</mat-option>
+            </mat-select>
+        </mat-form-field>
+    </div>
+
+    <table mat-table [dataSource]="dataSource" class="mat-elevation-z8">
+
+        <ng-container matColumnDef="firstName">
+            <th mat-header-cell *matHeaderCellDef> Име </th>
+            <td mat-cell *matCellDef="let element"> {{element.firstName}} </td>
+        </ng-container>
+
+        <ng-container matColumnDef="lastName">
+            <th mat-header-cell *matHeaderCellDef> Фамилия </th>
+            <td mat-cell *matCellDef="let element"> {{element.lastName}} </td>
+        </ng-container>
+
+        <ng-container matColumnDef="absenceType">
+            <th mat-header-cell *matHeaderCellDef> Извинено </th>
+            <td mat-cell *matCellDef="let element">
+                <mat-checkbox class="excusedCheckbox" [checked]="element.absenceType === 'Извинено'">
+                </mat-checkbox>
+            </td>
+        </ng-container>
+
+        <ng-container matColumnDef="absenceReason">
+            <th mat-header-cell *matHeaderCellDef> Причина за отсъствие </th>
+            <td mat-cell *matCellDef="let element"> {{element.absenceReason}} </td>
+        </ng-container>
+
+        <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+        <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+    </table>
+
+    <button class="button-add-row" mat-raised-button (click)="addRow()">
+        Добави ново отсъствие
+    </button>
 </div>
 
-<table mat-table [dataSource]="dataSource" class="mat-elevation-z8">
+<div class="studentview" *ngIf="userType() === 'Student'">
+    <h1 class="title">Моите отсъствия</h1>
 
-    <ng-container matColumnDef="firstName">
-      <th mat-header-cell *matHeaderCellDef> Име </th>
-      <td mat-cell *matCellDef="let element"> {{element.firstName}} </td>
-    </ng-container>
-  
-    <ng-container matColumnDef="lastName">
-      <th mat-header-cell *matHeaderCellDef> Фамилия </th>
-      <td mat-cell *matCellDef="let element"> {{element.lastName}} </td>
-    </ng-container>
-  
-    <ng-container matColumnDef="excused">
-        <th mat-header-cell *matHeaderCellDef> Извинено </th>
-        <td mat-cell *matCellDef="let element">
-            <mat-checkbox class="excusedCheckbox" [checked]="element.excused">
-            </mat-checkbox>
-        </td>
-    </ng-container>
-  
-    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-    <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
-  </table>
-  
-  <button class="button-add-row" mat-raised-button (click)="addRow()">
-    Добави ново отсъствие
-  </button>  
+    <div class="subject">
+        <mat-form-field>
+            <mat-label>Избери предмет:</mat-label>
+            <mat-select>
+                <mat-option value="bg">БЕЛ</mat-option>
+                <mat-option value="math">Математика</mat-option>
+                <mat-option value="en">Английски език</mat-option>
+                <mat-option value="bio">Биология</mat-option>
+                <mat-option value="geo">География</mat-option>
+            </mat-select>
+        </mat-form-field>
+    </div>
+
+    <table mat-table [dataSource]="dataSource2" class="mat-elevation-z8">
+        <ng-container matColumnDef="id">
+            <th mat-header-cell *matHeaderCellDef> </th>
+            <td mat-cell *matCellDef="let element"> {{element.id}} </td>
+        </ng-container>
+
+        <ng-container matColumnDef="absenceReasonId">
+            <th mat-header-cell *matHeaderCellDef> Причина за отсъствие </th>
+            <td mat-cell *matCellDef="let element"> {{element.absenceReasonId}} </td>
+        </ng-container>
+
+        <ng-container matColumnDef="absenceTypeId">
+            <th mat-header-cell *matHeaderCellDef> Извинено </th>
+            <td mat-cell *matCellDef="let element">
+                <mat-checkbox class="excusedCheckbox" [checked]="element.absenceTypeId === 'Извинено'">
+                </mat-checkbox>
+            </td>
+        </ng-container>
+
+        <tr mat-header-row *matHeaderRowDef="displayedColumns2"></tr>
+        <tr mat-row *matRowDef="let row; columns: displayedColumns2;"></tr>
+    </table>
+</div>
