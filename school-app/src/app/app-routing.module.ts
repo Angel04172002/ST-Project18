@@ -1,16 +1,16 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
-import { HomeComponent } from './home/home.component';
-import { CalendarComponent } from './calendar/calendar.component';
-import { GradesComponent } from './grades/grades.component';
-import { ChatComponent } from './chat/chat/chat.component';
+import { HomeComponent } from './pages/home/home.component';
+import { CalendarComponent } from './pages/calendar/calendar.component';
+import { GradesComponent } from './pages/grades/grades.component';
 import { StudentComponent } from './user/student/student.component';
 import { LoginComponent } from './user/login/login.component';
 import { RegisterComponent } from './user/register/register.component';
 import { AbsenceComponent } from './absence/absence.component';
-import { NoteComponent } from './note/note.component';
-import { AdminComponent } from './user/admin/admin.component';
-import { GroupChatComponent } from './chat/group-chat/group-chat.component';
+import { NoteComponent } from './pages/note/note.component';
+import { AdminComponent } from './admin/admin/admin.component';
+import { ChatComponent } from './pages/chat/chat/chat.component';
+import { GroupChatComponent } from './pages/chat/group-chat/group-chat.component';
 
 const routes: Routes = [
   {
@@ -49,11 +49,11 @@ const routes: Routes = [
   {
     path: 'student-profile',
     component: StudentComponent
-  },
-  {
-    path: 'admin-students',
-    component: AdminComponent
   }
+  // {
+  //   path: 'admin-students',
+  //   component: AdminComponent
+  // }
 ];
 
 @NgModule({

@@ -4,10 +4,10 @@ import { RouterModule } from '@angular/router';
 import { HeaderComponent } from './header/header.component';
 import { FooterComponent } from './footer/footer.component';
 import { NavigationComponent } from './navigation/navigation.component';
-import { CoreRoutingModule } from './core-routing.module';
 import { AppRoutingModule } from '../app-routing.module';
 import { AdminHeaderComponent } from './admin-header/admin-header.component';
-import { AdminComponent } from '../user/admin/admin.component';
+import { AdminComponent } from '../admin/admin/admin.component';
+import { AdminRoutingModule } from '../admin/admin-routing.module';
 
 
 
@@ -16,7 +16,8 @@ import { AdminComponent } from '../user/admin/admin.component';
   imports: [
     CommonModule,
     RouterModule,
-    AppRoutingModule
+    AppRoutingModule,
+    AdminRoutingModule
   ],
   exports: [
     HeaderComponent,

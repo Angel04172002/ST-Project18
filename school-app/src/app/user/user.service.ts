@@ -1,10 +1,10 @@
-import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Profile } from '../types/Profile';
 import { Observable, catchError, firstValueFrom, throwError } from 'rxjs';
 import { HttpService } from '../@backend/services/http.service';
 import { ProfileTypes } from '../@backend/enums/profile-types.enum';
 import { MatCardLgImage } from '@angular/material/card';
+import { Injectable } from '@angular/core';
 
 const BASE_URL = 'http://localhost:3000';
 const emailPattern = new RegExp('^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$');

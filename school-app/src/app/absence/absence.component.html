@@ -1,4 +1,4 @@
-<div class="teacherview" *ngIf="userType() === 'Teacher' || 'Admin'">
+<div class="teacherview" *ngIf="userType() === 'Teacher' || userType() === 'Grade teacher'">
     <h1 class="title">Отсъствия</h1>
 
     <div class="grade">
@@ -57,7 +57,10 @@
     </button>
 </div>
 
-<div class="studentview" *ngIf="userType() === 'Student'">
+
+
+
+<div class="studentview" *ngIf="userType() === 'Student' || userType() === 'Parent'">
     <h1 class="title">Моите отсъствия</h1>
 
     <div class="subject">

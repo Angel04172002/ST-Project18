@@ -1,4 +1,4 @@
-<div class="teacherview" *ngIf="userType() === 'Teacher' || 'Admin'">
+<div class="teacherview" *ngIf="userType() === 'Teacher' || userType() === 'Grade teacher'">
     <h1 class="title">Забeлежки</h1>
 
     <div class="grade">
@@ -10,7 +10,7 @@
                 <mat-option value="ten">10</mat-option>
                 <mat-option value="eleven">11</mat-option>
                 <mat-option value="twelve">12</mat-option>
-            </mat-select>
+            </mat-select>   
         </mat-form-field>
 
         <mat-form-field>
@@ -58,7 +58,7 @@
     </table>
 </div>
 
-<div class="studentview" *ngIf="userType() === 'Student'">
+<div class="studentview" *ngIf="userType() === 'Student' || userType() === 'Parent'">
     <h1 class="title">Моите забележки</h1>
 
     <div class="subject">

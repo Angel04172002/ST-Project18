@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Student } from 'src/app/types/Student';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { ExcelService } from '../excel.service';
+import { ExcelService } from '../../user/excel.service';
 import { Profile } from 'src/app/types/Profile';
 import { ProfileTypes } from 'src/app/@backend/enums/profile-types.enum';
 import { log } from 'console';

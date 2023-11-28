@@ -1,0 +1,12 @@
+<div class="welcome-container">
+    <div class="welcome-text">Добре дошли</div>
+    <img src="https://scontent.fsof9-1.fna.fbcdn.net/v/t1.15752-9/368090041_857371629511654_1220118858470486763_n.jpg?_nc_cat=108&ccb=1-7&_nc_sid=8cd0a2&_nc_ohc=5UUUb8ZnUFEAX-sDFxJ&_nc_ht=scontent.fsof9-1.fna&oh=03_AdQ16RyTnT1xVwU3SyS6CVC8ZltfF0uPwnGTLCeGFJOKIg&oe=658D9CD1" alt="Welcome" class="welcome-img">
+
+
+    <div class="button-container" *ngIf = "!isLoggedIn()">
+        <a routerLink = "/register" class="button">Регистрация</a>
+        <a routerLink = "/login" class="button">Вход</a>
+    </div>
+</div>
+
+
