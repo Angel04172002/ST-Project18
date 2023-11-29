@@ -6,11 +6,11 @@ import { GradesComponent } from './pages/grades/grades.component';
 import { StudentComponent } from './user/student/student.component';
 import { LoginComponent } from './user/login/login.component';
 import { RegisterComponent } from './user/register/register.component';
-import { AbsenceComponent } from './absence/absence.component';
 import { NoteComponent } from './pages/note/note.component';
 import { AdminComponent } from './admin/admin/admin.component';
 import { ChatComponent } from './pages/chat/chat/chat.component';
 import { GroupChatComponent } from './pages/chat/group-chat/group-chat.component';
+import { AbsenceComponent } from './pages/absence/absence.component';
 
 const routes: Routes = [
   {

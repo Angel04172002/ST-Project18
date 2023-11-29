@@ -99,3 +99,67 @@
         <tr mat-row *matRowDef="let row; columns: displayedColumns2;"></tr>
     </table>
 </div>
+
+
+<div *ngIf="userType() === 'Parent'">
+
+
+
+
+    <h2>Форма за извинение от родител</h2>
+    <form id="apologyForm">
+
+        <div>
+
+
+            <label for="classSelect">Изберете клас:</label>
+            <select id="classSelect" name="class">
+                <option value="1A">1A</option>
+                <option value="1B">1B</option>
+            </select>
+
+        </div>
+
+
+        <div>
+
+
+
+            <label for="studentSelect">Изберете ученик:</label>
+            <select id="studentSelect" name="student">
+                <option value="student">Георги Иванов</option>
+                <option value="student">Иван Иванов</option>
+            </select>
+
+        </div>
+
+        <div>
+
+
+
+            <label for="reasonSelect">Изберете причина за отсъствието:</label>
+            <select id="reasonSelect" name="reason">
+                <option value="болен">Болен</option>
+                <option value="лични дела">Лични дела</option>
+                <option value="учебна дейност">Учебна дейност</option>
+            </select>
+
+        </div>
+
+        <div>
+
+
+            <label for="notes">Прикачете извинителни бележки (снимка):</label>
+            <input type="file" id="notes" name="notes" accept="image/*">
+        </div>
+
+
+        <div>
+
+
+            <button type="button" onclick="submitForm()">Запиши</button>
+
+        </div>
+    </form>
+
+</div>

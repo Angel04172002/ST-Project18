@@ -3,7 +3,7 @@ import * as XLSX from 'xlsx';
 import * as Papa from 'papaparse';
 import * as FileSaver from 'file-saver';
 import * as csvtojson from 'csvtojson';
-import { Student } from '../absence/absence.component';
+import { Student } from '../pages/absence/absence.component';
 import { Profile } from '../types/Profile';
 
 
