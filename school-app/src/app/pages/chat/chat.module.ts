@@ -6,7 +6,6 @@ import { GroupChatComponent } from './group-chat/group-chat.component';
 import { ChatComponent } from './chat/chat.component';
 import { JitsiComponent } from './jitsi/jitsi.component';
 import { RouterModule } from '@angular/router';
-import { SharedModule } from '../shared/shared.module';
 
 
 
@@ -20,8 +19,7 @@ import { SharedModule } from '../shared/shared.module';
   ],
   imports: [
     CommonModule,
-    RouterModule,
-    SharedModule
+    RouterModule
   ]
 })
 export class ChatModule { }

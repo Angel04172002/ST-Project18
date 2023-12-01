@@ -44,8 +44,8 @@ createProfile = async (request, response) => {
         if (type == 'Student') {
 
             await pool.query(
-                'INSERT INTO STUDENT (id) VALUES ($1)',
-                [id]
+                'INSERT INTO STUDENT (id, grade_id, grade_division_id, parent_id) VALUES ($1)',
+                [id, null, null, null]
             )
 
         } else if (type == 'Parent') {

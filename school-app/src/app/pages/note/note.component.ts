@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { UserService } from 'src/app/user/user.service';
-import { Note } from '../types/Note';
+import { Note } from '../../types/Note';
 import {MatTableModule} from '@angular/material/table';
 import {MatCheckboxModule} from '@angular/material/checkbox';
 import { MatTableDataSource } from '@angular/material/table';

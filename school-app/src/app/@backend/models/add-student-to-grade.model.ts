@@ -1,7 +1,10 @@
 export class AddStudentToGrade {
-  public student_id!: string;
-  public grade_id!: number;
-  public grade_division_id!: string;
+  public studentId!: string;
+  public grade!: number;
+  public gradeDivision!: string;
+  public firstName !: string;
+  public lastName !: string;
+  public email !: string;
 
   constructor(init?: Partial<AddStudentToGrade>) {
     Object.assign(this, init);

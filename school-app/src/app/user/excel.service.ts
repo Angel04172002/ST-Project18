@@ -3,8 +3,10 @@ import * as XLSX from 'xlsx';
 import * as Papa from 'papaparse';
 import * as FileSaver from 'file-saver';
 import * as csvtojson from 'csvtojson';
-import { Student } from '../absence/absence.component';
+import { Student } from '../types/Student'
 import { Profile } from '../types/Profile';
+import { ProfileTypes } from '../@backend/enums/profile-types.enum';
+import { KeyValuePipe } from '@angular/common';
 
 
 @Injectable({
@@ -23,7 +25,7 @@ export class ExcelService {
 
     XLSX.utils.sheet_add_aoa(worksheet, [headers], { origin: 'A1' });
 
-    
+
     const workbook = XLSX.utils.book_new();
     XLSX.utils.book_append_sheet(workbook, worksheet, 'Sheet1');
 
@@ -76,9 +78,11 @@ export class ExcelService {
         const data = e.target.result;
         const workbook = XLSX.read(data, { type: 'binary' });
 
-        // Assuming you want to convert the first sheet to JSON
         const sheetName = workbook.SheetNames[0];
-        const jsonData = XLSX.utils.sheet_to_json(workbook.Sheets[sheetName]);
+        let jsonData: string[] = XLSX.utils.sheet_to_json(workbook.Sheets[sheetName]);
+
+
+        jsonData = this.convertArrayToCamelCase(jsonData);
 
         resolve(jsonData);
       };
@@ -89,6 +93,41 @@ export class ExcelService {
 
       reader.readAsBinaryString(file);
     });
+
+
+
+
   }
+
+  
+  convertArrayToCamelCase(originalArray: any[]): any[] {
+    return originalArray.map(item => this.convertObjectKeysToCamelCase(item));
+  }
+
+
+  convertObjectKeysToCamelCase(obj: any): any {
+
+    if (typeof obj !== 'object' || obj === null) {
+      return obj; // Return unchanged if not an object
+    }
+
+    const camelCaseObj: any = {};
+
+    for (let key in obj) {
+
+      let newKey = key.toLowerCase().split(' ').map((x, i) => {
+        if (i == 0) { return x.slice(0) }
+
+        return x[0].toUpperCase() + x.slice(1);
+
+      }).join('')
+
+      camelCaseObj[newKey] = obj[key];
+
+    }
+
+    return camelCaseObj;
+  }
+
 
 }

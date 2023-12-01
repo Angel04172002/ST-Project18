@@ -6,15 +6,18 @@ import { GradeTeacherComponent } from './grade-teacher/grade-teacher.component';
 import { LoginComponent } from './login/login.component';
 import { RegisterComponent } from './register/register.component';
 import { ParentComponent } from './parent/parent.component';
-import { StudentComponent } from './student/student.component';
 import { TeacherComponent } from './teacher/teacher.component';
 import { AppRoutingModule } from '../app-routing.module';
+import { StudentComponent } from './student/student.component';
 
 
 
 @NgModule({
-  declarations: [GradeTeacherComponent,
-    ParentComponent, StudentComponent, TeacherComponent],
+  declarations: [
+    GradeTeacherComponent,
+    ParentComponent, 
+    TeacherComponent
+  ],
 
   imports: [
     CommonModule,
@@ -23,6 +26,15 @@ import { AppRoutingModule } from '../app-routing.module';
     AppRoutingModule,
     LoginComponent, 
     RegisterComponent,
-  ]
+  ], 
+  // exports: [
+  //   GradeTeacherComponent,
+  //   ParentComponent, 
+  //   TeacherComponent,
+  //   GradeTeacherComponent,
+  //   LoginComponent,
+  //   RegisterComponent,
+  //   StudentComponent
+  // ]
 })
 export class UserModule { }

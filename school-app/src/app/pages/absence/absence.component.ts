@@ -8,9 +8,9 @@ import {MatSelectModule} from '@angular/material/select';
 import {MatInputModule} from '@angular/material/input';
 import {MatFormFieldModule} from '@angular/material/form-field';
 import {MatButtonModule} from '@angular/material/button';
-import { Absence } from '../types/Absence';
-import { AbsenceTypes } from '../types/AbsenceTypes';
-import { AbsenceExcuseReason } from '../types/AbsenceExcuseReason';
+import { Absence } from '../../types/Absence';
+import { AbsenceTypes } from '../../types/AbsenceTypes';
+import { AbsenceExcuseReason } from '../../types/AbsenceExcuseReason';
 
 export interface Student {
   firstName: string | undefined,
@@ -26,7 +26,7 @@ const ELEMENT_DATA: Student[] = [
 @Component({
   selector: 'app-absence',
   templateUrl: './absence.component.html',
-  styleUrls: ['./absence.component.css', '../styles/table-style.css'],
+  styleUrls: ['./absence.component.css', '../../styles/table-style.css'],
   imports: [
     CommonModule,
     MatTableModule,

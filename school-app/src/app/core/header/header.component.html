@@ -12,17 +12,29 @@
                 <a routerLink="/register">Регистрация</a>
             </div>
 
-                <div *ngIf="isLoggedIn()">
+            <div *ngIf="isLoggedIn()">
+
+                <div *ngIf = "userType() !== 'Admin'">
                     <a routerLink="/grades">Оценки</a>
                     <a routerLink="/absence">Отсъствия</a>
                     <a routerLink="/note">Забележки</a>
                     <a routerLink="/calendar">Календар</a>
                     <a routerLink="/chat">Чат</a>
                     <a routerLink="/group-chat">Групов чат</a>
-                    <a routerLink="/student-profile"  *ngIf="userType() === 'Student'">Профил на ученик</a>
-                    <a routerLink="/admin-students" *ngIf="userType() === 'Admin'">Администраторски панел</a>
-                    <a (click) = "logout()">Изход</a>
                 </div>
+
+                <a routerLink="/student-profile" *ngIf="userType() === 'Student'">Профил на ученик</a>
+
+                <div *ngIf = "userType() === 'Admin'">
+                    <a routerLink="/admin-panel">Администраторски панел</a>
+                    <a routerLink="/admin-subjects">Предмети</a>
+                    <a routerLink="/admin-students">Ученици и родители</a>
+                    <a routerLink="/admin-teachers">Учители и класни ръководители</a>
+                </div>
+
+
+                <a (click)="logout()">Изход</a>
+            </div>
 
 
         </nav>
