@@ -7,12 +7,12 @@ const mockDataStudent = [
     {
         subjectName: "biologiq",
         subjectId: 1,
-        marks: [1,2,3,4,5]
+        marks: [1, 2, 3, 4, 5]
     },
     {
         subjectName: "matematika",
         subjectId: 2,
-        marks: [2,2,2,2,2,2,2,2]
+        marks: [2, 2, 2, 2, 2, 2, 2, 2]
     },
 ]
 
@@ -24,12 +24,12 @@ const mockDataTeacher = [
             {
                 subjectName: "biologiq",
                 subjectId: 1,
-                marks: [1,2,3,4,5]
+                marks: [1, 2, 3, 4, 5]
             },
             {
                 subjectName: "matematika",
                 subjectId: 2,
-                marks: [2,2,2,2,2,2,2,2]
+                marks: [2, 2, 2, 2, 2, 2, 2, 2]
             },
         ]
     },
@@ -39,12 +39,12 @@ const mockDataTeacher = [
             {
                 subjectName: "biologiq",
                 subjectId: 1,
-                marks: [1,2,3,4,5]
+                marks: [1, 2, 3, 4, 5]
             },
             {
                 subjectName: "matematika",
                 subjectId: 2,
-                marks: [2,2,2,2,2,2,2,2]
+                marks: [2, 2, 2, 2, 2, 2, 2, 2]
             },
         ]
     }
@@ -53,7 +53,7 @@ const mockDataTeacher = [
 
 
 getGradesByStudent = async (request, response) => {
-    try{
+    try {
         const id = request.body?.id;
 
         if (!id) {
@@ -64,14 +64,14 @@ getGradesByStudent = async (request, response) => {
 
         return response.status(200).json(mockDataStudent)
     }
-    catch(err){
+    catch (err) {
         console.error(err.message)
         response.status(500).send(err.message)
     }
 }
 
 getGradesByTeacher = async (request, response) => {
-    try{
+    try {
         const id = request.body?.id;
 
         if (!id) {
@@ -83,7 +83,7 @@ getGradesByTeacher = async (request, response) => {
 
         return response.status(200).json(mockDataTeacher)
     }
-    catch(err){
+    catch (err) {
         console.error(err.message)
         response.status(500).send(err.message)
     }
@@ -91,7 +91,7 @@ getGradesByTeacher = async (request, response) => {
 }
 
 getGradesByParent = async (request, response) => {
-    try{
+    try {
         const id = request.body?.id;
 
         if (!id) {
@@ -103,7 +103,7 @@ getGradesByParent = async (request, response) => {
 
         return response.status(200).json(mockDataTeacher)
     }
-    catch(err){
+    catch (err) {
         console.error(err.message)
         response.status(500).send(err.message)
     }
@@ -112,23 +112,23 @@ getGradesByParent = async (request, response) => {
 
 
 addStudentsToGrade = async (request, response) => {
-    try{
+    try {
 
 
         const students = request.body?.students;
-        if(!students){
+        if (!students) {
             return response.status(500).send(`Students array not provided`);
         }
 
-        if(!Array.isArray(students)){
+        if (!Array.isArray(students)) {
             return response.status(500).send(`Students data of wrong type`);
         }
 
-        if(students.length < 1){
+        if (students.length < 1) {
             return response.status(200).send("Data is empty. No students added")
         }
 
-        for(let student of students){
+        for (let student of students) {
             await pool.query(
                 'insert into student (student_id, grade_id, grade_division_id) VALUES ($1, $2, $3)',
                 [student.student_id, student.grade_id, student.grade_division_id]
@@ -137,7 +137,7 @@ addStudentsToGrade = async (request, response) => {
 
         return response.status(200).send("Added successfully!")
     }
-    catch(err){
+    catch (err) {
         console.error(err.message)
         response.status(500).send(err.message)
     }
@@ -146,22 +146,22 @@ addStudentsToGrade = async (request, response) => {
 
 
 addSubjectsToGrade = async (request, response) => {
-    try{
+    try {
         const subjects = request.body?.subjects;
-        
-        if(!subjects){
+
+        if (!subjects) {
             return response.status(500).send(`Subjects array not provided`);
         }
 
-        if(!Array.isArray(subjects)){
+        if (!Array.isArray(subjects)) {
             return response.status(500).send(`Subjects data of wrong type`);
         }
 
-        if(subjects.length < 1){
+        if (subjects.length < 1) {
             return response.status(200).send("Data is empty. No subjects added")
         }
 
-        for(let subject of subjects){
+        for (let subject of subjects) {
             await pool.query(
                 'insert into  grades_subjects (grade_id, subject_id) VALUES ($1, $2)',
                 [subject.grade_id, subject.subject_name]
@@ -170,7 +170,7 @@ addSubjectsToGrade = async (request, response) => {
 
         return response.status(200).send("Added successfully!")
     }
-    catch(err){
+    catch (err) {
         console.error(err.message)
         response.status(500).send(err.message)
     }
@@ -179,33 +179,34 @@ addSubjectsToGrade = async (request, response) => {
 
 
 getStudentsWithGradeAndDivison = async (request, response) => {
-    try{
+    try {
+
         let { rows } = await pool.query(gradesQueries.getStudentsWithGradeAndDivisonQuery)
 
         return response.status(200).json(rows)
     }
-    catch(err){
+    catch (err) {
         console.error(err.message)
         response.status(500).send(err.message)
     }
 }
 
 getAllSubjects = async (request, response) => {
-    try{
+    try {
         let { rows } = await pool.query('select * from grades_subjects')
 
         return response.status(200).json(rows)
     }
-    catch(err){
+    catch (err) {
         console.error(err.message)
         response.status(500).send(err.message)
     }
 }
 
-module.exports = { 
+module.exports = {
     getGradesByStudent,
     getGradesByTeacher,
-    getGradesByParent, 
+    getGradesByParent,
     addStudentsToGrade,
     addSubjectsToGrade,
     getStudentsWithGradeAndDivison,

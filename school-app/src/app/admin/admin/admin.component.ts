@@ -21,6 +21,5 @@ export class AdminComponent {
   sendJson() {
 
     this.adminService.sendJsonData(this.fileInput.nativeElement.files);
-
   }
 }
