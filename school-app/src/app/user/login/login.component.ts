@@ -41,8 +41,8 @@ export class LoginComponent {
       .then(() => {
 
         setTimeout(() => {
-          location.reload();
-        }, 100);
+         location.reload();
+       }, 10);
 
         this.router.navigate(['/home']);
       })

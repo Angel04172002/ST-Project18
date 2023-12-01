@@ -42,7 +42,7 @@ export class AbsenceComponent {
     displayedColumns: string[] = ['firstName', 'lastName', 'absenceReason', 'absenceType'];
     dataSource = ELEMENT_DATA;
 
-    dataSource2: Absence[] = [
+    firstTerm: Absence[] = [
       { id: "1",
         creatorId: "1",
         absenceTypeId: AbsenceTypes.Excused,
@@ -52,6 +52,19 @@ export class AbsenceComponent {
         creatorId: "2",
         absenceTypeId: AbsenceTypes.Unexcused,
         absenceReasonId: AbsenceExcuseReason.MedicalReasons
+      }
+    ];
+
+    secondTerm: Absence[] = [
+      { id: "1",
+        creatorId: "1",
+        absenceTypeId: AbsenceTypes.Unexcused,
+        absenceReasonId: AbsenceExcuseReason.MedicalReasons
+      },
+      { id: "2",
+        creatorId: "2",
+        absenceTypeId: AbsenceTypes.Unexcused,
+        absenceReasonId: AbsenceExcuseReason.FamilyReasons
       }
     ];
     displayedColumns2: string[] = ['id', 'absenceReasonId', 'absenceTypeId'];

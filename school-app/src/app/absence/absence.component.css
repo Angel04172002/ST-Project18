@@ -23,4 +23,12 @@ h2 {
     float: right;
 }
 
+.form-options{
+    display: flex;
+}
+
+.subject{
+    margin-right: 10px;
+}
+
 
