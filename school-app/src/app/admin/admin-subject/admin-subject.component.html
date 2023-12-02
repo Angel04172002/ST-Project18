@@ -1,1 +1,33 @@
-<p>admin-subject works!</p>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="admin-subject.component.css">
+</head>
+<body>
+    <h2>Избор на предмет</h2>
+    <form id="addSubjectForm">
+        <label for="subjectSelect">Изберете предмет:</label>
+        <select id="subjectSelect" name="subject">
+            <option value="math">Математика</option>
+            <option value="english">Английски език</option>
+        </select>
+
+        <label for="classSelect">Изберете клас:</label>
+        <select id="classSelect" name="class">
+            <option value="1A">1A</option>
+            <option value="1B">1B</option>
+
+        </select>
+
+        <label for="additionalInfo">Допълнителна информация:</label>
+        <textarea id="additionalInfo" name="additionalInfo" rows="4"></textarea>
+
+        <button type="button" onclick="addSubject()">Добави предмет</button>
+    </form>
+
+
+    <script src="admin-acc.html"></script>
+</body>
+</html>
