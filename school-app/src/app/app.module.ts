@@ -26,6 +26,8 @@ import { HomeComponent } from './pages/home/home.component';
 import { ChatModule } from './pages/chat/chat.module';
 import { StudentComponent } from './user/student/student.component';
 import { AdminModule } from './admin/admin.module';
+import {MatDialogModule} from "@angular/material/dialog";
+import { FormsModule }   from '@angular/forms';
 
 
 @NgModule({
@@ -50,7 +52,9 @@ import { AdminModule } from './admin/admin.module';
     AbsenceComponent,
     NoteComponent,
     AdminModule,
-    UserModule
+    UserModule,
+    MatDialogModule,
+    FormsModule
   ],
   providers: [],
   bootstrap: [AppComponent]

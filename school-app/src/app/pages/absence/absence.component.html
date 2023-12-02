@@ -38,7 +38,7 @@
         <ng-container matColumnDef="absenceType">
             <th mat-header-cell *matHeaderCellDef> Извинено </th>
             <td mat-cell *matCellDef="let element">
-                <mat-checkbox class="excusedCheckbox" [checked]="element.absenceType === 'Извинено'">
+                <mat-checkbox #excusedCheckbox [checked]="element.absenceType === 'Извинено'">
                 </mat-checkbox>
             </td>
         </ng-container>
@@ -49,7 +49,8 @@
         </ng-container>
 
         <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-        <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+        <tr mat-row *matRowDef="let row; columns: displayedColumns;"
+            [ngClass]="{'highlight': selectedRowIndex == row.id}" (click)="highlight(row)"></tr>
     </table>
 
     <button class="button-add-row" mat-raised-button (click)="addRow()">
@@ -89,6 +90,10 @@
     </div>
 
     <ng-container [ngSwitch]="term.value">
+        <div *ngSwitchDefault>
+            <h1>Моля изберете предмет и срок...</h1>
+        </div>
+
         <table mat-table [dataSource]="firstTerm" class="mat-elevation-z8" *ngSwitchCase="'first'">
             <ng-container matColumnDef="id">
                 <th mat-header-cell *matHeaderCellDef> </th>
@@ -103,13 +108,15 @@
             <ng-container matColumnDef="absenceTypeId">
                 <th mat-header-cell *matHeaderCellDef> Извинено </th>
                 <td mat-cell *matCellDef="let element">
-                    <mat-checkbox class="excusedCheckbox" [checked]="element.absenceTypeId === 'Извинено'">
+                    <mat-checkbox #excusedCheckbox [checked]="element.absenceTypeId === 'Извинено'"
+                        (click)="$event.preventDefault()">
                     </mat-checkbox>
                 </td>
             </ng-container>
 
             <tr mat-header-row *matHeaderRowDef="displayedColumns2"></tr>
-            <tr mat-row *matRowDef="let row; columns: displayedColumns2;"></tr>
+            <tr mat-row *matRowDef="let row; columns: displayedColumns2;"
+                [ngClass]="{'highlight': selectedRowIndex == row.id}" (click)="highlight(row)"></tr>
         </table>
 
         <table mat-table [dataSource]="secondTerm" class="mat-elevation-z8" *ngSwitchCase="'second'">
@@ -126,13 +133,15 @@
             <ng-container matColumnDef="absenceTypeId">
                 <th mat-header-cell *matHeaderCellDef> Извинено </th>
                 <td mat-cell *matCellDef="let element">
-                    <mat-checkbox class="excusedCheckbox" [checked]="element.absenceTypeId === 'Извинено'">
+                    <mat-checkbox #excusedCheckbox [checked]="element.absenceTypeId === 'Извинено'"
+                        (click)="$event.preventDefault()">
                     </mat-checkbox>
                 </td>
             </ng-container>
 
             <tr mat-header-row *matHeaderRowDef="displayedColumns2"></tr>
-            <tr mat-row *matRowDef="let row; columns: displayedColumns2;"></tr>
+            <tr mat-row *matRowDef="let row; columns: displayedColumns2;"
+                [ngClass]="{'highlight': selectedRowIndex == row.id}" (click)="highlight(row)"></tr>
         </table>
 
     </ng-container>
@@ -141,64 +150,89 @@
 
 
 <div *ngIf="userType() === 'Parent'">
+    <button class="button-excuse" mat-raised-button (click)="openDialog()"
+        *ngIf="selectedRowIndex != -1 && excused === false">
+        Извини отсъствие
+    </button>
+
+    <ng-template #callDialog>
+        <form id="excuseForm" #excuseForm="ngForm" (ngSubmit)="onSend(excuseForm)">
+            <h2 matDialogTitle style="text-align: center;">Форма за извинение от родител</h2>
+            <mat-form-field>
+                <mat-label>Изберете причина за отсъствието:</mat-label>
+                <mat-select #excuseReason>
+                    <mat-option value="medicalReasons">Медицински причини</mat-option>
+                    <mat-option value="familyReasons">Семейни причини</mat-option>
+                </mat-select>
+            </mat-form-field>
+            <mat-label>Прикачете извинителни бележки тук (снимка):</mat-label>
+            <div class="file-upload">
+                <label for="notes" class="file-upload-label">Прикачи<mat-icon matPrefix>attachment</mat-icon></label>
+                <input type="file" id="notes" name="notes" accept="image/*">
+            </div>
+            <mat-dialog-actions class="formActions">
+                <button mat-button matDialogClose="no">Откажи</button>
+                <button type="submit" mat-button matDialogClose="yes">Изпрати</button>
+            </mat-dialog-actions>
+        </form>
+    </ng-template>
+
+    <!-- <div>
+        <h2>Форма за извинение от родител</h2>
+        <form id="apologyForm">
+
+            <div>
+
+
+                <label for="classSelect">Изберете клас:</label>
+                <select id="classSelect" name="class">
+                    <option value="1A">1A</option>
+                    <option value="1B">1B</option>
+                </select>
+
+            </div>
+
+
+            <div>
 
 
 
+                <label for="studentSelect">Изберете ученик:</label>
+                <select id="studentSelect" name="student">
+                    <option value="student">Георги Иванов</option>
+                    <option value="student">Иван Иванов</option>
+                </select>
 
-    <h2>Форма за извинение от родител</h2>
-    <form id="apologyForm">
+            </div>
 
-        <div>
-
-
-            <label for="classSelect">Изберете клас:</label>
-            <select id="classSelect" name="class">
-                <option value="1A">1A</option>
-                <option value="1B">1B</option>
-            </select>
-
-        </div>
-
-
-        <div>
+            <div>
 
 
 
-            <label for="studentSelect">Изберете ученик:</label>
-            <select id="studentSelect" name="student">
-                <option value="student">Георги Иванов</option>
-                <option value="student">Иван Иванов</option>
-            </select>
+                <label for="reasonSelect">Изберете причина за отсъствието:</label>
+                <select id="reasonSelect" name="reason">
+                    <option value="болен">Болен</option>
+                    <option value="лични дела">Лични дела</option>
+                    <option value="учебна дейност">Учебна дейност</option>
+                </select>
 
-        </div>
+            </div>
 
-        <div>
-
-
-
-            <label for="reasonSelect">Изберете причина за отсъствието:</label>
-            <select id="reasonSelect" name="reason">
-                <option value="болен">Болен</option>
-                <option value="лични дела">Лични дела</option>
-                <option value="учебна дейност">Учебна дейност</option>
-            </select>
-
-        </div>
-
-        <div>
+            <div>
 
 
-            <label for="notes">Прикачете извинителни бележки (снимка):</label>
-            <input type="file" id="notes" name="notes" accept="image/*">
-        </div>
+                <label for="notes">Прикачете извинителни бележки (снимка):</label>
+                <input type="file" id="notes" name="notes" accept="image/*">
+            </div>
 
 
-        <div>
+            <div>
 
 
-            <button type="button" onclick="submitForm()">Запиши</button>
+                <button type="button" onclick="submitForm()">Запиши</button>
 
-        </div>
-    </form>
+            </div>
+        </form>
+    </div> -->
 
 </div>

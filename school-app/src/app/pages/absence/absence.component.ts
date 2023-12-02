@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, TemplateRef, ViewChild } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { UserService } from 'src/app/user/user.service';
 import {MatTableModule} from '@angular/material/table';
@@ -11,6 +11,9 @@ import {MatButtonModule} from '@angular/material/button';
 import { Absence } from '../../types/Absence';
 import { AbsenceTypes } from '../../types/AbsenceTypes';
 import { AbsenceExcuseReason } from '../../types/AbsenceExcuseReason';
+import { MatDialog, MatDialogConfig, MatDialogModule} from '@angular/material/dialog';
+import { FormsModule, NgForm, ReactiveFormsModule }   from '@angular/forms';
+import { MatIconModule } from '@angular/material/icon';
 
 export interface Student {
   firstName: string | undefined,
@@ -34,8 +37,14 @@ const ELEMENT_DATA: Student[] = [
     MatSelectModule,
     MatInputModule,
     MatFormFieldModule,
-    MatButtonModule
-  ],
+    MatButtonModule,
+    MatFormFieldModule,
+    MatInputModule,
+    FormsModule,
+    ReactiveFormsModule,
+    MatDialogModule,
+    MatIconModule
+  ],          
   standalone: true
 })
 export class AbsenceComponent {
@@ -79,11 +88,44 @@ export class AbsenceComponent {
       this.dataSource = [...this.dataSource, newRow]
     }
 
+    selectedRowIndex = -1;
+    excused: boolean = false;
+
+    highlight(row: Absence) {
+      this.selectedRowIndex = Number(row.id);
+
+      if(row.absenceTypeId == AbsenceTypes.Excused){
+        this.excused = true;
+        return true;
+      }else{
+        this.excused = false;
+        return false;
+      }
+    }
+
     constructor(
-      private userService: UserService
+      private userService: UserService,
+      private dialog: MatDialog
       ) { }
 
     userType(){
       return this.userService.user?.type;
     }
+
+    @ViewChild('callDialog') callDialog!: TemplateRef<any>; 
+    dialogRef: any;
+
+    openDialog() {
+
+      const dialogConfig = new MatDialogConfig();
+      dialogConfig.autoFocus = true;
+
+      this.dialogRef = this.dialog.open(this.callDialog, dialogConfig);
+  }
+
+  onSend(form: NgForm){
+    let data = form.value;
+    console.log(data, 'form submitted');
+    this.dialogRef.close();
+  }
 }

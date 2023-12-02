@@ -10,7 +10,7 @@
                 <mat-option value="ten">10</mat-option>
                 <mat-option value="eleven">11</mat-option>
                 <mat-option value="twelve">12</mat-option>
-            </mat-select>   
+            </mat-select>
         </mat-form-field>
 
         <mat-form-field>
@@ -61,35 +61,67 @@
 <div class="studentview" *ngIf="userType() === 'Student' || userType() === 'Parent'">
     <h1 class="title">Моите забележки</h1>
 
-    <div class="subject">
-        <mat-form-field>
-            <mat-label>Избери предмет:</mat-label>
-            <mat-select>
-                <mat-option value="bg">БЕЛ</mat-option>
-                <mat-option value="math">Математика</mat-option>
-                <mat-option value="en">Английски език</mat-option>
-                <mat-option value="bio">Биология</mat-option>
-                <mat-option value="geo">География</mat-option>
-            </mat-select>
-        </mat-form-field>
+    <div class="form-options">
+        <div class="subject">
+            <mat-form-field>
+                <mat-label>Избери предмет:</mat-label>
+                <mat-select #subject>
+                    <mat-option value="bg">БЕЛ</mat-option>
+                    <mat-option value="math">Математика</mat-option>
+                    <mat-option value="en">Английски език</mat-option>
+                    <mat-option value="bio">Биология</mat-option>
+                    <mat-option value="geo">География</mat-option>
+                </mat-select>
+            </mat-form-field>
+        </div>
+
+        <div class="term">
+            <mat-form-field>
+                <mat-label>Избери срок:</mat-label>
+                <mat-select #term>
+                    <mat-option value="first">Първи срок</mat-option>
+                    <mat-option value="second">Втори срок</mat-option>
+                </mat-select>
+            </mat-form-field>
+        </div>
     </div>
 
-    <table mat-table [dataSource]="dataSource2" class="mat-elevation-z8">
+    <ng-container [ngSwitch]="term.value">
+        <div *ngSwitchDefault>
+            <h1>Моля изберете предмет и срок...</h1>
+        </div>
 
-        <ng-container matColumnDef="id">
-            <th mat-header-cell *matHeaderCellDef> </th>
-            <td mat-cell *matCellDef="let element"> {{element.id}} </td>
-        </ng-container>
+        <table mat-table [dataSource]="firstTerm" class="mat-elevation-z8" *ngSwitchCase="'first'">
 
-        <ng-container matColumnDef="note">
-            <th mat-header-cell *matHeaderCellDef> Забележка </th>
-            <td mat-cell *matCellDef="let element"> {{element.note}} </td>
-        </ng-container>
+            <ng-container matColumnDef="id">
+                <th mat-header-cell *matHeaderCellDef> </th>
+                <td mat-cell *matCellDef="let element"> {{element.id}} </td>
+            </ng-container>
 
-        <tr mat-header-row *matHeaderRowDef="displayedColumns2"></tr>
-        <tr mat-row *matRowDef="let row; columns: displayedColumns2;"></tr>
-    </table>
+            <ng-container matColumnDef="note">
+                <th mat-header-cell *matHeaderCellDef> Забележка </th>
+                <td mat-cell *matCellDef="let element"> {{element.note}} </td>
+            </ng-container>
+
+            <tr mat-header-row *matHeaderRowDef="displayedColumns2"></tr>
+            <tr mat-row *matRowDef="let row; columns: displayedColumns2;"></tr>
+        </table>
+
+        <table mat-table [dataSource]="secondTerm" class="mat-elevation-z8" *ngSwitchCase="'second'">
+
+            <ng-container matColumnDef="id">
+                <th mat-header-cell *matHeaderCellDef> </th>
+                <td mat-cell *matCellDef="let element"> {{element.id}} </td>
+            </ng-container>
+
+            <ng-container matColumnDef="note">
+                <th mat-header-cell *matHeaderCellDef> Забележка </th>
+                <td mat-cell *matCellDef="let element"> {{element.note}} </td>
+            </ng-container>
+
+            <tr mat-header-row *matHeaderRowDef="displayedColumns2"></tr>
+            <tr mat-row *matRowDef="let row; columns: displayedColumns2;"></tr>
+        </table>
+
+    </ng-container>
 </div>
-          
-  
-  

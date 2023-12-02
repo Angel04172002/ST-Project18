@@ -39,7 +39,7 @@ export class NoteComponent {
   displayedColumns: string[] = ['firstName', 'lastName', 'note', 'add'];
   dataSource = ELEMENT_DATA;
 
-  dataSource2: Note[] = [
+  firstTerm: Note[] = [
     { id: "1",
       creatorId: "1",
       note: 'Зaбележка1.........'
@@ -47,6 +47,17 @@ export class NoteComponent {
     { id: "2",
       creatorId: "2",
       note: 'Зaбележка2............'
+    }
+  ];
+
+  secondTerm: Note[] = [
+    { id: "1",
+      creatorId: "1",
+      note: 'Зaбележка3.........'
+    },
+    { id: "2",
+      creatorId: "2",
+      note: 'Зaбележка4............'
     }
   ];
   displayedColumns2: string[] = ['id', 'note'];
