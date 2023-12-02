@@ -1,21 +1,7 @@
-import { ComponentFixture, TestBed } from '@angular/core/testing';
-
-import { AdminTeacherComponent } from './admin-teacher.component';
-
-describe('AdminTeacherComponent', () => {
-  let component: AdminTeacherComponent;
-  let fixture: ComponentFixture<AdminTeacherComponent>;
-
-  beforeEach(() => {
-    TestBed.configureTestingModule({
-      declarations: [AdminTeacherComponent]
-    });
-    fixture = TestBed.createComponent(AdminTeacherComponent);
-    component = fixture.componentInstance;
-    fixture.detectChanges();
-  });
-
-  it('should create', () => {
-    expect(component).toBeTruthy();
-  });
-});
+function showTime() {
+	document.getElementById('currentTime').innerHTML = new Date().toUTCString();
+}
+showTime();
+setInterval(function () {
+	showTime();
+}, 1000);
