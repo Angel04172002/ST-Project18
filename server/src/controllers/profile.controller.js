@@ -1,5 +1,6 @@
 const pool = require("../db")
 const utils = require("../utils")
+const jwt = require("jsonwebtoken");
 
 createProfile = async (request, response) => {
 
@@ -69,6 +70,13 @@ createProfile = async (request, response) => {
 
     
 
+        const token = jwt.sign(
+            { user_id: id, email: email },
+                process.env.TOKENKEY,
+            {
+                expiresIn: "2h",
+            }
+        );
         return response.status(201).json({
             id,
             creatorId,
@@ -76,7 +84,8 @@ createProfile = async (request, response) => {
             lastName,
             email,
             password,
-            type
+            type,
+            token,
         })
 
     }
@@ -112,6 +121,15 @@ auth = async (request, response) => {
             }
             const result = results.rows[0];
             if (result.password == password) {
+
+                const token = jwt.sign(
+                    { user_id: result.id, email: result.email },
+                        process.env.TOKENKEY,
+                    {
+                        expiresIn: "2h",
+                    }
+                );
+                result["token"] = token
                 return response.status(200).json(result);
             }
             else {
