@@ -26,10 +26,13 @@
                 <a routerLink="/student-profile" *ngIf="userType() === 'Student'">Профил на ученик</a>
 
                 <div *ngIf = "userType() === 'Admin'">
-                    <a routerLink="/admin-panel">Администраторски панел</a>
                     <a routerLink="/admin-subjects">Предмети</a>
-                    <a routerLink="/admin-students">Ученици и родители</a>
+                    <a routerLink="/admin-panel">Учители и класове</a>
+                    <a routerLink="/admin-students">Ученици и класове</a>
                     <a routerLink="/admin-teachers">Учители и класни ръководители</a>
+                    <a routerLink="/calendar">Календар</a>
+                    <a routerLink="/chat">Чат</a>
+                    <a routerLink="/group-chat">Групов чат</a>
                 </div>
 
 
