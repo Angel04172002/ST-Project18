@@ -13,9 +13,13 @@ import { Injectable } from "@angular/core";
 export class HttpService {
   private readonly url = "http://localhost:3000";
 
+  public jwtToken: string = "";
+
   constructor(private httpClient: HttpClient) {}
 
   private post(endpoint: string, body: any) {
+    let headers: HttpHeaders = new HttpHeaders();
+    headers.append("x-access-token", this.jwtToken ? this.jwtToken : "");
     return this.httpClient.post(`${this.url}${endpoint}`, body);
   }
 
