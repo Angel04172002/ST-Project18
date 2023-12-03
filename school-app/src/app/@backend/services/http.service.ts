@@ -20,7 +20,9 @@ export class HttpService {
   private post(endpoint: string, body: any) {
     let headers: HttpHeaders = new HttpHeaders();
     headers.append("x-access-token", this.jwtToken ? this.jwtToken : "");
-    return this.httpClient.post(`${this.url}${endpoint}`, body);
+    return this.httpClient.post(`${this.url}${endpoint}`, body, {
+      headers: headers,
+    });
   }
 
   /**
