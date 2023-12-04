@@ -21,7 +21,6 @@ export class UserService {
   });
 
 
-
   user: Profile | undefined;
 
   constructor(private http: HttpClient, private api: HttpService) {
@@ -29,6 +28,7 @@ export class UserService {
     const lstUser = localStorage.getItem('user') || undefined;
 
     if (lstUser) {
+      console.log(lstUser);
       this.user = JSON.parse(lstUser);
     }
   }

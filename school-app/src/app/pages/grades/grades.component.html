@@ -1,4 +1,3 @@
-
 <!-- За учител-->
 <!DOCTYPE html>
 <html lang="en">
@@ -13,7 +12,7 @@
 
 
 
-    <table class="main-table" *ngIf = "userType() === 'Student' || userType() === 'Parent'">
+    <table class="main-table" *ngIf="userType() === 'Student' || userType() === 'Parent'">
 
 
         <thead>
@@ -55,7 +54,7 @@
 
                             <th class="flex-item-2">
 
-                                <p class="term">Втори срок</p>
+                                <p class="term second">Втори срок</p>
 
                                 <table class="first-term">
 
@@ -101,21 +100,24 @@
 
 
 
-        <tbody class="grades-row">
+
+
+
+
+
+        <tbody class="grades-row" *ngFor="let subject of grades">
 
             <tr>
                 <th class="subjects">
 
                     <div class="subject">
 
-                        <p>Математика</p>
-
-
+                        <p>{{subject.subjectName}}</p>
 
                     </div>
 
 
-                    <div class="subject">
+                    <!-- <div class="subject">
 
                         <p> Mузика </p>
 
@@ -129,9 +131,7 @@
                         <p>ИТ </p>
 
 
-
-
-                    </div>
+                    </div> -->
 
 
                 </th>
@@ -147,54 +147,28 @@
                             <th class="flex-item-1 flex-grades">
                                 <p class="term"></p>
 
+
+
                                 <table class="first-term">
 
 
+
                                     <tr class="term-grades-subject">
 
 
-                                        
-                                        <td><span class="term-grade excellent">6</span></td>
-                                        <td><span class="term-grade very-good">5</span></td>
-                                        <td><span class="term-grade good">4</span></td>
-                                        <td><span class="term-grade very-good">5</span></td>
+                                        <td *ngFor="let mark of subject['term-1-marks']">
+                                            <span class="term-grade {{gradesDictionary[mark]}}">{{mark}}</span>
+                                        </td>
 
-                                        <td class="term-final"><span class="term-grade very-good">5</span></td>
-
-                       
-                                   
-
+                                        <td class="term-final">
+                                            <span class="term-grade {{gradesDictionary[subject['term-1-final']]}}">
+                                                {{subject['term-1-final']}}
+                                            </span>
+                                        </td>
 
                                     </tr>
-                                    <tr class="term-grades-subject">
 
 
-             
-                                        <td><span class="term-grade excellent">6</span></td>
-                                        <td><span class="term-grade very-good">5</span></td>
-                                        <td><span class="term-grade good">4</span></td>
-                                        <td><span class="term-grade very-good">5</span></td>
-
-                                        <td class="term-final"><span class="term-grade very-good">5</span></td>
-
-                              
-
-
-                                    </tr>
-                                    <tr class="term-grades-subject">
-             
-                                        <td><span class="term-grade excellent">6</span></td>
-                                        <td><span class="term-grade very-good">5</span></td>
-                                        <td><span class="term-grade good">4</span></td>
-                                        <td><span class="term-grade very-good">5</span></td>
-                                
-
-                                        <td class="term-final"><span class="term-grade very-good">5</span></td>
-
-
-
-
-                                    </tr>
 
                                 </table>
                             </th>
@@ -210,85 +184,65 @@
                                     <tr class="term-grades-subject">
 
 
-                                        
-                                        <td><span class="term-grade excellent">6</span></td>
-                                        <td><span class="term-grade very-good">5</span></td>
-                                        <td><span class="term-grade good">4</span></td>
-                                        <td><span class="term-grade very-good">5</span></td>
 
+                                        <td *ngFor="let mark of subject['term-2-marks']">
+                                            <span class="term-grade {{gradesDictionary[mark]}}">{{mark}}</span>
+                                        </td>
 
-                                        <td class="term-final"><span class="term-grade very-good">5</span></td>
-                       
-                                   
-
-
-                                    </tr>
-                                    <tr class="term-grades-subject">
-
-
-             
-                                        <td><span class="term-grade excellent">6</span></td>
-                                        <td><span class="term-grade very-good">5</span></td>
-                                        <td><span class="term-grade good">4</span></td>
-                                        <td><span class="term-grade very-good">5</span></td>
-
-                                        <td class="term-final"><span class="term-grade very-good">5</span></td>
-
-                              
-
-
-                                    </tr>
-                                    <tr class="term-grades-subject">
-             
-                                        <td><span class="term-grade excellent">6</span></td>
-                                        <td><span class="term-grade very-good">5</span></td>
-                                        <td><span class="term-grade good">4</span></td>
-                                        <td><span class="term-grade very-good">5</span></td>
-                                
-                                        <td class="term-final"><span class="term-grade very-good">5</span></td>
+                                        <td class="term-final">
+                                            <span class="term-grade {{gradesDictionary[subject['term-2-final']]}}">
+                                                {{subject['term-2-final']}}
+                                            </span>
+                                        </td>
 
 
 
                                     </tr>
+
+
 
                                 </table>
                             </th>
 
                             <th class="flex-item-3 flex-grades">
-                                <tr class="final-grade">
-                                    <td><span class= "term-grade excellent">6</span></td>
-                                </tr>
-                            </th>
 
+                        <tr class="final-grade">
+                            <td>
+                                <span class="term-grade {{gradesDictionary[subject['year-mark']]}}">{{subject['year-mark']}}
+                                </span>
+                            </td>
                         </tr>
-
-
-
-                    </thead>
-
-
-                    <tbody>
-
-                    </tbody>
-
-                </table>
+                        </th>
 
             </tr>
 
 
+
+            </thead>
+
+
+        <tbody>
+
         </tbody>
 
+    </table>
+
+    </tr>
+
+
+    </tbody>
 
 
 
-        <script src="grades.js"></script>
+
+    <script src="grades.js"></script>
 
 
 
     </table>
 
 
-    <div class="container" *ngIf = "userType() == 'Teacher' || userType() == 'Grade teacher'">
+    <div class="container" *ngIf="userType() == 'Teacher' || userType() == 'Grade teacher'">
         <h1>Въвеждане на оценки</h1>
         <form id="grade-form">
             <label for="student">Име на ученика:</label>

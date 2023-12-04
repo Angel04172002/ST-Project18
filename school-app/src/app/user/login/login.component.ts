@@ -46,6 +46,7 @@ export class LoginComponent {
         this.router.navigate(['/home']);
       })
       .catch(err => {
+        console.error(err);
         alert(err.error);
       });
 

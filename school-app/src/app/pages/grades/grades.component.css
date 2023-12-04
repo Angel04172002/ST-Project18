@@ -35,6 +35,7 @@ td.inner-cell {
     display: block;
     position: relative;
     right: 1em;
+    top: 0.6em;
 }
 
 
@@ -63,9 +64,11 @@ td.inner-cell {
     margin: 3em 0;
 }
 
+
+
 .term-grade {
     padding: 0.2em;
-  
+    display: flex;
 }
 
 .subject-marks {
@@ -111,7 +114,7 @@ td.inner-cell {
 .term-final {
     display: block;
     position: relative;
-    left: 5.5em;
+    left: 10em;
 }
 
 
@@ -147,3 +150,4 @@ td.inner-cell {
 .term-grades-subject td {
     padding: 0.2em;
 }
+
