@@ -1,68 +1,44 @@
-<!DOCTYPE html>
-<html lang="bg">
-<head>
-  <meta charset="UTF-8">
-  <title>Календар</title>
-  <link rel="stylesheet" href="calendar.component.css">
-  <script src="./calendar.js" defer></script>
-</head>
-<body>
-  <div class="container">
-    <div class="calendar">
-      <table>
-        <thead>
-          <tr>
-            <th>Дата</th>
-            <th>Наименование</th>
-            <th>Час</th>
-            <th>Действие</th>
-          </tr>
-        </thead>
-        <tbody>
-        </tbody>
-      </table>
-    </div>
+<div class="container">
+
+
+	<div class="calendar">
+		<table>
+			<thead>
+				<tr>
+					<th>Дата</th>
+					<th>Наименование</th>
+					<th>Час</th>
+					<th>Действие</th>
+				</tr>
+			</thead>
+			<tbody>
+			</tbody>
+		</table>
+	</div>
+
+
+
+	<!-- 
     <div class="add-event">
       <input type="text" id="event-name" placeholder="Наименование">
       <input type="date" id="event-date" placeholder="Дата">
       <input type="time" id="event-time" placeholder="Час">
       <button id="add-event-button" onclick="addEvent()">Добави събитие</button>
-    </div>
-  </div>
- 
-</body>
-</html>
+    </div> -->
 
-
-<!-- Календар  изглед-->
-<!DOCTYPE html>
-<html lang="en" dir="ltr">
-
-<head>
-	<meta charset="utf-8">
-	<title>Calendar</title>
-	<meta name="viewport"
-		content="width=device-width, initial-scale=1.0">
-	<link rel="stylesheet"
-		href="calendar.component.css">
-</head>
-
-<body>
 	<div class="calendar-container">
 		<header class="calendar-header">
 			<p class="calendar-current-date"></p>
 			<div class="calendar-navigation">
-				<span id="calendar-prev"
-					class="material-symbols-rounded">
-                    <!-- стрелки--> 
+				<span id="calendar-prev" class="material-symbols-rounded">
+					<!-- стрелки-->
 				</span>
-				<span id="calendar-next"
-					class="material-symbols-rounded">
-				    <!-- стрелки-->
+				<span id="calendar-next" class="material-symbols-rounded">
+					<!-- стрелки-->
 				</span>
 			</div>
 		</header>
-
+	
 		<div class="calendar-body">
 			<ul class="calendar-weekdays">
 				<li>Sun</li>
@@ -76,6 +52,11 @@
 			<ul class="calendar-dates"></ul>
 		</div>
 	</div>
-    <script src="calendar.js" defer></script>
-</body>
-</html>
+
+</div>
+
+
+
+<!-- Календар  изглед-->
+
+
