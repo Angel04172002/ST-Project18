@@ -105,10 +105,10 @@
 
 
 
-        <tbody class="grades-row" *ngFor="let subject of grades">
+        <tbody class="grades-row">
 
             <tr>
-                <th class="subjects">
+                <th class="subjects" *ngFor="let subject of grades">
 
                     <div class="subject">
 
@@ -149,7 +149,7 @@
 
 
 
-                                <table class="first-term">
+                                <table class="first-term" *ngFor="let subject of grades">
 
 
 
@@ -178,7 +178,7 @@
 
                                 <p class="term"></p>
 
-                                <table class="second-term">
+                                <table class="second-term" *ngFor="let subject of grades">
 
 
                                     <tr class="term-grades-subject">
@@ -206,7 +206,7 @@
 
                             <th class="flex-item-3 flex-grades">
 
-                        <tr class="final-grade">
+                        <tr class="final-grade" *ngFor="let subject of grades">
                             <td>
                                 <span class="term-grade {{gradesDictionary[subject['year-mark']]}}">{{subject['year-mark']}}
                                 </span>
@@ -227,7 +227,7 @@
 
     </table>
 
-    </tr>
+            </tr>
 
 
     </tbody>
@@ -235,11 +235,14 @@
 
 
 
-    <script src="grades.js"></script>
+
 
 
 
     </table>
+
+
+    <script src="grades.js"></script>
 
 
     <div class="container" *ngIf="userType() == 'Teacher' || userType() == 'Grade teacher'">
