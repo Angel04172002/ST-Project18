@@ -35,7 +35,6 @@ td.inner-cell {
     display: block;
     position: relative;
     right: 1em;
-    top: 0.6em;
 }
 
 
@@ -68,7 +67,6 @@ td.inner-cell {
 
 .term-grade {
     padding: 0.2em;
-    display: flex;
 }
 
 .subject-marks {
@@ -85,7 +83,7 @@ td.inner-cell {
 .inner-cell-second {
     display: block;
     position: relative;
-    left: 3em;
+    left: 15em;
 }
 
 
@@ -114,13 +112,13 @@ td.inner-cell {
 .term-final {
     display: block;
     position: relative;
-    left: 10em;
 }
 
 
-.final-grade {
+
+.final-grade .term-grade {
     position: relative;
-    right: 1.5em;
+    right: 1em;
     top: 2em;
 }
 
@@ -136,6 +134,11 @@ td.inner-cell {
 }
 
 
+.term {
+    position: relative;
+    right: 3em;
+}
+
 
 .main-table {
     position: relative;
@@ -150,4 +153,5 @@ td.inner-cell {
 .term-grades-subject td {
     padding: 0.2em;
 }
+ 
 
