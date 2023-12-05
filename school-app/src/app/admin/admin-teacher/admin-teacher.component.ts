@@ -18,8 +18,6 @@ export class AdminTeacherComponent {
 
   async createAccount(firstName: string, lastName: string, email: string, password: string, type: string) {
 
-    debugger;
-
     this.userService.register(firstName, lastName, email, password, password, type)
       .then(() => {
         // this.registerForm.reset();

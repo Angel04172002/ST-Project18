@@ -15,7 +15,7 @@ export class HttpService {
 
   public jwtToken: string = "";
 
-  constructor(private httpClient: HttpClient) {}
+  constructor(private httpClient: HttpClient) { }
 
   private post(endpoint: string, body: any) {
     let headers: HttpHeaders = new HttpHeaders();
@@ -48,7 +48,7 @@ export class HttpService {
     lastName: string,
     email: string,
     password: string,
-    confirmPassword : string,
+    confirmPassword: string,
     type: ProfileTypes,
     creatorId?: string
   ): Observable<any> {
@@ -58,7 +58,7 @@ export class HttpService {
       lastName: lastName,
       email: email,
       password: password,
-      confirmPassword : confirmPassword,
+      confirmPassword: confirmPassword,
       type: type,
     });
   }
@@ -149,4 +149,10 @@ export class HttpService {
       subjects: subjects,
     });
   }
+
+
+  public getTeachersWithGradesDivisionsSubjects(): Observable<any> {
+    return this.post("/teacher/get/teacher-grades", {})
+  }
+
 }

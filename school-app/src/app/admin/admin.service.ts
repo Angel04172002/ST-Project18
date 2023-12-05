@@ -1,12 +1,13 @@
 import { Injectable, OnInit } from '@angular/core';
 import { Student } from 'src/app/types/Student';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { ExcelService } from '../../user/excel.service';
+import { ExcelService } from '../user/excel.service';
 import { Profile } from 'src/app/types/Profile';
 import { ProfileTypes } from 'src/app/@backend/enums/profile-types.enum';
 import { log } from 'console';
 import { HttpService } from 'src/app/@backend/services/http.service';
 import { firstValueFrom } from 'rxjs';
+import { Teacher } from '../types/Teacher';
 
 
 const BASE_URL = 'http://localhost:3000';
@@ -20,31 +21,13 @@ export class AdminService implements OnInit {
   urlHeaders = new HttpHeaders({
     'content-type': 'application/json'
   });
-  headers = ['Student id', 'First name', 'Last name', 'Email', 'Grade', 'Grade division'];
 
-  //TODO: Request to server
-  adminData: Student[] = [];
-  // {
-  //   id: "aaaa-bbbb-cccc",
-  //   parentId: 'ccc',
-  //   firstName: "Pesho",
-  //   lastName: "Georgiev",
-  //   email: "pesho.georgiev@abv.bg",
-  //   grade: 5,
-  //   gradeDivision: "B",
-  //   type: ProfileTypes.Student
-  // },
-  // {
-  //   id: "bban-cccc-vvvv",
-  //   parentId: 'ccc',
-  //   firstName: "Misho",
-  //   lastName: "Ivanov",
-  //   email: "misho.ivanov@gmail.com",
-  //   grade: 12,
-  //   gradeDivision: "C",
-  //   type: ProfileTypes.Student
-  // }
+  studentHeaders = ['Student id', 'First name', 'Last name', 'Email', 'Grade', 'Grade division'];
+  teacherHeaders = ['Teacher id', 'First name', 'Last name', 'Email', 'Grade', 'Grade division'];
 
+  adminStudentData: Student[] = [];
+  adminTeacherData: Teacher[] = [];
+ 
   constructor(private httpService: HttpService, private excelService: ExcelService) { }
 
 
@@ -52,8 +35,6 @@ export class AdminService implements OnInit {
 
 
   }
-
-
 
   async generateStudentsAndGrades() {
 
@@ -63,7 +44,7 @@ export class AdminService implements OnInit {
 
     await firstValueFrom(req)
       .then((data) => {
-        this.adminData = data;
+        this.adminStudentData = data;
       })
       .catch(err => {
         throw err;
@@ -71,8 +52,27 @@ export class AdminService implements OnInit {
 
 
 
-    this.excelService.downloadXLSX(this.adminData, this.headers);
+    this.excelService.downloadXLSX(this.adminStudentData, this.studentHeaders);
   }
+
+
+  async generateTeachersAndGrades() {
+
+    const req = this.httpService.getTeachersWithGradesDivisionsSubjects();
+
+    await firstValueFrom(req)
+      .then((data) => {
+        console.log(data);
+        this.adminTeacherData = data;
+      })
+      .catch(err => {
+        throw err;
+      });
+
+    this.excelService.downloadXLSX(this.adminTeacherData, this.teacherHeaders);
+  }
+
+
 
   sendJsonData(files: FileList | null) {
 

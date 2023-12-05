@@ -1,6 +1,6 @@
 import { Component, ViewChild, ElementRef } from '@angular/core';
 import { Student } from 'src/app/types/Student';
-import { AdminService } from './admin.service';
+import { AdminService } from '../admin.service';
 
 @Component({
   selector: 'app-admin',

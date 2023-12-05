@@ -57,7 +57,6 @@ getMarksByTeacher = async (request, response) => {
 }
 
 
-
 getMarksByClassTeacher = async (request, response) => {
     try{
         const teacherId = request.body?.teacherId;

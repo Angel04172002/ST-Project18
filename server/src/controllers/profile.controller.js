@@ -43,8 +43,6 @@ createProfile = async (request, response) => {
         }
 
 
-        console.log(type);
-
         await pool.query(
             'INSERT INTO PROFILE (id, creator_id, first_name, last_name, email, password, type) VALUES ($1, $2, $3, $4, $5, $6, $7) RETURNING *',
             [id, creatorId, firstName, lastName, email, hashedPassword, type]
