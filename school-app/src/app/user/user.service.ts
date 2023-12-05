@@ -56,6 +56,7 @@ export class UserService {
 
   async register(firstName: string, lastName: string, email: string, password: string, confirmPassword: string, type: string) {
 
+
     const user = {
       firstName: firstName,
       lastName: lastName,
@@ -69,7 +70,7 @@ export class UserService {
       profileType = ProfileTypes.Parent;
     } else if (type == 'Teacher') {
       profileType = ProfileTypes.Teacher
-    } else {
+    } else if(type == 'Grade teacher') {
       profileType = ProfileTypes.GradeTeacher;
     }
 

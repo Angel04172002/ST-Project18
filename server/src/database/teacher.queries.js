@@ -4,5 +4,3 @@ const addSubjectsAndGradesQuery = `
     
 
 `
-
-module

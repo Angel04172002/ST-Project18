@@ -82,18 +82,20 @@ export class AdminService implements OnInit {
       this.excelService.readXLSXFile(file)
         .then(async (jsonData) => {
 
+
           console.log(jsonData);
 
           const req = this.httpService.addStudentsToGrade(jsonData)
 
           await firstValueFrom(req)
             .then(() => {
-              alert('Saved successfully');
-            });
+              alert('Успешно запазени промени');
+            })
+            .catch(err => alert(err.message));
 
         })
         .catch((error) => {
-          console.error(error.message);
+          console.error(error.err);
         });
     } else {
       console.error('No file selected.');

@@ -113,8 +113,12 @@ getGradesByParent = async (request, response) => {
 
 addStudentsToGrade = async (request, response) => {
     try {
+       
 
         const students = request.body?.students;
+
+        console.log(students);
+
         if (!students) {
             return response.status(500).send(`Students array not provided`);
         }
@@ -128,13 +132,16 @@ addStudentsToGrade = async (request, response) => {
         }
 
         for (let student of students) {
+
+            console.log(student);
+
             await pool.query(
-                'insert into student (id, grade_id, grade_division_id) VALUES ($1, $2, $3)',
-                [student.studentId, student.grade, student.gradeDivision]
+                'INSERT INTO STUDENT (id, grade_id, grade_division_id, parent_id) VALUES ($1, $2, $3, $4) ON CONFLICT (id) DO UPDATE SET id = $1, grade_id = $2, grade_division_id = $3, parent_id = $4 WHERE student.id = $1',
+                [student?.studentId, Number(student?.grade), student?.gradeDivision, student?.parent_id]
             )
         }
 
-        return response.status(200).send("Added successfully!")
+        return response.status(200).json("Added successfully!")
     }
     catch (err) {
         console.error(err.message)

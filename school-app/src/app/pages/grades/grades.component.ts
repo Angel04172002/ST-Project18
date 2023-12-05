@@ -45,8 +45,6 @@ export class GradesComponent implements OnInit {
     await firstValueFrom(this.http.getMarksByStudent(id))
       .then(data => {
 
-        
-
         console.log(id);
 
         for (let item of data) {
