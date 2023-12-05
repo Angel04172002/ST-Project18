@@ -33,7 +33,6 @@ import { FormsModule }   from '@angular/forms';
 @NgModule({
   declarations: [
     AppComponent,
-    CalendarComponent,
     FeedbackComponent,
     NotificationComponent,
     SubjectComponent,
@@ -54,7 +53,8 @@ import { FormsModule }   from '@angular/forms';
     AdminModule,
     UserModule,
     MatDialogModule,
-    FormsModule
+    FormsModule,
+    CalendarComponent
   ],
   providers: [],
   bootstrap: [AppComponent]

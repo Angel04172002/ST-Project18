@@ -1,3 +1,4 @@
+<!--
 <div class="container">
 
 
@@ -25,10 +26,8 @@
 			<p class="calendar-current-date"></p>
 			<div class="calendar-navigation">
 				<span id="calendar-prev" class="material-symbols-rounded">
-					<!-- стрелки-->
 				</span>
 				<span id="calendar-next" class="material-symbols-rounded">
-					<!-- стрелки-->
 				</span>
 			</div>
 		</header>
@@ -90,6 +89,30 @@
 
 
 
-<!-- Календар  изглед-->
+ Календар  изглед-->
+<h1 style="text-align: center; font-size: 30px; margin-top: 20px;">Събития</h1>
+<div class="calendar">
+	<mat-card class="calendar-card" *ngIf="events">
+		<mat-calendar #calendar [(selected)]="selected" [dateClass]="dateClass()"></mat-calendar>
+	</mat-card>
 
+	<mat-card class="add-event">
+		<h3 style="font-size: 20px; padding-bottom: 20px; text-align: center;">Добави ново събитие:</h3>
+		<form class="add-event-form" #addEventForm="ngForm" (ngSubmit)="onSend(addEventForm)">
+			<mat-form-field>
+				<mat-label>Наименование</mat-label>
+				<input matInput #title name="title" ngModel>
+			</mat-form-field>
+			<mat-form-field>
+				<mat-label>Дата</mat-label>
+				<input matInput type="date" #date name="date" ngModel>
+			</mat-form-field>
+			<mat-form-field>
+				<mat-label>Час</mat-label>
+				<input matInput type="time" name="time" ngModel>
+			</mat-form-field>
+			<button type="submit" mat-raised-button class="add-event-button" color="primary">Добави</button>
+		</form>
+	</mat-card>
 
+</div>

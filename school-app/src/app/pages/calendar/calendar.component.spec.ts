@@ -1,4 +1,4 @@
-const events = [];
+const events: { id: any; }[] = [];
 
 function addEvent() {
   const name = document.getElementById("event-name").value;
