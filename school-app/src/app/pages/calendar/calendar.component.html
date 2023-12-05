@@ -102,15 +102,15 @@
 		<form class="add-event-form" #addEventForm="ngForm" (ngSubmit)="onSend(addEventForm)">
 			<mat-form-field>
 				<mat-label>Наименование</mat-label>
-				<input matInput #title name="title" ngModel>
+				<input matInput #title name="title" ngModel required>
 			</mat-form-field>
 			<mat-form-field>
 				<mat-label>Дата</mat-label>
-				<input matInput type="date" #date name="date" ngModel>
+				<input matInput type="date" #date name="date" ngModel required>
 			</mat-form-field>
 			<mat-form-field>
 				<mat-label>Час</mat-label>
-				<input matInput type="time" name="time" ngModel>
+				<input matInput type="time" name="time" ngModel required>
 			</mat-form-field>
 			<button type="submit" mat-raised-button class="add-event-button" color="primary">Добави</button>
 		</form>

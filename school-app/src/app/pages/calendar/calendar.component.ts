@@ -6,7 +6,7 @@ import { MatNativeDateModule } from '@angular/material/core';
 import { MatInputModule } from '@angular/material/input';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatButtonModule } from '@angular/material/button';
-import { FormsModule, NgForm, ReactiveFormsModule } from '@angular/forms';
+import { FormControl, FormsModule, NgForm, ReactiveFormsModule, Validators } from '@angular/forms';
 import { MatDialog, MatDialogConfig, MatDialogModule} from '@angular/material/dialog';
 import {MatDividerModule} from '@angular/material/divider';
 
@@ -61,7 +61,6 @@ export class CalendarComponent {
   onSend(form: NgForm) {
     const eventTitle = form.value.title;
     const eventDate = new Date(form.value.date + 'T' + form.value.time + ':00Z');
-    console.log(form.value.date)
 
     const event = { date: eventDate, title: eventTitle }
     this.events.push(event);
