@@ -69,7 +69,9 @@ export class UserService {
       profileType = ProfileTypes.Parent;
     } else if (type == 'Teacher') {
       profileType = ProfileTypes.Teacher
-    };
+    } else {
+      profileType = ProfileTypes.GradeTeacher;
+    }
 
 
     this.validateData(email, password, confirmPassword);
@@ -99,6 +101,9 @@ export class UserService {
   }
 
   saveUser(data: any) {
+
+    localStorage.clear();
+
     localStorage.setItem('user', JSON.stringify({
       id: data.id, firstName: data, lastName: data.lastName, email: data.email, type: data.type, token: data.token
     }));

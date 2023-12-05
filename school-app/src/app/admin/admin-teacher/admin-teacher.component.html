@@ -7,26 +7,28 @@
 </head>
 <body>
     <h2>Създаване на акаунт</h2>
-    <form id="signupForm">
+    <form #signupForm>
         <label for="firstName">Име:</label>
-        <input type="text" id="firstName" name="firstName" required>
+        <input type="text" id="firstName" name="firstName" #firstName required>
 
         <label for="lastName">Фамилия:</label>
-        <input type="text" id="lastName" name="lastName" required>
+        <input type="text" id="lastName" name="lastName" #lastName required>
 
         <label for="email">Имейл:</label>
-        <input type="email" id="email" name="email" required>
+        <input type="email" id="email" name="email" #email required>
 
-        <label for="role">Роля:</label>
-        <select id="role" name="role" required>
-            <option value="teacher">Учител</option>
-            <option value="class_teacher">Класен ръководител</option>
+       
+        <label for="password">Парола:</label>
+        <input type="password" id="password" name="password" #password required>
+
+
+        <label for="role" >Роля:</label>
+        <select id="role" name="role" #role required>
+            <option value="Teacher">Учител</option>
+            <option value="Grade teacher">Класен ръководител</option>
         </select>
 
-        <label for="password">Парола:</label>
-        <input type="password" id="password" name="password" required>
-
-        <button type="button" onclick="createAccount()">Създай акаунт</button>
+        <button type="button" (click) = "createAccount(firstName.value, lastName.value, email.value, password.value, role.value)">Създай акаунт</button>
     </form>
 
     <script src="admin-acc.js"></script>
