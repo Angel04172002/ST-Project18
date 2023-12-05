@@ -6,7 +6,6 @@ import { ProfileTypes } from '../@backend/enums/profile-types.enum';
 import { MatCardLgImage } from '@angular/material/card';
 import { Injectable } from '@angular/core';
 
-const BASE_URL = 'http://localhost:3000';
 const emailPattern = new RegExp('^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$');
 const passwordPattern = new RegExp('^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$ %^&*-]).{10,}$');
 
@@ -42,21 +41,17 @@ export class UserService {
 
   async login(email: string, password: string) {
 
-   // const user = { email, password };
-
     const req = this.api.login(email, password);
 
     await firstValueFrom(req)
       .then((data) => {
-        console.log(data);
-        localStorage.setItem('user', JSON.stringify(data));
+        this.saveUser(data);
       })
       .catch(err => {
         throw err;
       });
 
   }
-
 
 
   async register(firstName: string, lastName: string, email: string, password: string, confirmPassword: string, type: string) {
@@ -65,8 +60,6 @@ export class UserService {
       firstName: firstName,
       lastName: lastName,
       email: email,
-      password: password,
-      confirmPassword: confirmPassword,
       type: type
     };
 
@@ -74,18 +67,19 @@ export class UserService {
 
     if (type == 'Parent') {
       profileType = ProfileTypes.Parent;
-    }else if(type == 'Teacher'){
+    } else if (type == 'Teacher') {
       profileType = ProfileTypes.Teacher
     };
 
 
-    const req = this.api.createProfile(firstName, lastName, email, password, profileType);
+    this.validateData(email, password, confirmPassword);
+
+    const req = this.api.createProfile(firstName, lastName, email, password, confirmPassword, profileType);
 
 
     await firstValueFrom(req)
       .then((data) => {
-        console.log(data);
-        localStorage.setItem('user', JSON.stringify(user));
+        this.saveUser(data);
       })
       .catch(err => {
         throw err;
@@ -93,8 +87,51 @@ export class UserService {
   }
 
 
-  validateUser(user: any): boolean {
-    return true && Boolean(passwordPattern.exec(user.password));
+  getUser() {
+
+    let user = localStorage.getItem('user');
+
+    if (user) {
+      return JSON.parse(user);
+    }
+
+    return undefined;
+  }
+
+  saveUser(data: any) {
+    localStorage.setItem('user', JSON.stringify({
+      id: data.id, firstName: data, lastName: data.lastName, email: data.email, type: data.type, token: data.token
+    }));
+  }
+
+
+  validateData(email: string, password: string, confirmPassword: string): void {
+
+    let err = {};
+
+    if (!this.validateEmail(email)) {
+      err = { error: 'Имейлът не е правилен' };
+      throw err;
+    };
+
+    if (!this.validatePassword(password)) {
+      err = { error: 'Паролата трябва да съдържа поне 10 символа, поне една малка буква, една главна буква, една цифра и един специален символ' };
+      throw err;
+    }
+
+    if (password !== confirmPassword) {
+      err = { error: 'Паролите не съвпадат' };
+      throw err;
+    }
+  }
+
+
+  validateEmail(email: any): boolean {
+    return Boolean(emailPattern.exec(email));
+  }
+
+  validatePassword(password: any): boolean {
+    return Boolean(passwordPattern.exec(password));
   }
 
   logout() {

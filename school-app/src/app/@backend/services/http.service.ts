@@ -48,6 +48,7 @@ export class HttpService {
     lastName: string,
     email: string,
     password: string,
+    confirmPassword : string,
     type: ProfileTypes,
     creatorId?: string
   ): Observable<any> {
@@ -57,6 +58,7 @@ export class HttpService {
       lastName: lastName,
       email: email,
       password: password,
+      confirmPassword : confirmPassword,
       type: type,
     });
   }

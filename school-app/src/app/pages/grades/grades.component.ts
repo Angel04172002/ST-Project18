@@ -10,10 +10,10 @@ import { HttpService } from 'src/app/@backend/services/http.service';
 })
 export class GradesComponent implements OnInit {
 
-  grades  : any = [];
+  grades: any = [];
 
 
-  gradesDictionary : any = {
+  gradesDictionary: any = {
     2: 'poor',
     3: 'middle',
     4: 'good',
@@ -33,10 +33,21 @@ export class GradesComponent implements OnInit {
 
   async getGrades() {
 
-    const id = JSON.stringify(localStorage.getItem('id'));
+    let user = this.userService.getUser();
+    let id = '';
+
+    if(user) {
+      id = user.id;
+    }
+
+    this.grades = [];
 
     await firstValueFrom(this.http.getMarksByStudent(id))
       .then(data => {
+
+        
+
+        console.log(id);
 
         for (let item of data) {
 

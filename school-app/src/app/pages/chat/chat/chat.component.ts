@@ -7,4 +7,11 @@ import { Component } from '@angular/core';
 })
 export class ChatComponent {
 
+  isClicked = false;
+  
+  constructor() {
+    
+
+  }
+
 }

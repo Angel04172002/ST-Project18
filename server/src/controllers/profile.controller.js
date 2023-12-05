@@ -1,15 +1,16 @@
 const pool = require("../db")
 const utils = require("../utils")
 const jwt = require("jsonwebtoken");
+const bcrypt = require('bcryptjs');
 
 createProfile = async (request, response) => {
-
 
     try {
 
         let creatorId = '890e0f59-1c4f-4552-8a83-b7d1e5e92770';
 
-        const { firstName, lastName, email, password, type, creator_id } = request.body;
+        const { firstName, lastName, email, password, confirmPassword, type, creator_id } = request.body;
+        const salt = await bcrypt.genSalt(10);
 
         if (firstName == undefined) return response.status(500).send("firstName not provided!")
         if (lastName == undefined) return response.status(500).send("lastName not provided!")
@@ -17,12 +18,18 @@ createProfile = async (request, response) => {
         if (password == undefined) return response.status(500).send("password not provided!")
 
 
+        // if(password !== confirmPassword) {
+        //     return response.status(500).send('Паролите не съвпадат!');
+        // };
+
+        const hashedPassword = await bcrypt.hash(password, salt);
+
+    
         let { rows } = await pool.query("SELECT * FROM PROFILE WHERE email = $1", [email])
 
         if (rows.length > 0) {
-            return response.status(500).send(`User with email: ${email} already exists!`);
+            return response.status(500).send(`Потребител с имейл: ${email} вече съществува!`);
         }
-
 
         // ujas ;(
         const id = utils.generateRandomString(40)
@@ -35,17 +42,16 @@ createProfile = async (request, response) => {
 
 
 
-
         await pool.query(
             'INSERT INTO PROFILE (id, creator_id, first_name, last_name, email, password, type) VALUES ($1, $2, $3, $4, $5, $6, $7) RETURNING *',
-            [id, creatorId, firstName, lastName, email, password, type]
+            [id, creatorId, firstName, lastName, email, hashedPassword, type]
         )
 
 
         if (type == 'Student') {
 
             await pool.query(
-                'INSERT INTO STUDENT (id, grade_id, grade_division_id, parent_id) VALUES ($1)',
+                'INSERT INTO STUDENT (id, grade_id, grade_division_id, parent_id) VALUES ($1, $2, $3, $4)',
                 [id, null, null, null]
             )
 
@@ -101,6 +107,7 @@ auth = async (request, response) => {
     try {
         const email = request.body?.email;
         const password = request.body?.password;
+
         if (!email) {
             return response.status(500).json({
                 message: "email should be provided in request body",
@@ -112,15 +119,19 @@ auth = async (request, response) => {
             });
         }
 
-        pool.query("SELECT * FROM PROFILE WHERE email = $1", [email], (error, results) => {
+        pool.query("SELECT * FROM PROFILE WHERE email = $1", [email], async (error, results) => {
             if (error) {
                 throw error;
             }
             if (results.rows.length < 1) {
-                return response.status(500).send(`User with email: ${email} not found!`)
+                return response.status(500).send(`Потребител с имейл: ${email} не е намерен!`)
             }
             const result = results.rows[0];
-            if (result.password == password) {
+            const storedHashedPassword = result.password;
+            const isPasswordValid = await bcrypt.compare(password, storedHashedPassword);
+
+
+            if (isPasswordValid) {
 
                 const token = jwt.sign(
                     { user_id: result.id, email: result.email },
@@ -133,7 +144,7 @@ auth = async (request, response) => {
                 return response.status(200).json(result);
             }
             else {
-                return response.status(401).send("Wrong password!");
+                return response.status(401).send("Грешна парола!");
             }
         });
 

@@ -41,11 +41,12 @@ FROM
             s.grade_id = tgds.teacher_grade_id
             AND s.grade_division_id = tgds.teacher_grade_division_id
             AND gs.subject_id = tgds.teacher_subject_id
-        WHERE
-            tgds.teacher_id = $1
+      
     ) AS rs
 INNER JOIN
     profile pr ON rs.teacher_id = pr.id
+WHERE
+    tgds.teacher_id = $1
 GROUP BY
     rs.id,
     rs.first_name,
@@ -65,6 +66,11 @@ ORDER BY
 
 
 const getMarksByClassTeacherQuery = `
+
+	
+
+
+
 SELECT
     rs.id,
     rs.first_name,
@@ -106,11 +112,12 @@ FROM
             s.grade_id = gtgds.grade_teacher_grade_id
             AND s.grade_division_id = gtgds.grade_teacher_grade_division_id
             AND gs.subject_id = gtgds.grade_teacher_subject_id
-        WHERE
-            gtgds.grade_teacher_id = $1
+      
     ) AS rs
 INNER JOIN
     profile pr ON rs.grade_teacher_id = pr.id
+WHERE
+    rs.grade_teacher_id = $1
 GROUP BY
     rs.id,
     rs.first_name,
@@ -128,6 +135,7 @@ ORDER BY
     rs.subject_name ASC;
 `
 
+
 const getMarksByStudentQuery = `
 SELECT
     rs.id,
@@ -144,7 +152,6 @@ SELECT
     MAX(CASE WHEN rs.term_id = 'Годишна' THEN rs.marks END) AS term_final,
 	
 	
-		
 	CASE 
     WHEN teacher_id IS NULL THEN ''
     ELSE rs.teacher_id
@@ -222,13 +229,13 @@ FROM
             AND s.grade_division_id = gtgds.grade_teacher_grade_division_id
             AND gs.subject_id = gtgds.grade_teacher_subject_id
         WHERE 
-           s.id = $1 and
-		    tgds.teacher_subject_id = gs.subject_id or gtgds.grade_teacher_subject_id = gs.subject_id
+		   tgds.teacher_subject_id = gs.subject_id or gtgds.grade_teacher_subject_id = gs.subject_id
     ) AS rs
 INNER JOIN
     profile pr ON rs.grade_teacher_id = pr.id 
 INNER JOIN
 	profile pro on rs.teacher_id = pro.id
+WHERE rs.id = $1
 GROUP BY
     rs.id,
     rs.first_name,
@@ -250,7 +257,8 @@ ORDER BY
     rs.grade_division_id ASC,
     rs.subject_name ASC;
 
-`
+`;
+
 
 const getMarksByParentQuery = `
 SELECT
@@ -321,6 +329,7 @@ FROM
             p.email,
             gs.grade_id,
             s.grade_division_id,
+			s.parent_id,
             su.subject_name,
             sms.term_id,
             m.mark_id AS marks,
@@ -345,13 +354,14 @@ FROM
             AND s.grade_division_id = gtgds.grade_teacher_grade_division_id
             AND gs.subject_id = gtgds.grade_teacher_subject_id
         WHERE 
-           s.parent_id = $1 and
+       
 		    tgds.teacher_subject_id = gs.subject_id or gtgds.grade_teacher_subject_id = gs.subject_id
     ) AS rs
 INNER JOIN
     profile pr ON rs.grade_teacher_id = pr.id 
 INNER JOIN
 	profile pro on rs.teacher_id = pro.id
+WHERE rs.parent_id = $1
 GROUP BY
     rs.id,
     rs.first_name,

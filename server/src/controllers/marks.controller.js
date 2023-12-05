@@ -89,6 +89,9 @@ getMarksByStudent = async (request, response) => {
         }
 
         let { rows } = await pool.query(marksQueries.getMarksByStudentQuery, [studentId])
+
+        console.log(rows);
+
         return response.status(200).json(rows)
     }
     catch(err){
