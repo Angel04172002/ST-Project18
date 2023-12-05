@@ -93,7 +93,8 @@
 <h1 style="text-align: center; font-size: 30px; margin-top: 20px;">Събития</h1>
 <div class="calendar">
 	<mat-card class="calendar-card" *ngIf="events">
-		<mat-calendar #calendar [(selected)]="selected" [dateClass]="dateClass()"></mat-calendar>
+		<mat-calendar #calendar [(selected)]="selected" [dateClass]="dateClass()"
+			(selectedChange)="onSelectedChange($event)"></mat-calendar>
 	</mat-card>
 
 	<mat-card class="add-event">
@@ -114,5 +115,20 @@
 			<button type="submit" mat-raised-button class="add-event-button" color="primary">Добави</button>
 		</form>
 	</mat-card>
+
+	<ng-template #showDialog class="eventDialog">
+		<h2 matDialogTitle style="text-align: center; font-size: 25px;">Събитие:</h2>
+		<mat-dialog-content>
+			<mat-divider></mat-divider>
+			<h3 style="font-weight: 500; color:black">Наименование:</h3>
+			<p style="color:black"> {{selectedEventTitle}} </p>
+			<mat-divider></mat-divider>
+			<h3 style="font-weight: 500; color:black">Дата:</h3>
+			<p style="color:black"> {{selectedEventDate}} </p>
+		</mat-dialog-content>
+		<mat-dialog-actions class="formActions">
+			<button mat-raised-button matDialogClose color="primary">Затвори</button>
+		</mat-dialog-actions>
+	</ng-template>
 
 </div>

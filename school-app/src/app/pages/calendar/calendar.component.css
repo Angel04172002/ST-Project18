@@ -13,7 +13,7 @@
     border-width: 0px;
     border-style: solid;
     border-radius: 999px;
-    background-color: #3f51b5;
+    background-color: #f1604d;
   }
 
   .add-event{
@@ -29,5 +29,11 @@
   .add-event-button{
     width: fit-content;
     left: 85%;
+  }
+
+  .formActions{
+    float: right;
+    right: 10px;
+    bottom: 10px;
   }
   

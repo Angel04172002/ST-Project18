@@ -1,4 +1,4 @@
-import { ChangeDetectorRef, Component, ViewChild, ViewEncapsulation } from '@angular/core';
+import { ChangeDetectorRef, Component, TemplateRef, ViewChild, ViewEncapsulation } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { DateRange, MatCalendar, MatCalendarCellCssClasses, MatDatepickerModule } from '@angular/material/datepicker';
 import { MatCardModule } from '@angular/material/card';
@@ -7,6 +7,8 @@ import { MatInputModule } from '@angular/material/input';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatButtonModule } from '@angular/material/button';
 import { FormsModule, NgForm, ReactiveFormsModule } from '@angular/forms';
+import { MatDialog, MatDialogConfig, MatDialogModule} from '@angular/material/dialog';
+import {MatDividerModule} from '@angular/material/divider';
 
 
 @Component({
@@ -23,13 +25,22 @@ import { FormsModule, NgForm, ReactiveFormsModule } from '@angular/forms';
     MatFormFieldModule,
     MatButtonModule,
     FormsModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    MatDialogModule,
+    MatDividerModule
   ],
   standalone: true
 })
 export class CalendarComponent {
   @ViewChild(MatCalendar, { static: false }) calendar!: MatCalendar<Date>;
   selected!: Date | null;
+
+  @ViewChild('showDialog') showDialog!: TemplateRef<any>; 
+  dialogRef: any;
+
+  constructor(
+    private dialog: MatDialog
+    ) { }
 
   events = [
     { date: new Date(2023, 11, 12), title: 'Event 1' },
@@ -64,4 +75,28 @@ export class CalendarComponent {
       this.calendar.monthView._init();
     }
   }
+
+  selectedEventTitle : any;
+  selectedEventDate : any;
+
+  eventsCondition(date : Date, event : Date) : boolean{
+    return date.getFullYear() === event.getFullYear() && date.getMonth() === event.getMonth() && date.getDate() === event.getDate();
+  }
+
+  onSelectedChange(event: any) {
+    const eventSelected = this.events
+        .map(eventDate => eventDate.date)
+        .some(d => this.eventsCondition(event, d));
+
+    const result = this.events.filter((e) => this.eventsCondition(event, e.date));
+
+    if (eventSelected){
+      this.selectedEventTitle = result[0].title;
+      this.selectedEventDate = result[0].date.toLocaleDateString();
+      this.dialogRef = this.dialog.open(this.showDialog, {
+        minWidth: "400px"
+      });
+    } 
+  }
+
 }
