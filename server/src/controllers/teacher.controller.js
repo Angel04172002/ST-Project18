@@ -41,8 +41,9 @@ getSubjectsAndGradesForTeacher = async (request, response) => {
 
         let { rows } = await pool.query(teacherQueries.getTeachersAndGradesQuery);
 
+
         if (rows.length == 0) {
-            return response.json({ message: "Not provided teachers" });
+            return response.status(500).send("Not provided teachers");
         }
 
         return response.status(200).json(rows)

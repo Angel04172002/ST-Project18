@@ -7,6 +7,7 @@ import { MatButtonModule } from '@angular/material/button';
 import { FormControl, FormsModule, NgForm, ReactiveFormsModule, Validators } from '@angular/forms';
 import {MatDividerModule} from '@angular/material/divider';
 import { MatIconModule } from '@angular/material/icon';
+import { HttpService } from 'src/app/@backend/services/http.service';
 
 @Component({
   selector: 'app-admin',
@@ -28,7 +29,7 @@ export class AdminComponent {
 
   @ViewChild('fileInput') fileInput!: ElementRef;
 
-  constructor(private adminService: AdminService) { }
+  constructor(private httpService: HttpService, private adminService: AdminService) { }
 
   downloadCSVFile() {
     this.adminService.generateStudentsAndGrades();
@@ -36,6 +37,6 @@ export class AdminComponent {
 
   sendJson() {
 
-    this.adminService.sendJsonData(this.fileInput.nativeElement.files);
+    this.adminService.sendJsonData(this.fileInput.nativeElement.files, 'sendJsonStudents');
   }
 }

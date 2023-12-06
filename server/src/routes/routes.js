@@ -6,6 +6,7 @@ const gradesRoute = require('./grades.route')
 const chatRote = require('./chat.route')
 const marksRoute = require('./marks.route')
 const teacherRoute = require('./teacher.route')
+const absenceRoute = require('./absence.route')
 
 // Add profile routing
 router.use('/profile', profileRoute);
@@ -17,6 +18,13 @@ router.use('/chat', chatRote)
 
 router.use('/marks', marksRoute)
 
-router.use('/teacher', teacherRoute)
+router.use('/absences', absenceRoute);
+
+router.use('/teacher', teacherRoute);
+
+
+// router.use('/calendar', calendarRoute);
+
+
 
 module.exports = router

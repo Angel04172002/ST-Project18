@@ -8,6 +8,7 @@ import { log } from 'console';
 import { HttpService } from 'src/app/@backend/services/http.service';
 import { firstValueFrom } from 'rxjs';
 import { Teacher } from '../types/Teacher';
+import { AddStudentToGrade } from '../@backend/models/add-student-to-grade.model';
 
 
 const BASE_URL = 'http://localhost:3000';
@@ -27,8 +28,16 @@ export class AdminService implements OnInit {
 
   adminStudentData: Student[] = [];
   adminTeacherData: Teacher[] = [];
- 
+
+  // adminActions: any = {
+  //   sendJsonStudents: this.httpService.addStudentsToGrade,
+  //   sendJsonTeachers: this.httpService.addSubjectsAndGradesToTeacher
+  // }
+
   constructor(private httpService: HttpService, private excelService: ExcelService) { }
+
+
+
 
 
   ngOnInit(): void {
@@ -74,20 +83,24 @@ export class AdminService implements OnInit {
 
 
 
-  sendJsonData(files: FileList | null) {
+  sendJsonData(files: FileList | null, action: string) {
 
     if (files && files.length > 0) {
       const file = files[0];
-
+     
       this.excelService.readXLSXFile(file)
         .then(async (jsonData) => {
 
 
-          console.log(jsonData);
+          let req: any = '';
 
-          const req = this.httpService.addStudentsToGrade(jsonData)
+          if (action == 'sendJsonStudents') {
+            req = this.httpService.addStudentsToGrade;
+          } else if (action == 'sendJsonTeachers') {
+            req = this.httpService.addSubjectsAndGradesToTeacher;
+          }
 
-          await firstValueFrom(req)
+          await firstValueFrom(this.httpService.addStudentsToGrade(jsonData))
             .then(() => {
               alert('Успешно запазени промени');
             })
@@ -95,7 +108,7 @@ export class AdminService implements OnInit {
 
         })
         .catch((error) => {
-          console.error(error.err);
+          alert(error.message);
         });
     } else {
       console.error('No file selected.');

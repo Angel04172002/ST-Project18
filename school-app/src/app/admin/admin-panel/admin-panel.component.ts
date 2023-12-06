@@ -36,7 +36,7 @@ export class AdminPanelComponent {
   }
 
   sendJson() {
-    this.adminService.sendJsonData(this.fileInput.nativeElement.files);
+    this.adminService.sendJsonData(this.fileInput.nativeElement.files, 'sendJsonTeachers');
   }
 
 }
