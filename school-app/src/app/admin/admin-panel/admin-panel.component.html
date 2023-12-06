@@ -1,8 +1,17 @@
-<button (click)="downloadCSVFile()">Generate file</button>
+<h1 style="padding-top: 20px; padding-bottom: 20px; text-align: center;">Учители и класове:</h1>
+<mat-card class="admin-card">
+    <h3>Генерирай файл с учители и класове:</h3>
+    <button mat-raised-button color="primary" (click)="downloadCSVFile()" class="generate-button">Генерирай</button>
 
-<br>
+    <mat-divider></mat-divider>
+    <h3>Прикачи файл с учители и класове:</h3>
 
+    <div class="add-file-input">
+    <input type="file" name="file-input" class="file-input" accept=".xlsx" #fileUpload>
+    <button mat-raised-button color="primary" #file class="file-button"
+        (click)="fileUpload.click()"><mat-icon>attach_file</mat-icon>Прикачи</button>
 
-<input type="file" accept=".xlsx" #fileInput>
-
-<button (click)="sendJson()">Submit</button>
+    <button type="submit" mat-raised-button class="submit-data-button" color="primary"
+        (click)="sendJson()">Добави</button>
+    </div>
+</mat-card>

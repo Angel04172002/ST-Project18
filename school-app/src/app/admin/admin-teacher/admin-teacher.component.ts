@@ -4,11 +4,16 @@ import { firstValueFrom } from 'rxjs';
 import { ProfileTypes } from 'src/app/@backend/enums/profile-types.enum';
 import { HttpService } from 'src/app/@backend/services/http.service';
 import { UserService } from 'src/app/user/user.service';
+import { MatButtonModule } from '@angular/material/button';
 
 @Component({
   selector: 'app-admin-teacher',
   templateUrl: './admin-teacher.component.html',
-  styleUrls: ['./admin-teacher.component.css']
+  styleUrls: ['./admin-teacher.component.css'],
+  imports: [
+    MatButtonModule
+  ],
+  standalone: true
 })
 export class AdminTeacherComponent {
 

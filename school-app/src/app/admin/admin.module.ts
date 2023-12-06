@@ -11,15 +11,16 @@ import { AdminTeacherComponent } from './admin-teacher/admin-teacher.component';
 
 @NgModule({
   declarations: [
-    AdminPanelComponent,
-    AdminSubjectComponent,
-    AdminTeacherComponent
+    
   ],
   imports: [
     CommonModule,
     RouterModule,
     AppRoutingModule,
-    UserRoutingModule
+    UserRoutingModule,
+    AdminPanelComponent,
+    AdminSubjectComponent,
+    AdminTeacherComponent
   ]
 })
 export class AdminModule { }
