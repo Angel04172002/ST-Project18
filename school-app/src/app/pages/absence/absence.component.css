@@ -1,7 +1,12 @@
 .title{
     text-align: center;
     margin-top: 10px;
-    font-size: 30px;
+    font-size: 25px;
+}
+
+table th,
+table tbody td{
+    padding: 0 16px 0 16px!important; 
 }
 
 .grade mat-form-field + mat-form-field{
@@ -41,7 +46,7 @@ form {
     padding: 20px 30px 20px 30px;
   }
 
-input[type="file"] {
+.notes-input {
     display: none;
 }
 .file-upload {
@@ -49,12 +54,12 @@ input[type="file"] {
     cursor: pointer;
     width: fit-content;
     padding: 6px 10px;
-    border: 1px solid #ccc;
 }
 
 .file-upload:hover{
-    background-color: #ccc;
+    cursor: pointer;
 }
+
 
 .file-upload-label{
     display: flex;

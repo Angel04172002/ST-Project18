@@ -9,6 +9,7 @@ import {MatSelectModule} from '@angular/material/select';
 import {MatInputModule} from '@angular/material/input';
 import {MatButtonModule} from '@angular/material/button';
 import {MatFormFieldModule} from '@angular/material/form-field';
+import { FormsModule } from '@angular/forms';
 
 export interface Student {
   firstName: string,
@@ -17,8 +18,31 @@ export interface Student {
 }
 
 const ELEMENT_DATA: Student[] = [
-  {firstName: "Петър", lastName: "Петров", note: ''}
+  {firstName: "Петър", lastName: "Петров", note: 'Забележка...'}
 ];
+
+const COLUMNS_SCHEMA = [
+  {
+    key: "firstName",
+    type: "text",
+    label: "Име"
+  },
+  {
+    key: "lastName",
+    type: "text",
+    label: "Фамилия"
+  },
+  {
+    key: "note",
+    type: "textarea",
+    label: "Забележка"
+  },
+  {
+    key: "isEdit",
+    type: "isEdit",
+    label: ""
+  }
+]
 
 @Component({
   selector: 'app-note',
@@ -31,13 +55,15 @@ const ELEMENT_DATA: Student[] = [
     MatSelectModule,
     MatInputModule,
     MatFormFieldModule,
-    MatButtonModule
+    MatButtonModule,
+    FormsModule
   ],
   standalone: true
 })
 export class NoteComponent {
-  displayedColumns: string[] = ['firstName', 'lastName', 'note', 'add'];
+  displayedColumns: string[] = COLUMNS_SCHEMA.map((col) => col.key);
   dataSource = ELEMENT_DATA;
+  columnsSchema: any = COLUMNS_SCHEMA;
 
   firstTerm: Note[] = [
     { id: "1",
@@ -66,11 +92,13 @@ export class NoteComponent {
     const newNote = {
       firstName: '',
       lastName: '',
-      note: ''
+      note: '',
+      isEdit: true
     }
-  }
-   // this.dataSource = [...this.dataSource, newRow]
 
+    this.dataSource = [...this.dataSource, newNote]
+  }
+    
    constructor(
     private userService: UserService
     ) { }

@@ -25,35 +25,42 @@
 
     <table mat-table [dataSource]="dataSource" class="mat-elevation-z8">
 
-        <ng-container matColumnDef="firstName">
-            <th mat-header-cell *matHeaderCellDef> Име </th>
-            <td mat-cell *matCellDef="let element"> {{element.firstName}} </td>
-        </ng-container>
-
-        <ng-container matColumnDef="lastName">
-            <th mat-header-cell *matHeaderCellDef> Фамилия </th>
-            <td mat-cell *matCellDef="let element"> {{element.lastName}} </td>
-        </ng-container>
-
-        <ng-container matColumnDef="absenceType">
-            <th mat-header-cell *matHeaderCellDef> Извинено </th>
+        <ng-container [matColumnDef]="col.key" *ngFor="let col of columnsSchema">
+            <th mat-header-cell *matHeaderCellDef> {{col.label}} </th>
             <td mat-cell *matCellDef="let element">
-                <mat-checkbox #excusedCheckbox [checked]="element.absenceType === 'Извинено'">
-                </mat-checkbox>
+                <div [ngSwitch]="col.type" *ngIf="!element.isEdit">
+                    <div *ngSwitchCase="'isEdit'">
+                    </div>
+                    <span *ngSwitchCase="'checkbox'">
+                        <mat-checkbox color="primary" #excusedCheckbox [checked]="element[col.key] === 'Извинено'" (click)="$event.preventDefault()">
+                        </mat-checkbox>
+                    </span>
+                    <span *ngSwitchDefault>
+                        {{ element[col.key] }}
+                    </span>
+                </div>
+                <div [ngSwitch]="col.type" *ngIf="element.isEdit">
+                    <div class="btn-edit" *ngSwitchCase="'isEdit'">
+                        <button mat-raised-button color="primary" (click)="element.isEdit = !element.isEdit">
+                            Готово
+                        </button>
+                    </div>
+                    <span *ngSwitchCase="'checkbox'">
+                        <mat-checkbox color="primary" #excusedCheckbox [checked]="element[col.key] === 'Извинено'">
+                        </mat-checkbox>
+                    </span>
+                    <mat-form-field *ngSwitchDefault>
+                        <input [type]="col.type" matInput [(ngModel)]="element[col.key]" />
+                    </mat-form-field>
+                </div>
             </td>
         </ng-container>
 
-        <ng-container matColumnDef="absenceReason">
-            <th mat-header-cell *matHeaderCellDef> Причина за отсъствие </th>
-            <td mat-cell *matCellDef="let element"> {{element.absenceReason}} </td>
-        </ng-container>
-
         <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-        <tr mat-row *matRowDef="let row; columns: displayedColumns;"
-            [ngClass]="{'highlight': selectedRowIndex == row.id}" (click)="highlight(row)"></tr>
+        <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
     </table>
 
-    <button class="button-add-row" mat-raised-button (click)="addRow()">
+    <button class="button-add-row" mat-raised-button color="primary" (click)="addRow()">
         Добави ново отсъствие
     </button>
 </div>
@@ -167,72 +174,15 @@
             </mat-form-field>
             <mat-label>Прикачете извинителни бележки тук (снимка):</mat-label>
             <div class="file-upload">
-                <label for="notes" class="file-upload-label">Прикачи<mat-icon matPrefix>attachment</mat-icon></label>
-                <input type="file" id="notes" name="notes" accept="image/*">
+                <input type="file" class="notes-input" name="notes" accept="image/*" #fileUpload>
+                <button mat-raised-button #file class="file-button"
+                    (click)="fileUpload.click()"><mat-icon>attach_file</mat-icon>Прикачи</button>
             </div>
             <mat-dialog-actions class="formActions">
-                <button mat-button matDialogClose="no">Откажи</button>
-                <button type="submit" mat-button matDialogClose="yes">Изпрати</button>
+                <button mat-raised-button color="primary" matDialogClose="no">Откажи</button>
+                <button type="submit" mat-raised-button color="primary" matDialogClose="yes">Изпрати</button>
             </mat-dialog-actions>
         </form>
     </ng-template>
-
-    <!-- <div>
-        <h2>Форма за извинение от родител</h2>
-        <form id="apologyForm">
-
-            <div>
-
-
-                <label for="classSelect">Изберете клас:</label>
-                <select id="classSelect" name="class">
-                    <option value="1A">1A</option>
-                    <option value="1B">1B</option>
-                </select>
-
-            </div>
-
-
-            <div>
-
-
-
-                <label for="studentSelect">Изберете ученик:</label>
-                <select id="studentSelect" name="student">
-                    <option value="student">Георги Иванов</option>
-                    <option value="student">Иван Иванов</option>
-                </select>
-
-            </div>
-
-            <div>
-
-
-
-                <label for="reasonSelect">Изберете причина за отсъствието:</label>
-                <select id="reasonSelect" name="reason">
-                    <option value="болен">Болен</option>
-                    <option value="лични дела">Лични дела</option>
-                    <option value="учебна дейност">Учебна дейност</option>
-                </select>
-
-            </div>
-
-            <div>
-
-
-                <label for="notes">Прикачете извинителни бележки (снимка):</label>
-                <input type="file" id="notes" name="notes" accept="image/*">
-            </div>
-
-
-            <div>
-
-
-                <button type="button" onclick="submitForm()">Запиши</button>
-
-            </div>
-        </form>
-    </div> -->
 
 </div>
