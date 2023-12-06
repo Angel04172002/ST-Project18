@@ -6,6 +6,8 @@ import { AddSubjectsToGrade } from "../models/add-subjects-to-grade.model";
 import { AddMarksByTeacher } from "../models/add-marks-by-teacher";
 import { AddSubjectsAndGradesToTeacherModel } from "../models/add-subjects-and-grades-to-teacher.model";
 import { Injectable } from "@angular/core";
+import { AddAbsencesByTeacher } from "../models/add-absences-by-teacher";
+import { AddExcuseReasonsByParent } from "../models/add-excuse-reasons-by-parent";
 
 @Injectable({
   providedIn: "root",
@@ -13,9 +15,13 @@ import { Injectable } from "@angular/core";
 export class HttpService {
   private readonly url = "http://localhost:3000";
 
+
   public jwtToken: string = "";
 
   constructor(private httpClient: HttpClient) { }
+
+
+
 
   private post(endpoint: string, body: any) {
     let headers: HttpHeaders = new HttpHeaders();
@@ -73,6 +79,10 @@ export class HttpService {
   // Grades methods
 
   public addStudentsToGrade(students: AddStudentToGrade[]): Observable<any> {
+
+    console.log(this);
+    console.log(students);
+
     if (!students || students.length < 1) {
       console.error("Students not provided");
       return of({}); // empty observable so you don't get errors when subsribing to undefined
@@ -153,6 +163,65 @@ export class HttpService {
 
   public getTeachersWithGradesDivisionsSubjects(): Observable<any> {
     return this.post("/teacher/get/teacher-grades", {})
+  }
+
+
+
+  //Absences methods
+
+  public addAbsencesByTeacher(absences: AddAbsencesByTeacher[]): Observable<any> {
+    return this.post("/absences/add/absences", {
+      absences: absences
+    });
+  }
+
+  public addExcuseReasonsByParent(excuseReasons: AddExcuseReasonsByParent[]): Observable<any> {
+    return this.post("/absences/add/excuse-reasons", {
+      excuseReasons: excuseReasons
+    });
+  }
+
+  public getAbsencesByStudent(studentId : string): Observable<any> {
+    return this.post("/absences/get-absences/student", {
+      id: studentId
+    });
+  }
+
+  public getAbsencesByParent(parentId : string): Observable<any> {
+    return this.post("/absences/get-absences/parent", {
+      id: parentId
+    });
+  }
+
+  
+  public getAbsencesByTeacher(teacherId : string): Observable<any> {
+    return this.post("/absences/get-absences/teacher", {
+      id: teacherId
+    });
+  }
+
+  public getAbsencesByGradeTeacher(gradeTeacherId : string): Observable<any> {
+    return this.post("/absences/get-absences/grade-teacher", {
+      id: gradeTeacherId
+    });
+  }
+
+  public getExcuseReasonsByParent(parentId : string): Observable<any> {
+    return this.post("/absences/get-excuse-reasons/parent", {
+      id: parentId
+    });
+  }
+
+  public getExcuseReasonsByTeacher(teacherId : string): Observable<any> {
+    return this.post("/absences/get-excuse-reasons/teacher", {
+      id: teacherId
+    });
+  }
+
+  public getExcuseReasonsByGradeTeacher(gradeTeacherId : string): Observable<any> {
+    return this.post("/absences/get-excuse-reasons/grade-teacher", {
+      id: gradeTeacherId
+    });
   }
 
 }

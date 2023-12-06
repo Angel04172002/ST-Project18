@@ -14,3 +14,9 @@ const getTeachersAndGradesQuery = `
         on tgds.teacher_id = p.id
         order by tgds.teacher_grade_id ASC, tgds.teacher_grade_division_id ASC
 `;
+
+
+module.exports = {
+        addSubjectsAndGradesQuery,
+        getTeachersAndGradesQuery
+}
