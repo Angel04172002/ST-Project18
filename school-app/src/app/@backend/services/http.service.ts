@@ -226,11 +226,6 @@ export class HttpService {
     });
   }
 
-  public getExcuseReasonsByTeacher(teacherId: string): Observable<any> {
-    return this.post("/absences/get-excuse-reasons/teacher", {
-      id: teacherId
-    });
-  }
 
   public getExcuseReasonsByGradeTeacher(gradeTeacherId: string): Observable<any> {
     return this.post("/absences/get-excuse-reasons/grade-teacher", {
@@ -241,7 +236,6 @@ export class HttpService {
 
 
   //Helper methods
-
   public getGradesDivisionsAndSubjectsForTeacher(teacherId: string): Observable<any> {
     return this.post("/grades/get/teachers/grades", {
       teacherId: teacherId
@@ -265,9 +259,6 @@ export class HttpService {
       parentId: parentId
     })
   }
-
-
-
 
 
 }
