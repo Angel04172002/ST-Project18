@@ -5,6 +5,31 @@ on s.id = p.id
 `
 
 
+const getTeachersWithGradesDivisionsSubjectsQuery = `
+select * from teachers_grades_divisions_subjects where teacher_id = $1
+`;
+
+
+const getGradeTeachersWithGradesDivisionsSubjectsQuery = `
+select * from grade_teachers_grades_divisions_subjects where grade_teacher_id = $1
+`;
+
+
+const getStudentsWithGradesDivisionsSubjectsQuery = `
+select * from student where id = $1
+`;
+
+const getParentsWithGradesDivisionsSubjectsQuery = `
+select s.id, s.grade_id, s.grade_division_id, s.parent_id from parent p
+inner join student s
+on s.parent_id = p.id
+where s.parent_id = $1
+`;
+
 module.exports = {
-    getStudentsWithGradeAndDivisonQuery
+    getStudentsWithGradeAndDivisonQuery,
+    getTeachersWithGradesDivisionsSubjectsQuery,
+    getGradeTeachersWithGradesDivisionsSubjectsQuery,
+    getStudentsWithGradesDivisionsSubjectsQuery,
+    getParentsWithGradesDivisionsSubjectsQuery
 }

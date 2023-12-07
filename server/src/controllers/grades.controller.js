@@ -113,7 +113,7 @@ getGradesByParent = async (request, response) => {
 
 addStudentsToGrade = async (request, response) => {
     try {
-       
+
 
         const students = request.body?.students;
 
@@ -209,6 +209,66 @@ getAllSubjects = async (request, response) => {
     }
 }
 
+
+
+
+getGradesDivisionsAndSubjectsForTeacher = async (request, response) => {
+    try {
+
+        const teacherId = request.body?.teacherId;
+        let { rows } = await pool.query(gradesQueries.getTeachersWithGradesDivisionsSubjectsQuery, [teacherId])
+
+        return response.status(200).json(rows)
+    }
+    catch (err) {
+        console.error(err.message)
+        response.status(500).send(err.message)
+    }
+}
+
+getGradesDivisionsAndSubjectsForGradeTeacher = async (request, response) => {
+    try {
+        const gradeTeacherId = request.body?.gradeTeacherId;
+        let { rows } = await pool.query(gradesQueries.getGradeTeachersWithGradesDivisionsSubjectsQuery, [gradeTeacherId]);
+
+        return response.status(200).json(rows);
+    }
+    catch (err) {
+        console.error(err.message)
+        response.status(500).send(err.message)
+    }
+}
+
+getGradesDivisionsAndSubjectsForStudent = async (request, response) => {
+    try {
+        const studentId = request.body?.studentid;
+        let { rows } = await pool.query(gradesQueries.getStudentsWithGradesDivisionsSubjectsQuery, [studentId]);
+
+        return response.status(200).json(rows);
+    }
+    catch (err) {
+        console.error(err.message)
+        response.status(500).send(err.message)
+    }
+}
+
+
+getGradesDivisionsAndSubjectsForParent = async (request, response) => {
+    try {
+        const parentId = request.body?.parentId;
+        let { rows } = await pool.query(gradesQueries.getParentsWithGradesDivisionsSubjectsQuery, [parentId]);
+
+        return response.status(200).json(rows);
+    }
+    catch (err) {
+        console.error(err.message)
+        response.status(500).send(err.message)
+    }
+}
+
+
+
+
 module.exports = {
     getGradesByStudent,
     getGradesByTeacher,
@@ -216,5 +276,8 @@ module.exports = {
     addStudentsToGrade,
     addSubjectsToGrade,
     getStudentsWithGradeAndDivison,
-    getAllSubjects
+    getAllSubjects,
+    getGradesDivisionsAndSubjectsForTeacher,
+    getGradesDivisionsAndSubjectsForGradeTeacher,
+    getGradesDivisionsAndSubjectsForStudent
 }

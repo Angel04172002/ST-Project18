@@ -18,4 +18,9 @@ router.post('/all', gradesController.getStudentsWithGradeAndDivison)
 
 router.post('/subjects/all', gradesController.getAllSubjects)
 
+router.post('/get/teachers/grades', gradesController.getGradesDivisionsAndSubjectsForTeacher)
+router.post('/get/grade-teachers/grades', gradesController.getGradesDivisionsAndSubjectsForGradeTeacher)
+router.post('/get/students/grades', gradesController.getGradesDivisionsAndSubjectsForStudent)
+router.post('/get/parents/grades', gradesController.getGradesDivisionsAndSubjectsForStudent)
+
 module.exports = router
