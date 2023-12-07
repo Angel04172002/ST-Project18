@@ -1,4 +1,4 @@
-import { Component, TemplateRef, ViewChild } from '@angular/core';
+import { Component, OnInit, TemplateRef, ViewChild } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { UserService } from 'src/app/user/user.service';
 import { HttpService } from 'src/app/@backend/services/http.service';
@@ -16,17 +16,19 @@ import { AbsenceExcuseReason } from '../../types/AbsenceExcuseReason';
 import { MatDialog, MatDialogConfig, MatDialogModule } from '@angular/material/dialog';
 import { FormsModule, NgForm, ReactiveFormsModule } from '@angular/forms';
 import { MatIconModule } from '@angular/material/icon';
+import { AddAbsencesByTeacher } from 'src/app/@backend/models/add-absences-by-teacher';
+import { Term } from 'src/app/types/Term';
+import { Subject } from 'src/app/types/Subject';
+import { GradeDivision } from 'src/app/types/GradeDivision';
+import { Grade } from 'src/app/types/Grade';
 
 export interface Student {
   firstName: string | undefined,
   lastName: string | undefined,
+  subject: Subject['subjectName'],
   absenceType: AbsenceTypes,
   absenceReason: AbsenceExcuseReason
 }
-
-const ELEMENT_DATA: Student[] = [
-  { firstName: "Петър", lastName: "Петров", absenceType: AbsenceTypes.Excused, absenceReason: AbsenceExcuseReason.FamilyReasons }
-];
 
 const COLUMNS_SCHEMA = [
   {
@@ -40,13 +42,18 @@ const COLUMNS_SCHEMA = [
     label: "Фамилия"
   },
   {
+    key: "subject",
+    type: "selectSubject",
+    label: "Предмет"
+  },
+  {
     key: "absenceType",
     type: "checkbox",
     label: "Извинено"
   },
   {
     key: "absenceReason",
-    type: "select",
+    type: "selectAbsence",
     label: "Причина за отсъствие"
   },
   {
@@ -77,7 +84,7 @@ const COLUMNS_SCHEMA = [
   ],
   standalone: true
 })
-export class AbsenceComponent {
+export class AbsenceComponent implements OnInit {
   constructor(
     private userService: UserService,
     private http: HttpService,
@@ -88,9 +95,195 @@ export class AbsenceComponent {
     return this.userService.user?.type;
   }
 
+  yearTerms: Term['termId'] [] = ["Първи срок", "Втори срок"];
+  gradeDivisions: GradeDivision['id'] [] = [];
+  grades: Grade['id'] [] = [];
+  subjects: Subject['subjectName'] [] = [];
+  
   displayedColumns: string[] = COLUMNS_SCHEMA.map((col) => col.key);
-  dataSource = ELEMENT_DATA;
+  dataSource = new MatTableDataSource<Student>();
   columnsSchema: any = COLUMNS_SCHEMA;
+
+  @ViewChild('gradeSelect') gradeSelect!: MatSelect;
+  @ViewChild('gradeDivisionSelect') gradeDivisionSelect!: MatSelect;
+  @ViewChild('yearTermSelect') yearTermSelect!: MatSelect;
+
+  ngOnInit(): void {
+    this.getAbsences().then((res: any) => {
+      this.dataSource.data = res;
+      this.getGradeDivisions();
+    });
+
+    //this.getExcuseReasons()
+
+  }
+
+  async getAbsences() {
+    let user = this.userService.getUser();
+    let id = '';
+    let type = '';
+    let absences: Student[] = [];
+
+    if(user) {
+      id = user.id;
+      type = user.type;
+    }
+
+    console.log(user)
+
+    if (type === 'Teacher') {
+
+      await firstValueFrom(this.http.getAbsencesByTeacher(id))
+        .then(data => {
+          console.log(data)
+          for (let item of data) {
+
+             let absencesData = {
+               firstName: item.student_first_name,
+               lastName: item.student_last_name,
+               subject: item.absence_subject_id,
+               absenceType: item.absence_type_id,
+               absenceReason: AbsenceExcuseReason.FamilyReasons
+             }
+
+            absences.push(absencesData);
+            console.log(absences)
+
+          }
+
+        })
+    } else if (type === 'Grade teacher') {
+      
+      await firstValueFrom(this.http.getAbsencesByGradeTeacher(id))
+        .then(data => {
+
+          for (let item of data) {
+
+             let absencesData = {
+               firstName: item.student_first_name,
+               lastName: item.student_last_name,
+               subject: item.absence_subject_id,
+               absenceType: item.absence_type_id,
+               absenceReason: AbsenceExcuseReason.FamilyReasons
+             }
+
+            absences.push(absencesData);
+
+          }
+
+        })
+    }
+    return absences;
+  }
+
+  async addAbsences(row: any) {
+    let user = this.userService.getUser();
+    let id = '';
+    let type = '';
+
+    if(user) {
+      id = user.id;
+      type = user.type
+    }
+
+    console.log(row)
+    let absences : AddAbsencesByTeacher[] = [{
+      type: row.absenceType == true ? AbsenceTypes.Excused : AbsenceTypes.Unexcused,
+      subjectId: row.subject,
+      studentId: 'ZcIJNPgdwx0cq5s53ueZUNlQf72sVqAdC8MR8TRs',
+      termId: this.yearTermSelect.value
+    }]
+
+    let creator: any;
+
+    type == "Teacher" ? creator = { teacherId: id, gradeTeacherId: null } : creator = { teacherId: null, gradeTeacherId: id };
+    
+    let req = this.http.addAbsencesByTeacher(absences, creator)
+
+    await firstValueFrom(req)
+      .then(data => {
+
+        console.log(data);
+
+      })
+
+  }
+
+  async getExcuseReasons() {
+    let user = this.userService.getUser();
+    let id = '';
+    let type = '';
+
+    if(user) {
+      id = user.id;
+      type = user.type;
+    }
+
+    console.log(user)
+
+    if (type === 'Teacher') {
+
+      await firstValueFrom(this.http.getExcuseReasonsByTeacher(id))
+        .then(data => {
+          console.log(data)
+
+        })
+    }
+
+  }
+
+  async getGradeDivisions() {
+    let user = this.userService.getUser();
+    let id = '';
+    let type = '';
+
+    if(user) {
+      id = user.id;
+      type = user.type;
+    }
+
+    if (type === 'Teacher') {
+
+      await firstValueFrom(this.http.getGradesDivisionsAndSubjectsForTeacher(id))
+        .then(data => {
+          data = data[0]
+
+          this.gradeDivisions.push(data.teacher_grade_division_id);
+          this.grades.push(data.teacher_grade_id);
+          this.subjects.push(data.teacher_subject_id)
+        })
+    } else if (type === 'Grade teacher') {
+      
+      await firstValueFrom(this.http.getGradesDivisionsAndSubjectsForGradeTeacher(id))
+        .then(data => {
+          data = data[0]
+
+          this.gradeDivisions.push(data.grade_teacher_grade_division_id);
+          this.grades.push(data.grade_teacher_grade_id);
+          this.subjects.push(data.grade_teacher_subject_id)
+        })
+    } else if (type === 'Student') {
+      
+      await firstValueFrom(this.http.getGradesDivisionsAndSubjectsForStudent(id))
+        .then(data => {
+          data = data[0]
+
+          this.gradeDivisions.push(data.student_grade_division_id);
+          this.grades.push(data.student_grade_id);
+          this.subjects.push(data.student_subject_id)
+        })
+    } else if (type === 'Parent') {
+      
+      await firstValueFrom(this.http.getGradesDivisionsAndSubjectsForParent(id))
+        .then(data => {
+          data = data[0]
+
+          this.gradeDivisions.push(data.student_grade_division_id);
+          this.grades.push(data.student_grade_id);
+          this.subjects.push(data.student_subject_id)
+        })
+    }
+  }
 
   absenceExcuseReasons: AbsenceExcuseReason[] = [
     AbsenceExcuseReason.FamilyReasons,
@@ -98,46 +291,51 @@ export class AbsenceComponent {
     AbsenceExcuseReason.Others
   ];
 
-  // firstTerm: Absence[] = [
-  //   {
-  //     id: "1",
-  //     creatorId: "1",
-  //     absenceTypeId: AbsenceTypes.Excused,
-  //     absenceReasonId: AbsenceExcuseReason.FamilyReasons
-  //   },
-  //   {
-  //     id: "2",
-  //     creatorId: "2",
-  //     absenceTypeId: AbsenceTypes.Unexcused,
-  //     absenceReasonId: AbsenceExcuseReason.MedicalReasons
-  //   }
-  // ];
+  firstTerm: Absence[] = [
+    // {
+    //   id: "1",
+    //   creatorId: "1",
+    //   absenceTypeId: AbsenceTypes.Excused,
+    //   absenceReasonId: AbsenceExcuseReason.FamilyReasons
+    // },
+    // {
+    //   id: "2",
+    //   creatorId: "2",
+    //   absenceTypeId: AbsenceTypes.Unexcused,
+    //   absenceReasonId: AbsenceExcuseReason.MedicalReasons
+    // }
+  ];
 
-  // secondTerm: Absence[] = [
-  //   {
-  //     id: "1",
-  //     creatorId: "1",
-  //     absenceTypeId: AbsenceTypes.Unexcused,
-  //     absenceReasonId: AbsenceExcuseReason.MedicalReasons
-  //   },
-  //   {
-  //     id: "2",
-  //     creatorId: "2",
-  //     absenceTypeId: AbsenceTypes.Unexcused,
-  //     absenceReasonId: AbsenceExcuseReason.FamilyReasons
-  //   }
-  // ];
+  secondTerm: Absence[] = [
+    // {
+    //   id: "1",
+    //   creatorId: "1",
+    //   absenceTypeId: AbsenceTypes.Unexcused,
+    //   absenceReasonId: AbsenceExcuseReason.MedicalReasons
+    // },
+    // {
+    //   id: "2",
+    //   creatorId: "2",
+    //   absenceTypeId: AbsenceTypes.Unexcused,
+    //   absenceReasonId: AbsenceExcuseReason.FamilyReasons
+    // }
+  ];
   displayedColumns2: string[] = ['id', 'absenceReasonId', 'absenceTypeId'];
+
+  addRowDone(row: any){
+    this.addAbsences(row).then(() => (row.isEdit = false));
+  }
 
   addRow() {
     const newRow = {
       firstName: '',
       lastName: '',
+      subject: '',
       absenceType: AbsenceTypes.Unexcused,
       absenceReason: AbsenceExcuseReason.Others,
       isEdit: true
     }
-    this.dataSource = [...this.dataSource, newRow]
+    this.dataSource.data = [...this.dataSource.data, newRow]
   }
 
   selectedRowIndex = -1;

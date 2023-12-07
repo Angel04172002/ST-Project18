@@ -183,7 +183,7 @@ addExcuseReasonsByParent = async (request, response) => {
             );
         }
 
-        return response.status(200).send("Excuse reasons added successfully!")
+        return response.status(200).json("Excuse reasons added successfully!")
     }
     catch (err) {
         console.error(err.message)
@@ -218,7 +218,7 @@ addAbsencesByTeacher = async (request, response) => {
                     creator.teacherId, creator.gradeTeacherId]);
         }
 
-        return response.status(200).send("Absences added successfully!")
+        return response.status(200).json("Absences added successfully!")
     }
     catch (err) {
         console.error(err.message)
