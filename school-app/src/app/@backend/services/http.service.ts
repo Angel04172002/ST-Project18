@@ -207,7 +207,6 @@ export class HttpService {
     });
   }
 
-
   public getAbsencesByTeacher(teacherId: string): Observable<any> {
     return this.post("/absences/get-absences/teacher", {
       id: teacherId

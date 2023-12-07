@@ -1,6 +1,6 @@
 export class AddAbsencesByTeacher {
-    type!: string;
-    subjectId!: string;
+    type!: string; //Teacher or Grade teacher
+    subjectId!: string; //Математика
     studentId!: string;
     termId!: string;
 

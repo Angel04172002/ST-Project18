@@ -98,35 +98,35 @@ export class AbsenceComponent {
     AbsenceExcuseReason.Others
   ];
 
-  firstTerm: Absence[] = [
-    {
-      id: "1",
-      creatorId: "1",
-      absenceTypeId: AbsenceTypes.Excused,
-      absenceReasonId: AbsenceExcuseReason.FamilyReasons
-    },
-    {
-      id: "2",
-      creatorId: "2",
-      absenceTypeId: AbsenceTypes.Unexcused,
-      absenceReasonId: AbsenceExcuseReason.MedicalReasons
-    }
-  ];
+  // firstTerm: Absence[] = [
+  //   {
+  //     id: "1",
+  //     creatorId: "1",
+  //     absenceTypeId: AbsenceTypes.Excused,
+  //     absenceReasonId: AbsenceExcuseReason.FamilyReasons
+  //   },
+  //   {
+  //     id: "2",
+  //     creatorId: "2",
+  //     absenceTypeId: AbsenceTypes.Unexcused,
+  //     absenceReasonId: AbsenceExcuseReason.MedicalReasons
+  //   }
+  // ];
 
-  secondTerm: Absence[] = [
-    {
-      id: "1",
-      creatorId: "1",
-      absenceTypeId: AbsenceTypes.Unexcused,
-      absenceReasonId: AbsenceExcuseReason.MedicalReasons
-    },
-    {
-      id: "2",
-      creatorId: "2",
-      absenceTypeId: AbsenceTypes.Unexcused,
-      absenceReasonId: AbsenceExcuseReason.FamilyReasons
-    }
-  ];
+  // secondTerm: Absence[] = [
+  //   {
+  //     id: "1",
+  //     creatorId: "1",
+  //     absenceTypeId: AbsenceTypes.Unexcused,
+  //     absenceReasonId: AbsenceExcuseReason.MedicalReasons
+  //   },
+  //   {
+  //     id: "2",
+  //     creatorId: "2",
+  //     absenceTypeId: AbsenceTypes.Unexcused,
+  //     absenceReasonId: AbsenceExcuseReason.FamilyReasons
+  //   }
+  // ];
   displayedColumns2: string[] = ['id', 'absenceReasonId', 'absenceTypeId'];
 
   addRow() {
