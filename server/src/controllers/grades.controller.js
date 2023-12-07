@@ -276,6 +276,21 @@ getGradesDivisionsAndSubjectsForParent = async (request, response) => {
 }
 
 
+getStudentsByGradeAndDivision = async (request, response) => {
+    try {
+        const gradeId = request.body?.gradeId;
+        const gradeDivisionId = request.body?.gradeDivisionId;
+
+        let { rows } = await pool.query(gradesQueries.getStudentsByGradeAndDivision, [gradeId, gradeDivisionId]);
+
+        return response.status(200).json(rows);
+    }
+    catch (err) {
+        console.error(err.message)
+        response.status(500).send(err.message)
+    }
+}
+
 
 
 module.exports = {
@@ -288,5 +303,6 @@ module.exports = {
     getAllSubjects,
     getGradesDivisionsAndSubjectsForTeacher,
     getGradesDivisionsAndSubjectsForGradeTeacher,
-    getGradesDivisionsAndSubjectsForStudent
+    getGradesDivisionsAndSubjectsForStudent,
+    getStudentsByGradeAndDivision
 }

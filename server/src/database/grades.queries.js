@@ -26,10 +26,19 @@ on s.parent_id = p.id
 where s.parent_id = $1
 `;
 
+
+const getStudentsByGradeAndDivision = ` 
+select * from student s
+inner join profile p
+on s.id = p.id
+where s.grade_id = $1 and s.grade_division_id = $2
+`;
+
 module.exports = {
     getStudentsWithGradeAndDivisonQuery,
     getTeachersWithGradesDivisionsSubjectsQuery,
     getGradeTeachersWithGradesDivisionsSubjectsQuery,
     getStudentsWithGradesDivisionsSubjectsQuery,
-    getParentsWithGradesDivisionsSubjectsQuery
+    getParentsWithGradesDivisionsSubjectsQuery,
+    getStudentsByGradeAndDivision
 }

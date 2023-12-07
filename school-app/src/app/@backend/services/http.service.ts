@@ -256,9 +256,16 @@ export class HttpService {
   }
 
   public getGradesDivisionsAndSubjectsForParent(parentId: string): Observable<any> {
-    return this.post("/get/parents/grades", {
+    return this.post("/grades/get/parents/grades", {
       parentId: parentId
     })
+  }
+
+  public getStudentsByGradeAndDivision(gradeId: number, gradeDivisionId: string) {
+    return this.post('/grades/get/students/by-grades', {
+      gradeId: gradeId,
+      gradeDivisionId: gradeDivisionId
+    });
   }
 
 
