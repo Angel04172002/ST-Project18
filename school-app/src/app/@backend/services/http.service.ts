@@ -107,8 +107,10 @@ export class HttpService {
   }
 
   public getAllSubjects(): Observable<any> {
-    return this.post("/subjects/all", {});
+    return this.post("/grades/subjects/all", {});
   }
+
+
 
   // Marks methods
 

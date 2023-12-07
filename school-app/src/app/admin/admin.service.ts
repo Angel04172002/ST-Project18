@@ -8,6 +8,7 @@ import { log } from 'console';
 import { HttpService } from 'src/app/@backend/services/http.service';
 import { firstValueFrom } from 'rxjs';
 import { Teacher } from '../types/Teacher';
+import { Subject } from '../types/Subject';
 import { AddStudentToGrade } from '../@backend/models/add-student-to-grade.model';
 
 
@@ -25,9 +26,11 @@ export class AdminService implements OnInit {
 
   studentHeaders = ['Student id', 'First name', 'Last name', 'Email', 'Grade', 'Grade division'];
   teacherHeaders = ['Teacher id', 'First name', 'Last name', 'Email', 'Type', 'Grade', 'Grade division'];
+  subjectHeaders = ['Grade id', 'Subject id'];
 
   adminStudentData: Student[] = [];
   adminTeacherData: Teacher[] = [];
+  adminSubjectData: Subject[] = [];
 
   // adminActions: any = {
   //   sendJsonStudents: this.httpService.addStudentsToGrade,
@@ -71,7 +74,6 @@ export class AdminService implements OnInit {
 
     await firstValueFrom(req)
       .then((data) => {
-        console.log(data);
         this.adminTeacherData = data;
       })
       .catch(err => {
@@ -82,15 +84,31 @@ export class AdminService implements OnInit {
   }
 
 
+  async generateGradesAndSubjects() {
+
+    const req = this.httpService.getAllSubjects();
+
+    await firstValueFrom(req)
+      .then((data) => {
+        this.adminSubjectData = data;
+      })
+      .catch(err => {
+        throw err;
+      });
+
+    this.excelService.downloadXLSX(this.adminSubjectData, this.subjectHeaders);
+
+  }
+
+
 
   sendJsonData(files: FileList | null, action: string) {
 
     if (files && files.length > 0) {
       const file = files[0];
-     
+
       this.excelService.readXLSXFile(file)
         .then(async (jsonData) => {
-
 
           let req: any = '';
 
@@ -98,6 +116,8 @@ export class AdminService implements OnInit {
             req = this.httpService.addStudentsToGrade(jsonData);
           } else if (action == 'sendJsonTeachers') {
             req = this.httpService.addSubjectsAndGradesToTeacher(jsonData);
+          } else if(action == 'sendJsonGrades') {
+            req = this.httpService.addSubjectsToGrade(jsonData);
           }
 
           await firstValueFrom(req)

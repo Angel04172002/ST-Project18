@@ -10,7 +10,7 @@ import { NoteComponent } from './pages/note/note.component';
 import { AdminComponent } from './admin/admin/admin.component';
 import { ChatComponent } from './pages/chat/chat/chat.component';
 import { GroupChatComponent } from './pages/chat/group-chat/group-chat.component';
-import { AbsenceComponent } from './pages/absence/absence.component';
+// import { AbsenceComponent } from './pages/absence/absence.component';
 
 const routes: Routes = [
   {
@@ -22,10 +22,10 @@ const routes: Routes = [
     path: 'home',
     component: HomeComponent
   },
-  {
-    path: 'absence',
-    component: AbsenceComponent
-  },
+  // {
+  //   path: 'absence',
+  //   component: AbsenceComponent
+  // },
   {
     path: 'note',
     component: NoteComponent

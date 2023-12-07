@@ -3,7 +3,7 @@ import { BrowserModule } from '@angular/platform-browser';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
-import { AbsenceComponent } from './pages/absence/absence.component';
+// import { AbsenceComponent } from './pages/absence/absence.component';
 import { CalendarComponent } from './pages/calendar/calendar.component';
 import { FeedbackComponent } from './feedback/feedback.component';
 
@@ -48,7 +48,7 @@ import { FormsModule }   from '@angular/forms';
     ChatModule,
     SharedModule,
     BrowserAnimationsModule,
-    AbsenceComponent,
+    // AbsenceComponent,
     NoteComponent,
     AdminModule,
     UserModule,

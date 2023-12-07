@@ -37,7 +37,7 @@ export class ExcelService {
 
   }
 
-  downloadXLSX(data: Profile[], headers: string[]): void {
+  downloadXLSX(data: any, headers: string[]): void {
 
     const csvData = Papa.unparse(data, { header: true });
 

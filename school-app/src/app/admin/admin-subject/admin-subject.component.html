@@ -1,33 +1,63 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="admin-subject.component.css">
-</head>
-<body>
-    <h2>Избор на предмет</h2>
-    <form id="addSubjectForm">
-        <label for="subjectSelect">Изберете предмет:</label>
-        <select id="subjectSelect" name="subject">
-            <option value="math">Математика</option>
-            <option value="english">Английски език</option>
-        </select>
+<h2>Избор на предмет</h2>
+<form id="addSubjectForm">
+    <label>Изберете предмет:</label>
+    <!-- <select #subjectSelect name="subjectSelect">
+        <option value="Математика">Математика</option>
+        <option value="Английски">Английски език</option>
+        <option value="Литература">Литература</option>
+        <option value="Музика">Музика</option>
+        <option value="Изобразително изкуство">Изобразително изкуство</option>
+        <option value="ИТ">ИТ</option>
+        <option value="Физика">Физика</option>
+        <option value="Химия">Химия</option>
+        <option value="Биология">Биология</option>
+    </select> -->
 
-        <label for="classSelect">Изберете клас:</label>
-        <select id="classSelect" name="class">
-            <option value="1A">1A</option>
-            <option value="1B">1B</option>
-
-        </select>
-
-        <label for="additionalInfo">Допълнителна информация:</label>
-        <textarea id="additionalInfo" name="additionalInfo" rows="4"></textarea>
-
-        <button mat-raised-button color="primary" type="button" onclick="addSubject()">Добави предмет</button>
-    </form>
+    <input type="text" #subjectSelect>
 
 
-    <script src="admin-acc.html"></script>
-</body>
-</html>
+    <label>Изберете клас:</label>
+    <select #classSelect name="classSelect">
+        <option value="1">1</option>
+        <option value="2">2</option>
+        <option value="3">3</option>
+        <option value="4">4</option>
+        <option value="5">5</option>
+        <option value="6">6</option>
+        <option value="7">7</option>
+        <option value="8">8</option>
+        <option value="9">9</option>
+        <option value="10">10</option>
+        <option value="11">11</option>
+        <option value="12">12</option>
+
+    </select>
+    <!-- 
+    <label for="additionalInfo">Допълнителна информация:</label>
+    <textarea id="additionalInfo" name="additionalInfo" rows="4"></textarea> -->
+
+    <button mat-raised-button color="primary" type="button" (click)="addSubject($event)">Добави предмет</button>
+</form>
+
+
+<script src="admin-acc.html"></script>
+
+
+
+
+<mat-card class="admin-card">
+    <h3>Генерирай файл с учители и класове:</h3>
+    <button mat-raised-button color="primary" (click)="downloadCsvFile()" class="generate-button">Генерирай</button>
+
+    <mat-divider></mat-divider>
+    <h3>Прикачи файл с учители и класове:</h3>
+
+    <div class="add-file-input">
+        <input type="file" name="file-input" class="file-input" accept=".xlsx" #fileUpload>
+        <button mat-raised-button color="primary" #file class="file-button"
+            (click)="fileUpload.click()"><mat-icon>attach_file</mat-icon>Прикачи</button>
+
+        <button type="submit" mat-raised-button class="submit-data-button" color="primary"
+            (click)="sendJson()">Добави</button>
+    </div>
+</mat-card>

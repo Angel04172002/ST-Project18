@@ -168,13 +168,21 @@ addSubjectsToGrade = async (request, response) => {
         }
 
         for (let subject of subjects) {
+
+            console.log(subject);
+
             await pool.query(
-                'insert into  grades_subjects (grade_id, subject_id) VALUES ($1, $2)',
-                [subject.grade_id, subject.subject_name]
+                'insert into subject values ($1, $2) ON CONFLICT (subject_name) DO UPDATE SET subject_name = $1 WHERE subject.subject_name = $1',
+                [subject.subjectId, '890e0f59-1c4f-4552-8a83-b7d1e5e92770']
+            )
+
+            await pool.query(
+                'insert into  grades_subjects (grade_id, subject_id) VALUES ($1, $2) ON CONFLICT (grade_id, subject_id) DO UPDATE SET grade_id = $1, subject_id = $2 WHERE grades_subjects.grade_id = $1 and grades_subjects.subject_id = $2',
+                [subject.gradeId, subject.subjectId]
             )
         }
 
-        return response.status(200).send("Added successfully!")
+        return response.json("Added successfully!")
     }
     catch (err) {
         console.error(err.message)
@@ -198,8 +206,9 @@ getStudentsWithGradeAndDivison = async (request, response) => {
 }
 
 getAllSubjects = async (request, response) => {
+
     try {
-        let { rows } = await pool.query('select * from grades_subjects')
+        let { rows } = await pool.query('select * from grades_subjects order by grade_id, subject_id')
 
         return response.status(200).json(rows)
     }

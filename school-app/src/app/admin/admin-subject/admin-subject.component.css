@@ -61,3 +61,45 @@ button:hover {
 .footer a:hover {
     text-decoration: underline;
 }
+
+
+.admin-card{
+    margin: auto;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    width: 500px;
+    height: 300px;
+    padding: 20px 40px 20px 40px;
+}
+
+.file-input {
+    display: none;
+  }
+
+.file-unput:hover{
+    cursor: pointer;
+}
+
+button{
+    width: 150px;
+}
+
+.add-file-input{
+    display: flex;
+    justify-content: space-around;
+}
+
+.generate-button{
+    margin: auto;
+    margin-top: 0px;
+    margin-bottom: 10px;
+}
+
+
+input, select {
+    width: 100%;
+    padding: 8px;
+    margin-bottom: 16px;
+    box-sizing: border-box;
+}

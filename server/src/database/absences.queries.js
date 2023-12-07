@@ -151,7 +151,6 @@ gs.subject_id ASC;
 
 `;
 
-
 const getAbsencesFromParent = ` 
 	
 

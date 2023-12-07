@@ -25,8 +25,6 @@ import { MatIconModule } from '@angular/material/icon';
   standalone: true
 })
 export class AdminPanelComponent {
-
-  
   @ViewChild('fileUpload') fileInput!: ElementRef;
 
   constructor(private httpService: HttpService, private adminService: AdminService) { }
