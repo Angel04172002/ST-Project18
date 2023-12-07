@@ -169,10 +169,22 @@ export class HttpService {
 
   //Absences methods
 
-  public addAbsencesByTeacher(absences: AddAbsencesByTeacher[]): Observable<any> {
+  public addAbsencesByTeacher(absences: AddAbsencesByTeacher[], creator : any): Observable<any> {
     return this.post("/absences/add/absences", {
-      absences: absences
+      absences: absences,
+      creator: creator
     });
+
+    //creator:
+    // {
+        //teacherId: ...
+        //gradeTeacherId: null
+
+        //or
+
+        //teacherId: null
+        //gradeTeacherId: ...
+    // }
   }
 
   public addExcuseReasonsByParent(excuseReasons: AddExcuseReasonsByParent[]): Observable<any> {

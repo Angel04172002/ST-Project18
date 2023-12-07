@@ -169,9 +169,12 @@ addExcuseReasonsByParent = async (request, response) => {
 
 
         for (let excuseReason of excuseReasons) {
+
+            let id = utils.generateRandomString(40);
+
             await pool.query(
-                'insert into absence_excuse_reason values ($1, $2, $3)',
-                [excuseReason.reason, excuseReason.parentId, excuseReason.noteId]
+                'insert into absence_excuse_reason values ($1, $2, $3, $4)',
+                [excuseReason.reason, excuseReason.parentId, excuseReason.noteId, id]
             );
 
             await pool.query(
@@ -191,6 +194,7 @@ addExcuseReasonsByParent = async (request, response) => {
 addAbsencesByTeacher = async (request, response) => {
     try {
         const absences = request.body?.absences;
+        const creator = request.body?.creator;
 
         if (!absences) {
             return response.status(500).send(`Absences array not provided`);
@@ -209,12 +213,9 @@ addAbsencesByTeacher = async (request, response) => {
 
             const id = utils.generateRandomString(40);
 
-            await pool.query('insert into absence values ($1, $2, $3, $4, $5',
-                [id, absence.type, absence.subjectId, absence.studentId, absence.termId]);
-
-        
-
-
+            await pool.query('insert into absence values ($1, $2, $3, $4, $5, $6, $7)',
+                [id, absence.type, absence.subjectId, absence.studentId, absence.termId,
+                    creator.teacherId, creator.gradeTeacherId]);
         }
 
         return response.status(200).send("Excuse reasons added successfully!")
