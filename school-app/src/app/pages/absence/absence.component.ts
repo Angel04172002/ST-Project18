@@ -4,9 +4,9 @@ import { UserService } from 'src/app/user/user.service';
 import { HttpService } from 'src/app/@backend/services/http.service';
 import { firstValueFrom } from 'rxjs';
 import { MatTableModule } from '@angular/material/table';
-import { MatCheckboxModule } from '@angular/material/checkbox';
+import { MatCheckbox, MatCheckboxModule } from '@angular/material/checkbox';
 import { MatTableDataSource } from '@angular/material/table';
-import { MatSelectModule } from '@angular/material/select';
+import { MatSelect, MatSelectModule } from '@angular/material/select';
 import { MatInputModule } from '@angular/material/input';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatButtonModule } from '@angular/material/button';
@@ -46,7 +46,7 @@ const COLUMNS_SCHEMA = [
   },
   {
     key: "absenceReason",
-    type: "text",
+    type: "select",
     label: "Причина за отсъствие"
   },
   {
@@ -92,6 +92,12 @@ export class AbsenceComponent {
   dataSource = ELEMENT_DATA;
   columnsSchema: any = COLUMNS_SCHEMA;
 
+  absenceExcuseReasons: AbsenceExcuseReason[] = [
+    AbsenceExcuseReason.FamilyReasons,
+    AbsenceExcuseReason.MedicalReasons,
+    AbsenceExcuseReason.Others
+  ];
+
   firstTerm: Absence[] = [
     {
       id: "1",
@@ -132,7 +138,6 @@ export class AbsenceComponent {
       isEdit: true
     }
     this.dataSource = [...this.dataSource, newRow]
-
   }
 
   selectedRowIndex = -1;
