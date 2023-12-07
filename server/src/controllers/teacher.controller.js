@@ -20,13 +20,27 @@ addSubjectsAndGradesToTeacher = async (request, response) => {
         }
 
         for (let subject of subjects) {
-            await pool.query(
-                'insert into teachers_grades_divisions_subjects (teacher_id, teacher_grade_id, teacher_grade_division_id,  teacher_subject_id) VALUES ($1, $2, $3, $4)',
-                [subject.teacher_id, subject.grade_id, subject.grade_division_id, subject.subject_name]
-            )
+
+            console.log(subject);
+
+            if(subject.type == 'Teacher') {
+
+                await pool.query(
+                    'insert into teachers_grades_divisions_subjects (teacher_id, teacher_grade_id, teacher_grade_division_id,  teacher_subject_id) VALUES ($1, $2, $3, $4) ON CONFLICT (teacher_id) DO UPDATE SET teacher_id = $1, teacher_grade_id = $2, teacher_grade_division_id = $3, teacher_subject_id = $4 WHERE teachers_grades_divisions_subjects.teacher_id = $1',
+                    [subject.teacherId, subject.grade, subject.gradeDivision, subject.teacher_subject_id]
+                )
+
+            } else if(subject.type == 'Grade teacher') {
+                await pool.query(
+                    'insert into grade_teachers_grades_divisions_subjects (grade_teacher_id, grade_teacher_grade_id, grade_teacher_grade_division_id,  grade_teacher_subject_id) VALUES ($1, $2, $3, $4) ON CONFLICT (grade_teacher_id) DO UPDATE SET grade_teacher_id = $1, grade_teacher_grade_id = $2, grade_teacher_grade_division_id = $3, grade_teacher_subject_id = $4 WHERE grade_teacher_id  = $1',
+                    [subject.teacherId, subject.grade, subject.gradeDivision, subject.teacher_subject_id]
+                )
+            }
+
+       
         }
 
-        return response.status(200).send("Added successfully!")
+        return response.status(200).json("Added successfully!")
     }
     catch (err) {
         console.error(err.message)

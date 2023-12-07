@@ -24,7 +24,7 @@ export class AdminService implements OnInit {
   });
 
   studentHeaders = ['Student id', 'First name', 'Last name', 'Email', 'Grade', 'Grade division'];
-  teacherHeaders = ['Teacher id', 'First name', 'Last name', 'Email', 'Grade', 'Grade division'];
+  teacherHeaders = ['Teacher id', 'First name', 'Last name', 'Email', 'Type', 'Grade', 'Grade division'];
 
   adminStudentData: Student[] = [];
   adminTeacherData: Teacher[] = [];
@@ -95,12 +95,12 @@ export class AdminService implements OnInit {
           let req: any = '';
 
           if (action == 'sendJsonStudents') {
-            req = this.httpService.addStudentsToGrade;
+            req = this.httpService.addStudentsToGrade(jsonData);
           } else if (action == 'sendJsonTeachers') {
-            req = this.httpService.addSubjectsAndGradesToTeacher;
+            req = this.httpService.addSubjectsAndGradesToTeacher(jsonData);
           }
 
-          await firstValueFrom(this.httpService.addStudentsToGrade(jsonData))
+          await firstValueFrom(req)
             .then(() => {
               alert('Успешно запазени промени');
             })

@@ -27,7 +27,7 @@ import { HttpService } from 'src/app/@backend/services/http.service';
 
 export class AdminComponent {
 
-  @ViewChild('fileInput') fileInput!: ElementRef;
+  @ViewChild('fileUpload') fileInput!: ElementRef;
 
   constructor(private httpService: HttpService, private adminService: AdminService) { }
 
@@ -36,7 +36,6 @@ export class AdminComponent {
   }
 
   sendJson() {
-
     this.adminService.sendJsonData(this.fileInput.nativeElement.files, 'sendJsonStudents');
   }
 }
