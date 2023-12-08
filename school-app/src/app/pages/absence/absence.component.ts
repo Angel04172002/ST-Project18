@@ -25,7 +25,12 @@ export interface Student {
 }
 
 const ELEMENT_DATA: Student[] = [
-  { firstName: "Петър", lastName: "Петров", absenceType: AbsenceTypes.Excused, absenceReason: AbsenceExcuseReason.FamilyReasons }
+  {
+    firstName: "Петър",
+    lastName: "Петров",
+    absenceType: AbsenceTypes.Excused,
+    absenceReason: AbsenceExcuseReason.FamilyReasons
+  }
 ];
 
 const COLUMNS_SCHEMA = [
@@ -98,6 +103,14 @@ export class AbsenceComponent {
     AbsenceExcuseReason.Others
   ];
 
+
+  //    id: string,
+  // teacherCreatorId: string,
+  // gradeTeacherCreatorId: string,
+  // absenceTypeId: AbsenceTypes,
+  // absenceReasonId: AbsenceExcuseReason,
+  // absenceSubjectId : Subject
+
   // firstTerm: Absence[] = [
   //   {
   //     id: "1",
@@ -127,6 +140,8 @@ export class AbsenceComponent {
   //     absenceReasonId: AbsenceExcuseReason.FamilyReasons
   //   }
   // ];
+
+  
   displayedColumns2: string[] = ['id', 'absenceReasonId', 'absenceTypeId'];
 
   addRow() {
