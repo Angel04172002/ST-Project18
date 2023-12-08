@@ -23,6 +23,7 @@ import { GradeDivision } from 'src/app/types/GradeDivision';
 import { Grade } from 'src/app/types/Grade';
 
 export interface Student {
+  id: string | undefined,
   firstName: string | undefined,
   lastName: string | undefined,
   subject: Subject['subjectName'],
@@ -36,12 +37,12 @@ export interface Student {
 const COLUMNS_SCHEMA = [
   {
     key: "firstName",
-    type: "text",
+    type: "selectFirstName",
     label: "Име"
   },
   {
     key: "lastName",
-    type: "text",
+    type: "selectLastName",
     label: "Фамилия"
   },
   {
@@ -66,7 +67,7 @@ const COLUMNS_SCHEMA = [
   },
   {
     key: "absenceReason",
-    type: "selectAbsence",
+    type: "selectAbsenceReason",
     label: "Причина за отсъствие"
   },
   {
@@ -108,11 +109,11 @@ export class AbsenceComponent implements OnInit {
     return this.userService.user?.type;
   }
 
-  yearTerms: Term['termId'] [] = ["Първи срок", "Втори срок"];
-  gradeDivisions: GradeDivision['id'] [] = [];
-  grades: Grade['id'] [] = [];
-  subjects: Subject['subjectName'] [] = [];
-  
+  yearTerms: Term['termId'][] = ["Първи срок", "Втори срок"];
+  gradeDivisions: GradeDivision['id'][] = [];
+  grades: Grade['id'][] = [];
+  subjects: Subject['subjectName'][] = [];
+
   displayedColumns: string[] = COLUMNS_SCHEMA.map((col) => col.key);
   dataSource = new MatTableDataSource<Student>();
   columnsSchema: any = COLUMNS_SCHEMA;
@@ -124,20 +125,21 @@ export class AbsenceComponent implements OnInit {
   ngOnInit(): void {
     this.getAbsences().then(() => {
       //this.getGradeDivisions();
+
     });
 
     //this.getExcuseReasons()
 
   }
 
-  absencesData =  new MatTableDataSource<Student>();
+  absencesData = new MatTableDataSource<Student>();
 
   async getAbsences() {
     let user = this.userService.getUser();
     let id = '';
     let type = '';
 
-    if(user) {
+    if (user) {
       id = user.id;
       type = user.type;
     }
@@ -151,28 +153,30 @@ export class AbsenceComponent implements OnInit {
           //console.log(data)
           for (let item of data) {
 
-             let absencesDataArray = {
-               firstName: item.student_first_name,
-               lastName: item.student_last_name,
-               subject: item.absence_subject_id,
-               grade: item.grade_id,
-               gradeDivision: item.grade_division_id,
-               absenceType: item.absence_type_id,
-               absenceReason: AbsenceExcuseReason.FamilyReasons,
-               term: item.absence_term_id
-             }
+            let absencesDataArray = {
+              id: item.absence_student_id,
+              firstName: item.student_first_name,
+              lastName: item.student_last_name,
+              subject: item.absence_subject_id,
+              grade: item.grade_id,
+              gradeDivision: item.grade_division_id,
+              absenceType: item.absence_type_id,
+              absenceReason: this.absenceReasonValue,
+              term: item.absence_term_id
+            }
 
             this.absencesData.data.push(absencesDataArray);
+            console.log(this.absenceReasonValue)
 
-            if(this.gradeDivisions.indexOf(item.grade_division_id) === -1) {
+            if (this.gradeDivisions.indexOf(item.grade_division_id) === -1) {
               this.gradeDivisions.push(item.grade_division_id);
             }
 
-            if(this.grades.indexOf(item.grade_id) === -1) {
+            if (this.grades.indexOf(item.grade_id) === -1) {
               this.grades.push(item.grade_id);
             }
 
-            if(this.subjects.indexOf(item.absence_subject_id) === -1) {
+            if (this.subjects.indexOf(item.absence_subject_id) === -1) {
               this.subjects.push(item.absence_subject_id);
             }
 
@@ -180,34 +184,35 @@ export class AbsenceComponent implements OnInit {
 
         })
     } else if (type === 'Grade teacher') {
-      
+
       await firstValueFrom(this.http.getAbsencesByGradeTeacher(id))
         .then(data => {
 
           for (let item of data) {
 
-             let absencesDataArray = {
-               firstName: item.student_first_name,
-               lastName: item.student_last_name,
-               subject: item.absence_subject_id,
-               grade: item.grade_id,
-               gradeDivision: item.grade_division_id,
-               absenceType: item.absence_type_id,
-               absenceReason: AbsenceExcuseReason.FamilyReasons,
-               term: item.absence_term_id
-             }
+            let absencesDataArray = {
+              id: item.absence_student_id,
+              firstName: item.student_first_name,
+              lastName: item.student_last_name,
+              subject: item.absence_subject_id,
+              grade: item.grade_id,
+              gradeDivision: item.grade_division_id,
+              absenceType: item.absence_type_id,
+              absenceReason: this.absenceReasonValue,
+              term: item.absence_term_id
+            }
 
             this.absencesData.data.push(absencesDataArray);
 
-            if(this.gradeDivisions.indexOf(item.grade_division_id) === -1) {
+            if (this.gradeDivisions.indexOf(item.grade_division_id) === -1) {
               this.gradeDivisions.push(item.grade_division_id);
             }
 
-            if(this.grades.indexOf(item.grade_id) === -1) {
+            if (this.grades.indexOf(item.grade_id) === -1) {
               this.grades.push(item.grade_id);
             }
-            
-            if(this.subjects.indexOf(item.absence_subject_id) === -1) {
+
+            if (this.subjects.indexOf(item.absence_subject_id) === -1) {
               this.subjects.push(item.absence_subject_id);
             }
 
@@ -224,23 +229,23 @@ export class AbsenceComponent implements OnInit {
     let id = '';
     let type = '';
 
-    if(user) {
+    if (user) {
       id = user.id;
       type = user.type
     }
 
     console.log(row)
-    let absences : AddAbsencesByTeacher[] = [{
-      type: row.absenceType == true ? AbsenceTypes.Excused : AbsenceTypes.Unexcused,
+    let absences: AddAbsencesByTeacher[] = [{
+      type: row.absenceType,
       subjectId: row.subject,
-      studentId: 'ZcIJNPgdwx0cq5s53ueZUNlQf72sVqAdC8MR8TRs',
+      studentId: row.id,
       termId: this.yearTermsSelect
     }]
 
     let creator: any;
 
     type == "Teacher" ? creator = { teacherId: id, gradeTeacherId: null } : creator = { teacherId: null, gradeTeacherId: id };
-    
+
     let req = this.http.addAbsencesByTeacher(absences, creator)
 
     await firstValueFrom(req)
@@ -252,12 +257,18 @@ export class AbsenceComponent implements OnInit {
 
   }
 
+  absenceReasonValue!: AbsenceExcuseReason;
+  getAbsenceReasonSwitch(row: any) {
+    this.absenceReasonValue = row.absenceReason;
+    console.log(this.absenceReasonValue)
+  }
+
   async getExcuseReasons() {
     let user = this.userService.getUser();
     let id = '';
     let type = '';
 
-    if(user) {
+    if (user) {
       id = user.id;
       type = user.type;
     }
@@ -275,12 +286,60 @@ export class AbsenceComponent implements OnInit {
 
   }
 
+  students: any;
+  async getStudents(grade: Grade['id'], division: GradeDivision['id']) {
+    let user = this.userService.getUser();
+    let id = '';
+    let type = '';
+
+    if (user) {
+      id = user.id;
+      type = user.type;
+    }
+
+    console.log(user)
+
+    this.students = [];
+    if (type === 'Teacher') {
+
+      try{
+        await firstValueFrom(this.http.getStudentsByGradeAndDivision(grade, division))
+          .then(data => {
+            console.log(data)
+              for (let [key, value] of Object.entries(data)) {
+                let studentDataArray = {
+                  id: value.id != undefined ? value.id : '',
+                  firstName: value.first_name != undefined ? value.first_name : 'No students in this grade',
+                  lastName: value.last_name != undefined ? value.last_name : 'No students in this grade',
+                }
+                this.students.push(studentDataArray);
+              }
+          })
+      } catch(err) {
+          console.log(err)
+      }
+    }
+
+    console.log(this.students[0].id)
+
+  }
+
+  getStudentIdSwitch(row: any){
+    row.id = this.students[0].id;
+  }
+
+  getStudentsSwitch(row: any) {
+    if (row.grade != 0 && row.gradeDivision != '') {
+      this.getStudents(row.grade, row.gradeDivision);
+    }
+  }
+
   async getGradeDivisions() {
     let user = this.userService.getUser();
     let id = '';
     let type = '';
 
-    if(user) {
+    if (user) {
       id = user.id;
       type = user.type;
     }
@@ -296,7 +355,7 @@ export class AbsenceComponent implements OnInit {
           this.subjects.push(data.teacher_subject_id)
         })
     } else if (type === 'Grade teacher') {
-      
+
       await firstValueFrom(this.http.getGradesDivisionsAndSubjectsForGradeTeacher(id))
         .then(data => {
           data = data[0]
@@ -306,7 +365,7 @@ export class AbsenceComponent implements OnInit {
           this.subjects.push(data.grade_teacher_subject_id)
         })
     } else if (type === 'Student') {
-      
+
       await firstValueFrom(this.http.getGradesDivisionsAndSubjectsForStudent(id))
         .then(data => {
           data = data[0]
@@ -316,7 +375,7 @@ export class AbsenceComponent implements OnInit {
           this.subjects.push(data.student_subject_id)
         })
     } else if (type === 'Parent') {
-      
+
       await firstValueFrom(this.http.getGradesDivisionsAndSubjectsForParent(id))
         .then(data => {
           data = data[0]
@@ -330,9 +389,9 @@ export class AbsenceComponent implements OnInit {
 
   applyFilter() {
     this.dataSource.data = this.absencesData.data.filter(item => {
-    return (this.gradeSelect === undefined || item.grade === this.gradeSelect) &&
-           (this.gradeDivisionSelect === undefined || item.gradeDivision === this.gradeDivisionSelect) &&
-           (this.yearTermsSelect === undefined || item.term === this.yearTermsSelect);;
+      return (this.gradeSelect === undefined || item.grade === this.gradeSelect) &&
+        (this.gradeDivisionSelect === undefined || item.gradeDivision === this.gradeDivisionSelect) &&
+        (this.yearTermsSelect === undefined || item.term === this.yearTermsSelect);
     });
   }
 
@@ -373,12 +432,13 @@ export class AbsenceComponent implements OnInit {
   ];
   displayedColumns2: string[] = ['id', 'absenceReasonId', 'absenceTypeId'];
 
-  addRowDone(row: any){
+  addRowDone(row: any) {
     this.addAbsences(row).then(() => (row.isEdit = false));
   }
 
   addRow() {
     const newRow = {
+      id: '0',
       firstName: '',
       lastName: '',
       subject: '',

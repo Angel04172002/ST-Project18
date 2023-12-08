@@ -22,5 +22,7 @@ router.post('/get/teachers/grades', gradesController.getGradesDivisionsAndSubjec
 router.post('/get/grade-teachers/grades', gradesController.getGradesDivisionsAndSubjectsForGradeTeacher)
 router.post('/get/students/grades', gradesController.getGradesDivisionsAndSubjectsForStudent)
 router.post('/get/parents/grades', gradesController.getGradesDivisionsAndSubjectsForStudent)
+router.post('/get/students/by-grades', gradesController.getStudentsByGradeAndDivision)
+
 
 module.exports = router
