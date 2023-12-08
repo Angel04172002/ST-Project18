@@ -1,3 +1,8 @@
+.teacherview,
+.studentview{
+    margin-bottom: 100px;
+}
+
 .title{
     text-align: center;
     margin-top: 10px;
@@ -9,7 +14,7 @@ table tbody td{
     padding: 0 16px 0 16px!important; 
 }
 
-.grade mat-form-field + mat-form-field{
+.gradesSelect mat-form-field{
     margin-left: 8px;
 }
 

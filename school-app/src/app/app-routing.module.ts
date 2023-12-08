@@ -11,7 +11,10 @@ import { AdminComponent } from './admin/admin/admin.component';
 import { ChatComponent } from './pages/chat/chat/chat.component';
 import { GroupChatComponent } from './pages/chat/group-chat/group-chat.component';
 import { AbsenceComponent } from './pages/absence/absence.component';
+<<<<<<< HEAD
 // import { AbsenceComponent } from './pages/absence/absence.component';
+=======
+>>>>>>> 2ba2029e80d2cc64ff2718a6e88d96166b7e79bb
 
 const routes: Routes = [
   {

@@ -227,6 +227,11 @@ export class HttpService {
     });
   }
 
+  public getExcuseReasonsByTeacher(teacherId: string): Observable<any> {
+    return this.post("/absences/get-excuse-reasons/teacher", {
+      id: teacherId
+    });
+  }
 
   public getExcuseReasonsByGradeTeacher(gradeTeacherId: string): Observable<any> {
     return this.post("/absences/get-excuse-reasons/grade-teacher", {

@@ -1,26 +1,33 @@
 <div class="teacherview" *ngIf="userType() === 'Teacher' || userType() === 'Grade teacher'">
     <h1 class="title">Отсъствия</h1>
 
-    <div class="grade">
+    <div class="gradesSelect">
         <mat-form-field>
             <mat-label>Избери клас:</mat-label>
-            <mat-select>
-                <mat-option value="eight">8</mat-option>
-                <mat-option value="nine">9</mat-option>
-                <mat-option value="ten">10</mat-option>
-                <mat-option value="eleven">11</mat-option>
-                <mat-option value="twelve">12</mat-option>
+            <mat-select [(ngModel)]="gradeSelect" (selectionChange)="applyFilter()">
+                <mat-option *ngFor="let el of grades" [value]="el">
+                    {{ el }}
+                </mat-option>
             </mat-select>
         </mat-form-field>
 
         <mat-form-field>
             <mat-label>Избери паралелка:</mat-label>
-            <mat-select>
-                <mat-option value="a">А</mat-option>
-                <mat-option value="b">Б</mat-option>
-                <mat-option value="c">В</mat-option>
+            <mat-select [(ngModel)]="gradeDivisionSelect" (selectionChange)="applyFilter()">
+                <mat-option *ngFor="let el of gradeDivisions" [value]="el">
+                    {{ el }}
+                </mat-option>
             </mat-select>
         </mat-form-field>
+
+            <mat-form-field>
+                <mat-label>Избери срок:</mat-label>
+                <mat-select [(ngModel)]="yearTermsSelect" (selectionChange)="applyFilter()">
+                    <mat-option *ngFor="let el of yearTerms" [value]="el">
+                        {{ el }}
+                    </mat-option>
+                </mat-select>
+            </mat-form-field>
     </div>
 
     <table mat-table [dataSource]="dataSource" class="mat-elevation-z8">
@@ -32,7 +39,7 @@
                     <div *ngSwitchCase="'isEdit'">
                     </div>
                     <span *ngSwitchCase="'checkbox'">
-                        <mat-checkbox color="primary" #excusedCheckbox [(ngModel)]="element[col.key]" [checked]="element[col.key] === 'Извинено'" (click)="$event.preventDefault()">
+                        <mat-checkbox color="primary" #excusedCheckbox  [checked]="element[col.key] == 'Извинено'" (click)="$event.preventDefault()">
                         </mat-checkbox>
                     </span>
                     <span *ngSwitchDefault>
@@ -41,24 +48,60 @@
                 </div>
                 <div [ngSwitch]="col.type" *ngIf="element.isEdit">
                     <div class="btn-edit" *ngSwitchCase="'isEdit'">
-                        <button mat-raised-button color="primary" (click)="element.isEdit = !element.isEdit">
+                        <button mat-raised-button color="primary" (click)="addRowDone(element)">
                             Готово
                         </button>
                     </div>
+                    <mat-form-field *ngSwitchCase="'selectFirstName'">
+                        <mat-select #editSelect  [(ngModel)]="element[col.key]" (selectionChange)="getStudentIdSwitch(element)">
+                          <mat-option *ngFor="let el of students" [value]="el.firstName">
+                            {{ el.firstName }}
+                          </mat-option>
+                        </mat-select>
+                    </mat-form-field>
+                    <mat-form-field *ngSwitchCase="'selectLastName'">
+                        <mat-select #editSelect  [(ngModel)]="element[col.key]" (selectionChange)="getStudentIdSwitch(element)">
+                          <mat-option *ngFor="let el of students" [value]="el.lastName">
+                            {{ el.lastName }}
+                          </mat-option>
+                        </mat-select>
+                    </mat-form-field>
                     <span *ngSwitchCase="'checkbox'">
                         <mat-checkbox color="primary" #editCheckbox [(ngModel)]="element[col.key]">
                         </mat-checkbox>
                     </span>
-                    <mat-form-field *ngSwitchCase="'select'">
-                        <mat-select #editSelect  [(ngModel)]="element[col.key]">
+                    <mat-form-field *ngSwitchCase="'selectAbsenceReason'">
+                        <mat-select #editSelect  [(ngModel)]="element[col.key]" (selectionChange)="getAbsenceReasonSwitch(element)">
                           <mat-option *ngFor="let el of absenceExcuseReasons" [value]="el">
                             {{ el }}
                           </mat-option>
                         </mat-select>
                     </mat-form-field>
-                    <mat-form-field *ngSwitchDefault>
-                        <input [type]="col.type" matInput [(ngModel)]="element[col.key]" />
+                    <mat-form-field *ngSwitchCase="'selectSubject'">
+                        <mat-select #editSelect  [(ngModel)]="element[col.key]">
+                          <mat-option *ngFor="let el of subjects" [value]="el">
+                            {{ el }}
+                          </mat-option>
+                        </mat-select>
                     </mat-form-field>
+                    <mat-form-field *ngSwitchCase="'selectGrade'">
+                        <mat-select #editSelect  [(ngModel)]="element[col.key]" (selectionChange)="getStudentsSwitch(element)">
+                          <mat-option *ngFor="let el of grades" [value]="el">
+                            {{ el }}
+                          </mat-option>
+                        </mat-select>
+                    </mat-form-field>
+                    <mat-form-field *ngSwitchCase="'selectGradeDivision'">
+                        <mat-select #editSelect  [(ngModel)]="element[col.key]" (selectionChange)="getStudentsSwitch(element)">
+                          <mat-option *ngFor="let el of gradeDivisions" [value]="el">
+                            {{ el }}
+                          </mat-option>
+                        </mat-select>
+                    </mat-form-field>
+                    
+                    <!-- <mat-form-field *ngSwitchDefault>
+                        <input [type]="col.type" matInput [(ngModel)]="element[col.key]" />
+                    </mat-form-field> -->
                 </div>
             </td>
         </ng-container>

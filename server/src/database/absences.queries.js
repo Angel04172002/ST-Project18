@@ -18,7 +18,7 @@ where par.id = $1
 
 const getExcuseReasonsFromTeacher = `  
 select rs.id as student_id, rs.first_name, rs.last_name, rs.email, rs.grade_id,
-rs.grade_division_id, rs.absence_id, rs.type_id, rs.subject_id, rs.student_id, rs.term_id, rs.excuse_reason,
+rs.grade_division_id, rs.absence_id, rs.type_id, rs.subject_id, rs.student_id, rs.term_id, rs.excuse_reason_id,
 rs.excuse_reason_id, 
 rs.parent_id,
 rs.excuse_note,
