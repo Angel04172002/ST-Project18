@@ -2,12 +2,11 @@ const pool = require("../db")
 const utils = require("../utils")
 const jwt = require("jsonwebtoken");
 const bcrypt = require('bcryptjs');
+const { notify } = require("../routes/grades.route");
 
 createProfile = async (request, response) => {
 
     try {
-
-       
 
         let creatorId = '890e0f59-1c4f-4552-8a83-b7d1e5e92770';
 
@@ -35,7 +34,6 @@ createProfile = async (request, response) => {
 
         // ujas ;(
         const id = utils.generateRandomString(40)
-
 
         
         if(type == 'Parent' || type == 'Student') {
@@ -68,11 +66,22 @@ createProfile = async (request, response) => {
                 'INSERT INTO TEACHER (id) VALUES ($1)',
                 [id]
             );
+
+            // await pool.query(
+            //     'INSERT INTO teachers_grades_divisions_subjects VALUES ($1, $2, $3, $4)'
+            //     [id, null, null, null]
+            // )
+
         } else if (type == 'Grade teacher') {
             await pool.query(
                 'INSERT INTO GRADE_TEACHER (id) VALUES ($1)',
                 [id]
             );
+
+            // await pool.query(
+            //     'INSERT INTO grade_teachers_grades_divisions_subjects VALUES ($1, $2, $3, $4)'
+            //     [id, null, null, null]
+            // )
         }
 
     

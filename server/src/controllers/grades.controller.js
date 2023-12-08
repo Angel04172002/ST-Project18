@@ -243,6 +243,9 @@ getGradesDivisionsAndSubjectsForTeacher = async (request, response) => {
     }
 }
 
+
+
+
 getGradesDivisionsAndSubjectsForGradeTeacher = async (request, response) => {
     try {
         const gradeTeacherId = request.body?.gradeTeacherId;

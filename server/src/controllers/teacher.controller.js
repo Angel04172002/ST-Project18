@@ -21,17 +21,23 @@ addSubjectsAndGradesToTeacher = async (request, response) => {
 
         for (let subject of subjects) {
 
+
+
             if (subject.type == 'Teacher') {
 
                 await pool.query('insert into teacher values ($1) on conflict(id) do update set id = $1 where teacher.id = $1',
                     [subject.teacherId]
                 );
 
+                if(!validateRow(subject)) {
+                    continue;
+                }
+
                 await pool.query(
                     'insert into teachers_grades_divisions_subjects (teacher_id, teacher_grade_id, teacher_grade_division_id,  teacher_subject_id) VALUES ($1, $2, $3, $4) ON CONFLICT (teacher_id) DO UPDATE SET teacher_id = $1, teacher_grade_id = $2, teacher_grade_division_id = $3, teacher_subject_id = $4 WHERE teachers_grades_divisions_subjects.teacher_id = $1',
                     [subject.teacherId, subject.grade, subject.gradeDivision, subject.teacher_subject_id]
                 );
-                
+
                 await pool.query(
                     'delete  from grade_teachers_grades_divisions_subjects cascade where grade_teacher_id = $1',
                     [subject.teacherId]
@@ -44,6 +50,10 @@ addSubjectsAndGradesToTeacher = async (request, response) => {
                     [subject.teacherId]
                 );
 
+                if(!validateRow(subject)) {
+                    continue;
+                }
+
                 await pool.query(
                     'insert into grade_teachers_grades_divisions_subjects (grade_teacher_id, grade_teacher_grade_id, grade_teacher_grade_division_id,  grade_teacher_subject_id) VALUES ($1, $2, $3, $4) ON CONFLICT (grade_teacher_id) DO UPDATE SET grade_teacher_id = $1, grade_teacher_grade_id = $2, grade_teacher_grade_division_id = $3, grade_teacher_subject_id = $4 WHERE grade_teachers_grades_divisions_subjects.grade_teacher_id  = $1',
                     [subject.teacherId, subject.grade, subject.gradeDivision, subject.teacher_subject_id]
@@ -54,7 +64,7 @@ addSubjectsAndGradesToTeacher = async (request, response) => {
                     'delete  from teachers_grades_divisions_subjects cascade where teacher_id = $1',
                     [subject.teacherId]
                 );
-              
+
 
             }
 
@@ -68,6 +78,16 @@ addSubjectsAndGradesToTeacher = async (request, response) => {
         response.status(500).send(err.message)
     }
 
+}
+
+
+
+function validateRow(row) {
+    if (row.grade == '' || row.gradeDivision == '' || row.teacher_subject_id == '') {
+        return false;
+    }
+
+    return true;
 }
 
 

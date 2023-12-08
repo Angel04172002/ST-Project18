@@ -54,17 +54,16 @@ export class UserService {
   }
 
 
-  async register(firstName: string, lastName: string, email: string, password: string, confirmPassword: string, type: string) {
+  async register(firstName: string, lastName: string, email: string, password: string, confirmPassword: string, 
+    type: string) {
 
 
-    const user = {
-      firstName: firstName,
-      lastName: lastName,
-      email: email,
-      type: type
-    };
+  
 
     let profileType = ProfileTypes.Student;
+
+
+
 
     if (type == 'Parent') {
       profileType = ProfileTypes.Parent;
