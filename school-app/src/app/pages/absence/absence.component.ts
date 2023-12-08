@@ -14,7 +14,7 @@ import { Absence } from '../../types/Absence';
 import { AbsenceTypes } from '../../types/AbsenceTypes';
 import { AbsenceExcuseReason } from '../../types/AbsenceExcuseReason';
 import { MatDialog, MatDialogConfig, MatDialogModule } from '@angular/material/dialog';
-import { FormsModule, NgForm, ReactiveFormsModule } from '@angular/forms';
+import { FormsModule, NgForm, ReactiveFormsModule, FormControl } from '@angular/forms';
 import { MatIconModule } from '@angular/material/icon';
 import { AddAbsencesByTeacher } from 'src/app/@backend/models/add-absences-by-teacher';
 import { Term } from 'src/app/types/Term';
@@ -26,8 +26,11 @@ export interface Student {
   firstName: string | undefined,
   lastName: string | undefined,
   subject: Subject['subjectName'],
+  grade: Grade['id'],
+  gradeDivision: GradeDivision['id'],
   absenceType: AbsenceTypes,
-  absenceReason: AbsenceExcuseReason
+  absenceReason: AbsenceExcuseReason,
+  term: Term['termId']
 }
 
 const COLUMNS_SCHEMA = [
@@ -45,6 +48,16 @@ const COLUMNS_SCHEMA = [
     key: "subject",
     type: "selectSubject",
     label: "Предмет"
+  },
+  {
+    key: "grade",
+    type: "selectGrade",
+    label: "Клас"
+  },
+  {
+    key: "gradeDivision",
+    type: "selectGradeDivision",
+    label: "Паралелка"
   },
   {
     key: "absenceType",
@@ -80,7 +93,7 @@ const COLUMNS_SCHEMA = [
     FormsModule,
     ReactiveFormsModule,
     MatDialogModule,
-    MatIconModule
+    MatIconModule,
   ],
   standalone: true
 })
@@ -104,25 +117,25 @@ export class AbsenceComponent implements OnInit {
   dataSource = new MatTableDataSource<Student>();
   columnsSchema: any = COLUMNS_SCHEMA;
 
-  @ViewChild('gradeSelect') gradeSelect!: MatSelect;
-  @ViewChild('gradeDivisionSelect') gradeDivisionSelect!: MatSelect;
-  @ViewChild('yearTermSelect') yearTermSelect!: MatSelect;
+  gradeSelect: any;
+  gradeDivisionSelect: any;
+  yearTermsSelect: any;
 
   ngOnInit(): void {
-    this.getAbsences().then((res: any) => {
-      this.dataSource.data = res;
-      this.getGradeDivisions();
+    this.getAbsences().then(() => {
+      //this.getGradeDivisions();
     });
 
     //this.getExcuseReasons()
 
   }
 
+  absencesData =  new MatTableDataSource<Student>();
+
   async getAbsences() {
     let user = this.userService.getUser();
     let id = '';
     let type = '';
-    let absences: Student[] = [];
 
     if(user) {
       id = user.id;
@@ -135,19 +148,33 @@ export class AbsenceComponent implements OnInit {
 
       await firstValueFrom(this.http.getAbsencesByTeacher(id))
         .then(data => {
-          console.log(data)
+          //console.log(data)
           for (let item of data) {
 
-             let absencesData = {
+             let absencesDataArray = {
                firstName: item.student_first_name,
                lastName: item.student_last_name,
                subject: item.absence_subject_id,
+               grade: item.grade_id,
+               gradeDivision: item.grade_division_id,
                absenceType: item.absence_type_id,
-               absenceReason: AbsenceExcuseReason.FamilyReasons
+               absenceReason: AbsenceExcuseReason.FamilyReasons,
+               term: item.absence_term_id
              }
 
-            absences.push(absencesData);
-            console.log(absences)
+            this.absencesData.data.push(absencesDataArray);
+
+            if(this.gradeDivisions.indexOf(item.grade_division_id) === -1) {
+              this.gradeDivisions.push(item.grade_division_id);
+            }
+
+            if(this.grades.indexOf(item.grade_id) === -1) {
+              this.grades.push(item.grade_id);
+            }
+
+            if(this.subjects.indexOf(item.absence_subject_id) === -1) {
+              this.subjects.push(item.absence_subject_id);
+            }
 
           }
 
@@ -159,21 +186,37 @@ export class AbsenceComponent implements OnInit {
 
           for (let item of data) {
 
-             let absencesData = {
+             let absencesDataArray = {
                firstName: item.student_first_name,
                lastName: item.student_last_name,
                subject: item.absence_subject_id,
+               grade: item.grade_id,
+               gradeDivision: item.grade_division_id,
                absenceType: item.absence_type_id,
-               absenceReason: AbsenceExcuseReason.FamilyReasons
+               absenceReason: AbsenceExcuseReason.FamilyReasons,
+               term: item.absence_term_id
              }
 
-            absences.push(absencesData);
+            this.absencesData.data.push(absencesDataArray);
+
+            if(this.gradeDivisions.indexOf(item.grade_division_id) === -1) {
+              this.gradeDivisions.push(item.grade_division_id);
+            }
+
+            if(this.grades.indexOf(item.grade_id) === -1) {
+              this.grades.push(item.grade_id);
+            }
+            
+            if(this.subjects.indexOf(item.absence_subject_id) === -1) {
+              this.subjects.push(item.absence_subject_id);
+            }
 
           }
 
         })
     }
-    return absences;
+    console.log(this.absencesData.data)
+    this.dataSource.data = this.absencesData.data;
   }
 
   async addAbsences(row: any) {
@@ -191,7 +234,7 @@ export class AbsenceComponent implements OnInit {
       type: row.absenceType == true ? AbsenceTypes.Excused : AbsenceTypes.Unexcused,
       subjectId: row.subject,
       studentId: 'ZcIJNPgdwx0cq5s53ueZUNlQf72sVqAdC8MR8TRs',
-      termId: this.yearTermSelect.value
+      termId: this.yearTermsSelect
     }]
 
     let creator: any;
@@ -285,6 +328,14 @@ export class AbsenceComponent implements OnInit {
     }
   }
 
+  applyFilter() {
+    this.dataSource.data = this.absencesData.data.filter(item => {
+    return (this.gradeSelect === undefined || item.grade === this.gradeSelect) &&
+           (this.gradeDivisionSelect === undefined || item.gradeDivision === this.gradeDivisionSelect) &&
+           (this.yearTermsSelect === undefined || item.term === this.yearTermsSelect);;
+    });
+  }
+
   absenceExcuseReasons: AbsenceExcuseReason[] = [
     AbsenceExcuseReason.FamilyReasons,
     AbsenceExcuseReason.MedicalReasons,
@@ -331,8 +382,11 @@ export class AbsenceComponent implements OnInit {
       firstName: '',
       lastName: '',
       subject: '',
+      grade: 0,
+      gradeDivision: '',
       absenceType: AbsenceTypes.Unexcused,
       absenceReason: AbsenceExcuseReason.Others,
+      term: '',
       isEdit: true
     }
     this.dataSource.data = [...this.dataSource.data, newRow]

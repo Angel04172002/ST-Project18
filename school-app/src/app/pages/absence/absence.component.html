@@ -4,7 +4,7 @@
     <div class="gradesSelect">
         <mat-form-field>
             <mat-label>Избери клас:</mat-label>
-            <mat-select #gradeSelect>
+            <mat-select [(ngModel)]="gradeSelect" (selectionChange)="applyFilter()">
                 <mat-option *ngFor="let el of grades" [value]="el">
                     {{ el }}
                 </mat-option>
@@ -13,7 +13,7 @@
 
         <mat-form-field>
             <mat-label>Избери паралелка:</mat-label>
-            <mat-select #gradeDivisionSelect>
+            <mat-select [(ngModel)]="gradeDivisionSelect" (selectionChange)="applyFilter()">
                 <mat-option *ngFor="let el of gradeDivisions" [value]="el">
                     {{ el }}
                 </mat-option>
@@ -22,7 +22,7 @@
 
             <mat-form-field>
                 <mat-label>Избери срок:</mat-label>
-                <mat-select #yearTermSelect>
+                <mat-select [(ngModel)]="yearTermsSelect" (selectionChange)="applyFilter()">
                     <mat-option *ngFor="let el of yearTerms" [value]="el">
                         {{ el }}
                     </mat-option>
@@ -39,7 +39,7 @@
                     <div *ngSwitchCase="'isEdit'">
                     </div>
                     <span *ngSwitchCase="'checkbox'">
-                        <mat-checkbox color="primary" #excusedCheckbox [(ngModel)]="element[col.key]" [checked]="element[col.key] === 'Извинено'" (click)="$event.preventDefault()">
+                        <mat-checkbox color="primary" #excusedCheckbox  [checked]="element[col.key] === 'Извинено'" (click)="$event.preventDefault()">
                         </mat-checkbox>
                     </span>
                     <span *ngSwitchDefault>
@@ -66,6 +66,20 @@
                     <mat-form-field *ngSwitchCase="'selectSubject'">
                         <mat-select #editSelect  [(ngModel)]="element[col.key]">
                           <mat-option *ngFor="let el of subjects" [value]="el">
+                            {{ el }}
+                          </mat-option>
+                        </mat-select>
+                    </mat-form-field>
+                    <mat-form-field *ngSwitchCase="'selectGrade'">
+                        <mat-select #editSelect  [(ngModel)]="element[col.key]">
+                          <mat-option *ngFor="let el of grades" [value]="el">
+                            {{ el }}
+                          </mat-option>
+                        </mat-select>
+                    </mat-form-field>
+                    <mat-form-field *ngSwitchCase="'selectGradeDivision'">
+                        <mat-select #editSelect  [(ngModel)]="element[col.key]">
+                          <mat-option *ngFor="let el of gradeDivisions" [value]="el">
                             {{ el }}
                           </mat-option>
                         </mat-select>
