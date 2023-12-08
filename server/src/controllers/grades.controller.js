@@ -1,6 +1,7 @@
 const pool = require("../db")
 
 const gradesQueries = require('../database/grades.queries')
+const studentQueries = require('../database/student.queries');
 
 
 const mockDataStudent = [
@@ -111,6 +112,8 @@ getGradesByParent = async (request, response) => {
 }
 
 
+
+
 addStudentsToGrade = async (request, response) => {
     try {
 
@@ -133,12 +136,20 @@ addStudentsToGrade = async (request, response) => {
 
         for (let student of students) {
 
-            console.log(student);
+            let { rows } = await pool.query(studentQueries.getParentById, [student?.parent_id]);
+            let parent = rows[0];
 
+       
             await pool.query(
                 'INSERT INTO STUDENT (id, grade_id, grade_division_id, parent_id) VALUES ($1, $2, $3, $4) ON CONFLICT (id) DO UPDATE SET id = $1, grade_id = $2, grade_division_id = $3, parent_id = $4 WHERE student.id = $1',
                 [student?.studentId, Number(student?.grade), student?.gradeDivision, student?.parent_id]
             )
+
+            await pool.query(
+                'UPDATE PROFILE SET first_name = $1, last_name = $2, email = $3 WHERE id = $4',
+                [student.parent_first_name, student.parent_last_name, student.parent_email, parent.id]
+            );
+
         }
 
         return response.status(200).json("Added successfully!")
@@ -195,7 +206,7 @@ addSubjectsToGrade = async (request, response) => {
 getStudentsWithGradeAndDivison = async (request, response) => {
     try {
 
-        let { rows } = await pool.query(gradesQueries.getStudentsWithGradeAndDivisonQuery)
+        let { rows } = await pool.query(gradesQueries.getStudentsWithGradeAndDivisonAndParentQuery)
 
         return response.status(200).json(rows)
     }
@@ -217,9 +228,6 @@ getAllSubjects = async (request, response) => {
         response.status(500).send(err.message)
     }
 }
-
-
-
 
 getGradesDivisionsAndSubjectsForTeacher = async (request, response) => {
     try {
