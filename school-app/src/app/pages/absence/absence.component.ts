@@ -81,7 +81,7 @@ const COLUMNS_SCHEMA = [
 const COLUMNS_SCHEMA2 = [
   {
     key: "subject",
-    type: "selectSubject",
+    type: "text",
     label: "Предмет"
   },
   {
@@ -91,7 +91,7 @@ const COLUMNS_SCHEMA2 = [
   },
   {
     key: "absenceReason",
-    type: "selectAbsenceReason",
+    type: "text",
     label: "Причина за отсъствие"
   }
 ]
@@ -535,6 +535,10 @@ export class AbsenceComponent implements OnInit {
         (this.gradeDivisionSelect === undefined || item.gradeDivision === this.gradeDivisionSelect) &&
         (this.yearTermsSelect === undefined || item.term === this.yearTermsSelect);
     });
+  }
+
+  removeRow(id: string) {
+    this.dataSource.data = this.dataSource.data.filter((u) => u.id !== '0');
   }
 
   absenceExcuseReasons: AbsenceExcuseReason[] = [

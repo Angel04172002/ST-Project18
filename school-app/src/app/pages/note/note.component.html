@@ -38,9 +38,12 @@
                     </span>
                 </div>
                 <div [ngSwitch]="col.type" *ngIf="element.isEdit">
-                    <div class="btn-edit" *ngSwitchCase="'isEdit'">
+                    <div class="buttons-edit" *ngSwitchCase="'isEdit'">
                         <button mat-raised-button color="primary" (click)="element.isEdit = !element.isEdit">
                             Готово
+                        </button>
+                        <button mat-stroked-button color="primary" class="button-remove" (click)="removeRow(element.id)">
+                            Отказ
                         </button>
                     </div>
                     <mat-form-field *ngSwitchCase="'textarea'">

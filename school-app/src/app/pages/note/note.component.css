@@ -25,6 +25,13 @@ h2 {
     float: right;
 }
 
+.buttons-edit{
+    display: flex;
+}
+
+.button-remove{
+    margin-left: 10px;
+}
 
 
 

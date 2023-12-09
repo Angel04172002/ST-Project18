@@ -12,13 +12,14 @@ import {MatFormFieldModule} from '@angular/material/form-field';
 import { FormsModule } from '@angular/forms';
 
 export interface Student {
+  id: string,
   firstName: string,
   lastName: string,
   note: Note["note"]
 }
 
 const ELEMENT_DATA: Student[] = [
-  {firstName: "Петър", lastName: "Петров", note: 'Забележка...'}
+  {id: '1', firstName: "Петър", lastName: "Петров", note: 'Забележка...'}
 ];
 
 const COLUMNS_SCHEMA = [
@@ -90,6 +91,7 @@ export class NoteComponent {
 
   addNote() {
     const newNote = {
+      id: '0',
       firstName: '',
       lastName: '',
       note: '',
@@ -97,6 +99,10 @@ export class NoteComponent {
     }
 
     this.dataSource = [...this.dataSource, newNote]
+  }
+
+  removeRow(id: string) {
+    this.dataSource = this.dataSource.filter((u) => u.id !== '0');
   }
     
    constructor(
