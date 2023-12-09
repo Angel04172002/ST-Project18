@@ -128,11 +128,11 @@ export class AbsenceComponent implements OnInit {
 
   ngOnInit(): void {
     this.getAbsences().then(() => {
-      //this.getGradeDivisions();
+      this.getGradeDivisions();
 
     });
 
-    //this.getExcuseReasons()
+   // this.getExcuseReasons()
 
   }
 
@@ -239,8 +239,9 @@ export class AbsenceComponent implements OnInit {
     }
 
     console.log(row)
+    debugger;
     let absences: AddAbsencesByTeacher[] = [{
-      type: row.absenceType,
+      type: row.absenceType == true ? AbsenceTypes.Excused : AbsenceTypes.Unexcused,
       subjectId: row.subject,
       studentId: row.id,
       termId: this.yearTermsSelect
@@ -303,6 +304,7 @@ export class AbsenceComponent implements OnInit {
 
     console.log(user)
 
+    console.log(grade, division)
     this.students = [];
     if (type === 'Teacher') {
 
@@ -329,7 +331,11 @@ export class AbsenceComponent implements OnInit {
   }
 
   getStudentIdSwitch(row: any){
-    row.id = this.students[0].id;
+    for(let i in this.students){
+      if(row.firstName === this.students[i].firstName && row.lastName === this.students[i].lastName){
+        row.id = this.students[i].id;
+      }
+    }
   }
 
   getStudentsSwitch(row: any) {
@@ -354,19 +360,35 @@ export class AbsenceComponent implements OnInit {
         .then(data => {
           data = data[0]
 
-          this.gradeDivisions.push(data.teacher_grade_division_id);
-          this.grades.push(data.teacher_grade_id);
-          this.subjects.push(data.teacher_subject_id)
+          if (this.gradeDivisions.indexOf(data.teacher_grade_division_id) === -1) {
+            this.gradeDivisions.push(data.teacher_grade_division_id);
+          }
+
+          if (this.grades.indexOf(data.teacher_grade_id) === -1) {
+            this.grades.push(data.teacher_grade_id);
+          }
+
+          if (this.subjects.indexOf(data.teacher_subject_id) === -1) {
+            this.subjects.push(data.teacher_subject_id)
+          }
         })
     } else if (type === 'Grade teacher') {
 
       await firstValueFrom(this.http.getGradesDivisionsAndSubjectsForGradeTeacher(id))
         .then(data => {
           data = data[0]
+          
+          if (this.gradeDivisions.indexOf(data.teacher_grade_division_id) === -1) {
+            this.gradeDivisions.push(data.teacher_grade_division_id);
+          }
 
-          this.gradeDivisions.push(data.grade_teacher_grade_division_id);
-          this.grades.push(data.grade_teacher_grade_id);
-          this.subjects.push(data.grade_teacher_subject_id)
+          if (this.grades.indexOf(data.teacher_grade_id) === -1) {
+            this.grades.push(data.teacher_grade_id);
+          }
+
+          if (this.subjects.indexOf(data.teacher_subject_id) === -1) {
+            this.subjects.push(data.teacher_subject_id)
+          }
         })
     } else if (type === 'Student') {
 

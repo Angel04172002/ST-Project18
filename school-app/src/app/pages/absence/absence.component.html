@@ -39,7 +39,7 @@
                     <div *ngSwitchCase="'isEdit'">
                     </div>
                     <span *ngSwitchCase="'checkbox'">
-                        <mat-checkbox color="primary" #excusedCheckbox  [checked]="element[col.key] == 'Извинено'" (click)="$event.preventDefault()">
+                        <mat-checkbox color="primary" #excusedCheckbox  [checked]="element[col.key] === 'Извинено' || element[col.key] === true" (click)="$event.preventDefault()">
                         </mat-checkbox>
                     </span>
                     <span *ngSwitchDefault>
