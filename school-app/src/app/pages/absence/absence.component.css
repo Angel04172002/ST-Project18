@@ -74,6 +74,19 @@ form {
     font-weight: 500;
 }
 
+.buttons-edit{
+    display: flex;
+    justify-content: space-between;
+}
+
+.edit-view mat-form-field{
+    max-width: 150px;
+}
+
+.button-remove{
+    margin-left: 10px;
+}
+
 
 
 
