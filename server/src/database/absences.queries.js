@@ -120,9 +120,9 @@ CASE
 ELSE tgds.teacher_id
 END AS teacher_creator_id,
 
-pro.first_name,
-pro.last_name,
-pro.email
+pro.first_name as teacher_first_name,
+pro.last_name as teacher_last_name,
+pro.email as teacher_email
 
 
 FROM
@@ -172,9 +172,9 @@ CASE
 ELSE tgds.teacher_id
 END AS teacher_creator_id,
 
-pro.first_name,
-pro.last_name,
-pro.email
+pro.first_name as teacher_first_name,
+pro.last_name as teacher_last_name,
+pro.email as teacher_email
 
 
 FROM
