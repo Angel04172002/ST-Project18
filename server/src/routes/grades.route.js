@@ -21,7 +21,7 @@ router.post('/subjects/all', gradesController.getAllSubjects)
 router.post('/get/teachers/grades', gradesController.getGradesDivisionsAndSubjectsForTeacher)
 router.post('/get/grade-teachers/grades', gradesController.getGradesDivisionsAndSubjectsForGradeTeacher)
 router.post('/get/students/grades', gradesController.getGradesDivisionsAndSubjectsForStudent)
-router.post('/get/parents/grades', gradesController.getGradesDivisionsAndSubjectsForStudent)
+router.post('/get/parents/grades', gradesController.getGradesDivisionsAndSubjectsForParent)
 
 router.post('/get/students/by-grades', gradesController.getStudentsByGradeAndDivision)
 

@@ -315,5 +315,6 @@ module.exports = {
     getGradesDivisionsAndSubjectsForTeacher,
     getGradesDivisionsAndSubjectsForGradeTeacher,
     getGradesDivisionsAndSubjectsForStudent,
+    getGradesDivisionsAndSubjectsForParent,
     getStudentsByGradeAndDivision
 }
