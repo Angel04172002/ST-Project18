@@ -179,7 +179,7 @@ addExcuseReasonsByParent = async (request, response) => {
 
             await pool.query(
                 'insert into absences_excuse_reasons values ($1, $2)'
-                [excuseReason.absenceId, excuseReason.reason]
+                [excuseReason.absenceId, id]
             );
         }
 
