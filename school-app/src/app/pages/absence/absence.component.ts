@@ -1,4 +1,4 @@
-import { Component, OnInit, TemplateRef, ViewChild } from '@angular/core';
+import { Component, ElementRef, HostListener, OnInit, TemplateRef, ViewChild } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { UserService } from 'src/app/user/user.service';
 import { HttpService } from 'src/app/@backend/services/http.service';
@@ -96,7 +96,7 @@ const COLUMNS_SCHEMA2 = [
     label: "Извинено"
   },
   {
-    key: "absenceExcuse",
+    key: "absenceReason",
     type: "text",
     label: "Причина за отсъствие"
   }
@@ -151,7 +151,8 @@ export class AbsenceComponent implements OnInit {
   yearTermsSelect: any;
 
   ngOnInit(): void {
-    this.getAbsences().then(() => {
+    this.getExcuseReasons().then(() => {
+      this.getAbsences()
       this.getGradeDivisions();
 
     });
@@ -175,12 +176,23 @@ export class AbsenceComponent implements OnInit {
 
     console.log(user)
 
+    let excuseReason: any;
     if (type === 'Teacher') {
 
       await firstValueFrom(this.http.getAbsencesByTeacher(id))
         .then(data => {
           //console.log(data)
           for (let item of data) {
+
+            debugger
+
+            for (let i of this.excuseReasons) {
+              if (i.absenceId === item.id) {
+                excuseReason = i.excuseReason;
+              } else {
+                excuseReason = '';
+              }
+            }
 
             let absencesDataArray = {
               id: item.absence_student_id,
@@ -190,12 +202,12 @@ export class AbsenceComponent implements OnInit {
               grade: item.grade_id,
               gradeDivision: item.grade_division_id,
               absenceType: item.absence_type_id,
-              absenceReason: this.absenceReasonValue,
+              absenceReason: excuseReason,
               term: item.absence_term_id
             }
 
             this.absencesData.data.push(absencesDataArray);
-            console.log(this.absenceReasonValue)
+            console.log(this.excuseReason)
 
             if (this.gradeDivisions.indexOf(item.grade_division_id) === -1) {
               this.gradeDivisions.push(item.grade_division_id);
@@ -219,6 +231,15 @@ export class AbsenceComponent implements OnInit {
 
           for (let item of data) {
 
+            for (let i of this.excuseReasons) {
+              if (i.absenceId === item.id) {
+                excuseReason = i.excuseReason;
+              } else {
+                excuseReason = '';
+              }
+
+            }
+
             let absencesDataArray = {
               id: item.absence_student_id,
               firstName: item.student_first_name,
@@ -227,7 +248,7 @@ export class AbsenceComponent implements OnInit {
               grade: item.grade_id,
               gradeDivision: item.grade_division_id,
               absenceType: item.absence_type_id,
-              absenceReason: this.absenceReasonValue,
+              absenceReason: excuseReason,
               term: item.absence_term_id
             }
 
@@ -255,14 +276,23 @@ export class AbsenceComponent implements OnInit {
           console.log(data)
           for (let item of data) {
 
+            for (let i of this.excuseReasons) {
+              if (i.absenceId === item.absence_id) {
+                excuseReason = i.excuseReason;
+              } else {
+                excuseReason = '';
+              }
+            }
+
             let absencesDataArray = {
               id: item.absence_id,
               teacherName: item.teacher_first_name + ' ' + item.teacher_last_name,
               teacherCreator: item.teacher_creator_id ? item.teacher_creator_id : '',
               gradeTeacherCreator: item.grade_teacher_creator_id ? item.grade_teacher_creator_id : '',
               absenceType: item.absence_type_id,
-              absenceReason: this.absenceReasonValue,
-              absenceSubject: item.absence_subject_id
+              absenceReason: excuseReason,
+              absenceSubject: item.absence_subject_id,
+              term: item.absence_term_id
             }
 
             this.absencesDataForStudents.data.push(absencesDataArray);
@@ -289,14 +319,24 @@ export class AbsenceComponent implements OnInit {
           console.log(data)
           for (let item of data) {
 
+            debugger;
+            for (let i of this.excuseReasons) {
+              if (i.absenceId === item.absence_id) {
+                excuseReason = i.excuseReason;
+              } else {
+                excuseReason = '';
+              }
+            }
+
             let absencesDataArray = {
               id: item.absence_id,
               teacherName: item.teacher_first_name + ' ' + item.teacher_last_name,
               teacherCreator: item.teacher_creator_id ? item.teacher_creator_id : '',
               gradeTeacherCreator: item.grade_teacher_creator_id ? item.grade_teacher_creator_id : '',
               absenceType: item.absence_type_id,
-              absenceReason: this.absenceReasonValue,
-              absenceSubject: item.absence_subject_id
+              absenceReason: excuseReason,
+              absenceSubject: item.absence_subject_id,
+              term: item.absence_term_id
             }
 
             this.absencesDataForStudents.data.push(absencesDataArray);
@@ -318,8 +358,8 @@ export class AbsenceComponent implements OnInit {
         })
 
     }
-    this.absencesData.data.length != 0 ? this.dataSource.data = this.absencesData.data : this.dataSource.data = this.absencesDataForStudents.data 
-   
+    this.absencesData.data.length != 0 ? this.dataSource.data = this.absencesData.data : this.dataSource.data = this.absencesDataForStudents.data
+
   }
 
   async addAbsences(row: any) {
@@ -333,11 +373,9 @@ export class AbsenceComponent implements OnInit {
     }
 
     let absenceType;
-    if(row.absenceType === true){
-      this.isExcused = true;
+    if (row.absenceType === true) {
       absenceType = AbsenceTypes.Excused;
     } else {
-      this.isExcused = false;
       absenceType = AbsenceTypes.Unexcused;
     }
 
@@ -368,12 +406,13 @@ export class AbsenceComponent implements OnInit {
 
   }
 
-  absenceReasonValue!: AbsenceExcuseReason;
-  getAbsenceReasonSwitch(row: any) {
-    this.absenceReasonValue = row.absenceReason;
-    console.log(this.absenceReasonValue)
-  }
+  // absenceReasonValue!: AbsenceExcuseReason;
+  // getAbsenceReasonSwitch(row: any) {
+  //   this.absenceReasonValue = row.absenceReason;
+  //   console.log(this.absenceReasonValue)
+  // }
 
+  excuseReasons: any[] = [];
   async getExcuseReasons() {
     let user = this.userService.getUser();
     let id = '';
@@ -386,12 +425,41 @@ export class AbsenceComponent implements OnInit {
 
     console.log(user)
 
-    if (type === 'Teacher') {
+    if (type === 'Parent') {
 
+      try {
+        await firstValueFrom(this.http.getExcuseReasonsByParent(id))
+          .then(data => {
+            console.log(data)
+
+            debugger;
+            for (let item of data) {
+              let excuseReasonsArray = {
+                absenceId: item.id,
+                excuseReason: item.excuse_reason
+              }
+
+              this.excuseReasons.push(excuseReasonsArray);
+            }
+
+          })
+      } catch (err) {
+        console.log(err)
+      }
+    } else if (type === 'Teacher') {
       try {
         await firstValueFrom(this.http.getExcuseReasonsByTeacher(id))
           .then(data => {
             console.log(data)
+
+            for (let item of data) {
+              let excuseReasonsArray = {
+                absenceId: item.absence_id,
+                excuseReason: item.excuse_reason
+              }
+
+              this.excuseReasons.push(excuseReasonsArray);
+            }
 
           })
       } catch (err) {
@@ -515,28 +583,43 @@ export class AbsenceComponent implements OnInit {
   }
 
   applyFilter() {
-    this.dataSource.data = this.absencesData.data.filter(item => {
-      return (this.gradeSelect === undefined || item.grade === this.gradeSelect) &&
-        (this.gradeDivisionSelect === undefined || item.gradeDivision === this.gradeDivisionSelect) &&
-        (this.yearTermsSelect === undefined || item.term === this.yearTermsSelect);
-    });
+    let user = this.userService.getUser();
+    let type = '';
+
+    if (user) {
+      type = user.type;
+    }
+
+    if (type === 'Teacher' || type === 'Grade teacher') {
+      this.dataSource.data = this.absencesData.data.filter(item => {
+        return (this.gradeSelect === undefined || item.grade === this.gradeSelect) &&
+          (this.gradeDivisionSelect === undefined || item.gradeDivision === this.gradeDivisionSelect) &&
+          (this.yearTermsSelect === undefined || item.term === this.yearTermsSelect);
+      });
+    } else if (type === 'Student' || type === 'Parent') {
+      this.dataSource.data = this.absencesDataForStudents.data.filter(item => {
+        return (this.gradeSelect === undefined || item.grade === this.gradeSelect) &&
+          (this.gradeDivisionSelect === undefined || item.gradeDivision === this.gradeDivisionSelect) &&
+          (this.yearTermsSelect === undefined || item.term === this.yearTermsSelect);
+      });
+    }
   }
 
   removeRow(id: string) {
     this.dataSource.data = this.dataSource.data.filter((u) => u.id !== '0');
   }
 
-  isExcused: boolean = false;
-  onCheckboxChange(row: any){
-    console.log(row)
-    if (row.absenceType == true) {
-      this.isExcused = true;
-      return AbsenceTypes.Excused;
-    } else {
-      this.isExcused = false;
-      return AbsenceTypes.Unexcused;
-    }
-  }
+  // isExcused: boolean = false;
+  // onCheckboxChange(row: any){
+  //   console.log(row)
+  //   if (row.absenceType == true) {
+  //     this.isExcused = true;
+  //     return AbsenceTypes.Excused;
+  //   } else {
+  //     this.isExcused = false;
+  //     return AbsenceTypes.Unexcused;
+  //   }
+  // }
 
   absenceExcuseReasons: AbsenceExcuseReason[] = [
     AbsenceExcuseReason.FamilyReasons,
@@ -579,6 +662,7 @@ export class AbsenceComponent implements OnInit {
     }
   }
 
+
   @ViewChild('callDialog') callDialog!: TemplateRef<any>;
   dialogRef: any;
 
@@ -609,11 +693,10 @@ export class AbsenceComponent implements OnInit {
   _handleReaderLoaded(readerEvent: any) {
     var binaryString = readerEvent.target.result;
     this.fileAsBinaryString = btoa(binaryString);
-    console.log(btoa(binaryString));
-   }
+  }
 
   excuseReason: any;
-  getExcuseReasonSwitch(value: any){
+  getExcuseReasonSwitch(value: any) {
     this.excuseReason = value;
   }
 
@@ -627,7 +710,7 @@ export class AbsenceComponent implements OnInit {
       type = user.type;
     }
 
-    console.log(user)
+    console.log(this.selectedRowIndex)
     debugger;
     let excuseReasons: AddExcuseReasonsByParent[] = [{
       reason: this.excuseReason,
@@ -635,7 +718,9 @@ export class AbsenceComponent implements OnInit {
       absenceId: this.selectedRowIndex,
       noteId: this.fileAsBinaryString,
     }]
-    
+
+    console.log(excuseReasons)
+
     let req = this.http.addExcuseReasonsByParent(excuseReasons)
 
     try {

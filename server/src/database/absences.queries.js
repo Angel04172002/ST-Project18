@@ -3,7 +3,7 @@ const getExcuseReasonsFromParent = `
 select p.id as student_id, p.first_name, p.last_name, p.email, s.grade_id, s.grade_division_id,
 a.*, aer.id as excuse_reason_id ,aer.reason_id as excuse_reason, aer.excuse_note from absences_excuse_reasons aers
 join absence_excuse_reason aer
-on aers.excuse_reason_id = aer.reason_id
+on aers.excuse_reason_id = aer.id
 join parent par
 on aer.creator_id = par.id
 join student s
@@ -19,7 +19,7 @@ where par.id = $1
 const getExcuseReasonsFromTeacher = `  
 select rs.id as student_id, rs.first_name, rs.last_name, rs.email, rs.grade_id,
 rs.grade_division_id, rs.absence_id, rs.type_id, rs.subject_id, rs.student_id, rs.term_id, rs.excuse_reason_id,
-rs.excuse_reason_id, 
+rs.excuse_reason, 
 rs.parent_id,
 rs.excuse_note,
 pp.first_name as parent_first_name, pp.last_name as parent_last_name, pp.email as parent_email
@@ -30,13 +30,14 @@ from (
 	a.absence_subject_id as subject_id,
 	a.absence_student_id as student_id,
 	a.absence_term_id as term_id,
-	aer.reason_id as reason_id, aer.excuse_note as excuse_note,
+	aer.excuse_note as excuse_note,
+	aer.reason_id as excuse_reason, 
 	aer.id as excuse_reason_id,
     par.id as parent_id,
 	tgds.teacher_id
 	from absences_excuse_reasons aers
 	join absence_excuse_reason aer
-	on aers.excuse_reason_id = aer.reason_id
+	on aers.excuse_reason_id = aer.id
 	join absence a
 	on aers.absence_id = a.id
 	join student s
@@ -112,6 +113,7 @@ s.grade_division_id,
 a.id as absence_id,
 a.absence_type_id,
 a.absence_subject_id,
+a.absence_term_id,
 
 
 CASE 
@@ -164,6 +166,7 @@ s.grade_division_id,
 a.id as absence_id,
 a.absence_type_id,
 a.absence_subject_id,
+a.absence_term_id,
 
 
 CASE 

@@ -53,7 +53,8 @@
                         <button mat-raised-button color="primary" (click)="addRowDone(element)">
                             Готово
                         </button>
-                        <button mat-stroked-button color="primary" class="button-remove" (click)="removeRow(element.id)">
+                        <button mat-stroked-button color="primary" class="button-remove"
+                            (click)="removeRow(element.id)">
                             Отказ
                         </button>
                     </div>
@@ -74,12 +75,12 @@
                         </mat-select>
                     </mat-form-field>
                     <span *ngSwitchCase="'checkbox'">
-                        <mat-checkbox color="primary" #editCheckbox [(ngModel)]="element[col.key]" [checked]="element[col.key] === 'Извинено' || element[col.key] === true" (change)="onCheckboxChange(element)">
+                        <mat-checkbox color="primary" #editCheckbox [(ngModel)]="element[col.key]"
+                            [checked]="element[col.key] === 'Извинено' || element[col.key] === true">
                         </mat-checkbox>
                     </span>
                     <mat-form-field *ngSwitchCase="'selectAbsenceReason'">
-                        <mat-select #editSelect [(ngModel)]="element[col.key]"
-                            (selectionChange)="getAbsenceReasonSwitch(element)">
+                        <mat-select #editSelect [(ngModel)]="element[col.key]">
                             <mat-option *ngFor="let el of absenceExcuseReasons" [value]="el">
                                 {{ el }}
                             </mat-option>
@@ -172,41 +173,43 @@
 
         <tr mat-header-row *matHeaderRowDef="displayedColumns2"></tr>
         <tr mat-row *matRowDef="let row; columns: displayedColumns2;"
-            [ngClass]="{'highlight': selectedRowIndex == row.id}" (click)="highlight(row)"></tr>
+            [ngClass]="{'highlight': selectedRowIndex == row.id && userType() === 'Parent'}" (click)="highlight(row)">
+        </tr>
     </table>
 
 
 
-<div *ngIf="userType() === 'Parent'">
-    <button class="button-excuse" mat-raised-button color='primary' (click)="openDialog()"
-        *ngIf="selectedRowIndex != '-1' && excused === false">
-        Извини отсъствие
-    </button>
+    <div *ngIf="userType() === 'Parent'">
+        <button class="button-excuse" mat-raised-button color='primary' (click)="openDialog()"
+            *ngIf="selectedRowIndex != '-1' && excused === false">
+            Извини отсъствие
+        </button>
 
-    <ng-template #callDialog>
-        <form id="excuseForm" #excuseForm="ngForm" (ngSubmit)="onSend(excuseForm)">
-            <h2 matDialogTitle style="text-align: center;">Форма за извинение от родител</h2>
-            <mat-form-field>
-                <mat-label>Изберете причина за отсъствието:</mat-label>
-                <mat-select #excuseReason (selectionChange)="getExcuseReasonSwitch($event.value)">
-                    <mat-option *ngFor="let el of absenceExcuseReasons" [value]="el">
-                        {{ el }}
-                    </mat-option>
-                </mat-select>
-            </mat-form-field>
-            <mat-label>Прикачете извинителни бележки тук (снимка):</mat-label>
-            <div class="file-upload">
-                <input type="file" class="notes-input" name="notes" accept="image/*" #fileUpload (change)="onFileSelected($event)">
-                <button mat-raised-button #file class="file-button"
-                    (click)="fileUpload.click(); $event.preventDefault()"><mat-icon>attach_file</mat-icon>Прикачи</button>
+        <ng-template #callDialog>
+            <form id="excuseForm" #excuseForm="ngForm" (ngSubmit)="onSend(excuseForm)">
+                <h2 matDialogTitle style="text-align: center;">Форма за извинение от родител</h2>
+                <mat-form-field>
+                    <mat-label>Изберете причина за отсъствието:</mat-label>
+                    <mat-select #excuseReason (selectionChange)="getExcuseReasonSwitch($event.value)">
+                        <mat-option *ngFor="let el of absenceExcuseReasons" [value]="el">
+                            {{ el }}
+                        </mat-option>
+                    </mat-select>
+                </mat-form-field>
+                <mat-label>Прикачете извинителни бележки тук (снимка):</mat-label>
+                <div class="file-upload">
+                    <input type="file" class="notes-input" name="notes" accept="image/*" #fileUpload
+                        (change)="onFileSelected($event)">
+                    <button mat-raised-button #file class="file-button"
+                        (click)="fileUpload.click(); $event.preventDefault()"><mat-icon>attach_file</mat-icon>Прикачи</button>
                     <p>{{ fileMessage }}</p>
-            </div>
-            <mat-dialog-actions class="formActions">
-                <button mat-raised-button color="primary" matDialogClose="no">Откажи</button>
-                <button type="submit" mat-raised-button color="primary" matDialogClose="yes">Изпрати</button>
-            </mat-dialog-actions>
-        </form>
-    </ng-template>
+                </div>
+                <mat-dialog-actions class="formActions">
+                    <button type="submit" mat-raised-button color="primary" matDialogClose="yes">Изпрати</button>
+                    <button mat-raised-button color="primary" matDialogClose="no">Откажи</button>
+                </mat-dialog-actions>
+            </form>
+        </ng-template>
 
-</div>
+    </div>
 </div>
