@@ -112,6 +112,7 @@ s.grade_division_id,
 a.id as absence_id,
 a.absence_type_id,
 a.absence_subject_id,
+a.absence_term_id,
 
 
 CASE 
@@ -164,6 +165,7 @@ s.grade_division_id,
 a.id as absence_id,
 a.absence_type_id,
 a.absence_subject_id,
+a.absence_term_id,
 
 
 CASE 
