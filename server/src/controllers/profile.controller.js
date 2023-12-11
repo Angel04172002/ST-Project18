@@ -2,7 +2,6 @@ const pool = require("../db")
 const utils = require("../utils")
 const jwt = require("jsonwebtoken");
 const bcrypt = require('bcryptjs');
-const { notify } = require("../routes/grades.route");
 
 createProfile = async (request, response) => {
 

@@ -7,6 +7,7 @@ const chatRote = require('./chat.route')
 const marksRoute = require('./marks.route')
 const teacherRoute = require('./teacher.route')
 const absenceRoute = require('./absence.route')
+const remarkRoute = require('./remark.route')
 
 // Add profile routing
 router.use('/profile', profileRoute);
@@ -21,6 +22,8 @@ router.use('/marks', marksRoute)
 router.use('/absences', absenceRoute);
 
 router.use('/teacher', teacherRoute);
+
+router.use('/remark', remarkRoute)
 
 
 // router.use('/calendar', calendarRoute);
