@@ -59,10 +59,17 @@ form {
     cursor: pointer;
     width: fit-content;
     padding: 6px 10px;
+    display: flex;
 }
 
 .file-upload:hover{
     cursor: pointer;
+}
+
+.file-upload p{
+    margin-top: 5px;
+    margin-left: 10px;
+    opacity: 0.5;
 }
 
 
