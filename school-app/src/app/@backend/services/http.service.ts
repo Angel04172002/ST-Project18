@@ -8,6 +8,7 @@ import { AddSubjectsAndGradesToTeacherModel } from "../models/add-subjects-and-g
 import { Injectable } from "@angular/core";
 import { AddAbsencesByTeacher } from "../models/add-absences-by-teacher";
 import { AddExcuseReasonsByParent } from "../models/add-excuse-reasons-by-parent";
+import { AddRemarkModel } from "../models/add-remarks.model";
 
 @Injectable({
   providedIn: "root",
@@ -15,13 +16,9 @@ import { AddExcuseReasonsByParent } from "../models/add-excuse-reasons-by-parent
 export class HttpService {
   private readonly url = "http://localhost:3000";
 
-
   public jwtToken: string = "";
 
-  constructor(private httpClient: HttpClient) { }
-
-
-
+  constructor(private httpClient: HttpClient) {}
 
   private post(endpoint: string, body: any) {
     let headers: HttpHeaders = new HttpHeaders();
@@ -79,7 +76,6 @@ export class HttpService {
   // Grades methods
 
   public addStudentsToGrade(students: AddStudentToGrade[]): Observable<any> {
-
     console.log(this);
     console.log(students);
 
@@ -109,8 +105,6 @@ export class HttpService {
   public getAllSubjects(): Observable<any> {
     return this.post("/grades/subjects/all", {});
   }
-
-
 
   // Marks methods
 
@@ -162,22 +156,20 @@ export class HttpService {
     });
   }
 
-
   public getTeachersWithGradesDivisionsSubjects(): Observable<any> {
-    return this.post("/teacher/get/teacher-grades", {})
+    return this.post("/teacher/get/teacher-grades", {});
   }
-
-
 
   //Absences methods
 
-  public addAbsencesByTeacher(absences: AddAbsencesByTeacher[], creator: any): Observable<any> {
+  public addAbsencesByTeacher(
+    absences: AddAbsencesByTeacher[],
+    creator: any
+  ): Observable<any> {
     return this.post("/absences/add/absences", {
       absences: absences,
-      creator: creator
+      creator: creator,
     });
-
-
 
     //creator:
     // {
@@ -191,87 +183,133 @@ export class HttpService {
     // }
   }
 
-  public addExcuseReasonsByParent(excuseReasons: AddExcuseReasonsByParent[]): Observable<any> {
+  public addExcuseReasonsByParent(
+    excuseReasons: AddExcuseReasonsByParent[]
+  ): Observable<any> {
     return this.post("/absences/add/excuse-reasons", {
-      excuseReasons: excuseReasons
+      excuseReasons: excuseReasons,
     });
   }
 
   public getAbsencesByStudent(studentId: string): Observable<any> {
     return this.post("/absences/get-absences/student", {
-      id: studentId
+      id: studentId,
     });
   }
 
   public getAbsencesByParent(parentId: string): Observable<any> {
     return this.post("/absences/get-absences/parent", {
-      id: parentId
+      id: parentId,
     });
   }
 
   public getAbsencesByTeacher(teacherId: string): Observable<any> {
     return this.post("/absences/get-absences/teacher", {
-      id: teacherId
+      id: teacherId,
     });
   }
 
   public getAbsencesByGradeTeacher(gradeTeacherId: string): Observable<any> {
     return this.post("/absences/get-absences/grade-teacher", {
-      id: gradeTeacherId
+      id: gradeTeacherId,
     });
   }
 
   public getExcuseReasonsByParent(parentId: string): Observable<any> {
     return this.post("/absences/get-excuse-reasons/parent", {
-      id: parentId
+      id: parentId,
     });
   }
 
   public getExcuseReasonsByTeacher(teacherId: string): Observable<any> {
     return this.post("/absences/get-excuse-reasons/teacher", {
-      id: teacherId
+      id: teacherId,
     });
   }
 
-  public getExcuseReasonsByGradeTeacher(gradeTeacherId: string): Observable<any> {
+  public getExcuseReasonsByGradeTeacher(
+    gradeTeacherId: string
+  ): Observable<any> {
     return this.post("/absences/get-excuse-reasons/grade-teacher", {
-      id: gradeTeacherId
+      id: gradeTeacherId,
     });
   }
-
-
 
   //Helper methods
-  public getGradesDivisionsAndSubjectsForTeacher(teacherId: string): Observable<any> {
+  public getGradesDivisionsAndSubjectsForTeacher(
+    teacherId: string
+  ): Observable<any> {
     return this.post("/grades/get/teachers/grades", {
-      teacherId: teacherId
-    })
-  }
-
-  public getGradesDivisionsAndSubjectsForGradeTeacher(gradeTeacherId: string): Observable<any> {
-    return this.post("/grades/get/grade-teachers/grades", {
-      gradeTeacherId: gradeTeacherId
-    })
-  }
-
-  public getGradesDivisionsAndSubjectsForStudent(studentId: string): Observable<any> {
-    return this.post("/grades/get/students/grades", {
-      studentId: studentId
-    })
-  }
-
-  public getGradesDivisionsAndSubjectsForParent(parentId: string): Observable<any> {
-    return this.post("/grades/get/parents/grades", {
-      parentId: parentId
-    })
-  }
-
-  public getStudentsByGradeAndDivision(gradeId: number, gradeDivisionId: string) {
-    return this.post('/grades/get/students/by-grades', {
-      gradeId: gradeId,
-      gradeDivisionId: gradeDivisionId
+      teacherId: teacherId,
     });
   }
 
+  public getGradesDivisionsAndSubjectsForGradeTeacher(
+    gradeTeacherId: string
+  ): Observable<any> {
+    return this.post("/grades/get/grade-teachers/grades", {
+      gradeTeacherId: gradeTeacherId,
+    });
+  }
 
+  public getGradesDivisionsAndSubjectsForStudent(
+    studentId: string
+  ): Observable<any> {
+    return this.post("/grades/get/students/grades", {
+      studentId: studentId,
+    });
+  }
+
+  public getGradesDivisionsAndSubjectsForParent(
+    parentId: string
+  ): Observable<any> {
+    return this.post("/grades/get/parents/grades", {
+      parentId: parentId,
+    });
+  }
+
+  public getStudentsByGradeAndDivision(
+    gradeId: number,
+    gradeDivisionId: string
+  ) {
+    return this.post("/grades/get/students/by-grades", {
+      gradeId: gradeId,
+      gradeDivisionId: gradeDivisionId,
+    });
+  }
+
+  // Remarks methods
+  // ********************************************
+
+  public addRemark(remark: AddRemarkModel): Observable<any> {
+    return this.post("/remark/add/", {
+      note: remark.note,
+      teacher_creator_id: remark.teacher_creator_id,
+      grade_teacher_creator_id: remark.grade_teacher_creator_id, // This parameter is optional !!
+      note_student_id: remark.note_student_id,
+      note_subject_id: remark.note_subject_id,
+      note_term_id: remark.note_term_id,
+    });
+  }
+
+  public getRemarksByStudent(studentId: string): Observable<any> {
+    return this.post("/remark/get/student", {
+      studentId: studentId,
+    });
+  }
+  public getRemarksByParent(parentId: string): Observable<any> {
+    return this.post("/remark/get/parent", {
+      parentId: parentId,
+    });
+  }
+  public getRemarksByTeacher(teacherId: string): Observable<any> {
+    return this.post("/remark/get/teacher", {
+      teacherId: teacherId,
+    });
+  }
+  public getRemarksByClassTeacher(teacherId: string): Observable<any> {
+    return this.post("/remark/get/class-teacher", {
+      teacherId: teacherId,
+    });
+  }
 }

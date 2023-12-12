@@ -3,7 +3,7 @@ const pool = require("../db")
 const remarkQueries = require('../database/remarks.queries')
 
 
-addRemark = async (request, response) => {
+addRemark = async (request, response) => {  
     try {
     
         const {note, teacher_creator_id, grade_teacher_creator_id, note_student_id, note_subject_id, note_term_id } = request.body;
@@ -36,4 +36,76 @@ addRemark = async (request, response) => {
 }
 
 
-module.exports = { addRemark }
+
+getRemarksByStudent = async (request, response) => {
+    try {
+
+        const studentId = request.body?.studentId;
+        let { rows } = await pool.query(remarkQueries.getRemarkByStudentQuery, [studentId])
+
+        return response.status(200).json(rows)
+    }
+    catch (err) {
+        console.error(err.message)
+        response.status(500).send(err.message)
+    }
+}
+
+getRemarksByParent = async (request, response) => {
+    try {
+
+        const parentId = request.body?.parentId;
+        let { rows } = await pool.query(remarkQueries.getRemarkByParentQuery, [parentId])
+
+        return response.status(200).json(rows)
+    }
+    catch (err) {
+        console.error(err.message)
+        response.status(500).send(err.message)
+    }
+}
+
+
+
+getRemarksByTeacher = async (request, response) => {
+    try {
+
+        const teacherId = request.body?.teacherId;
+        let { rows } = await pool.query(remarkQueries.getRemarkByTeacherQuery, [teacherId])
+
+        return response.status(200).json(rows)
+    }
+    catch (err) {
+        console.error(err.message)
+        response.status(500).send(err.message)
+    }
+}
+
+
+
+getRemarksByClassTeacher = async (request, response) => {
+    try {
+
+        const teacherId = request.body?.teacherId;
+        let { rows } = await pool.query(remarkQueries.getRemarkByClassTeacherQuery, [teacherId])
+
+        return response.status(200).json(rows)
+    }
+    catch (err) {
+        console.error(err.message)
+        response.status(500).send(err.message)
+    }
+}
+
+
+
+
+
+
+module.exports = { 
+    addRemark,
+    getRemarksByStudent, 
+    getRemarksByParent,
+    getRemarksByTeacher,
+    getRemarksByClassTeacher
+}
