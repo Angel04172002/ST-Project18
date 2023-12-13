@@ -16,14 +16,19 @@ div {
 }
 
 .navbar a {
+    /* display: block; */
     color: white;
     text-decoration: none;
     margin: 0 15px;
     border: 1px solid #CCC;
+    border-radius: 1em;
+    width: 2em;
     padding: 10px;
+    transition: all 0.3s ease-in;
 }
 
 .navbar a:hover {
+    background-color: #0056b3;
     text-decoration: underline;
     cursor: pointer;
 }

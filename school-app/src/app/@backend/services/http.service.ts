@@ -284,7 +284,7 @@ export class HttpService {
   public addRemark(remark: AddRemarkModel): Observable<any> {
     return this.post("/remark/add/", {
       note: remark.note,
-      teacher_creator_id: remark.teacher_creator_id,
+      teacher_creator_id: remark.teacher_creator_id, // This parameter is optional !!
       grade_teacher_creator_id: remark.grade_teacher_creator_id, // This parameter is optional !!
       note_student_id: remark.note_student_id,
       note_subject_id: remark.note_subject_id,
