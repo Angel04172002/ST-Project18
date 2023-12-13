@@ -9,6 +9,7 @@ import { Injectable } from "@angular/core";
 import { AddAbsencesByTeacher } from "../models/add-absences-by-teacher";
 import { AddExcuseReasonsByParent } from "../models/add-excuse-reasons-by-parent";
 import { AddRemarkModel } from "../models/add-remarks.model";
+import { AddEventsModel } from "../models/add-event.model";
 
 @Injectable({
   providedIn: "root",
@@ -310,6 +311,38 @@ export class HttpService {
   public getRemarksByClassTeacher(teacherId: string): Observable<any> {
     return this.post("/remark/get/class-teacher", {
       teacherId: teacherId,
+    });
+  }
+
+  // Events methods
+  // ********************************************
+
+  public addEvent(event: AddEventsModel): Observable<any> {
+    return this.post("/event/add", {
+      name: event.name,
+      description: event.description,
+      date: event.date,
+      place: event.place,
+      teacher_creator_id: event.teacher_creator_id,
+      grade_teacher_creator_id: event.grade_teacher_creator_id,
+      admin_creator_id: event.admin_creator_id,
+      isPrivate: event.isPrivate,
+    });
+  }
+
+  public getAllEvents(): Observable<any> {
+    return this.post("/event/get", {});
+  }
+
+  public getEventsByStudent(studentId: string): Observable<any> {
+    return this.post("/event/get/student", {
+      studentId: studentId,
+    });
+  }
+
+  public getEventsByParent(parentId: string): Observable<any> {
+    return this.post("/event/get/parent", {
+      parentId: parentId,
     });
   }
 }
