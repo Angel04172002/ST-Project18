@@ -1,3 +1,105 @@
+h2 {
+    color: #333;
+}
+
+form {
+    max-width: 400px;
+    margin: 20px auto;
+    background-color: #fff;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+label {
+    display: block;
+    margin-bottom: 8px;
+    text-align: left;
+}
+
+textarea, select {
+    width: 100%;
+    padding: 8px;
+    margin-bottom: 16px;
+    box-sizing: border-box;
+}
+
+button {
+    padding: 12px;
+    background-color: #4caf50;
+    color: #fff;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+button:hover {
+    background-color: #45a049;
+}
+
+.footer {
+    margin-top: 20px;
+    background-color: #333;
+    padding: 10px;
+    color: #fff;
+}
+
+.footer a {
+    color: #fff;
+    margin: 0 10px;
+    text-decoration: none;
+}
+
+.footer a:hover {
+    text-decoration: underline;
+}
+
+
+.admin-card{
+    margin: auto;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    width: 500px;
+    height: 300px;
+    padding: 20px 40px 20px 40px;
+}
+
+.file-input {
+    display: none;
+  }
+
+.file-unput:hover{
+    cursor: pointer;
+}
+
+button{
+    width: 150px;
+}
+
+.add-file-input{
+    display: flex;
+    justify-content: space-around;
+}
+
+.generate-button{
+    margin: auto;
+    margin-top: 0px;
+    margin-bottom: 10px;
+}
+
+
+input, select {
+    width: 100%;
+    padding: 8px;
+    margin-bottom: 16px;
+    box-sizing: border-box;
+}
+
+
+
+
+
 .grades,
 .grades-term {
     display: inline-block;
@@ -154,4 +256,6 @@ td.inner-cell {
     padding: 0.2em;
 }
  
+
+
 

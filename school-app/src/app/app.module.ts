@@ -36,9 +36,8 @@ import { FormsModule }   from '@angular/forms';
     FeedbackComponent,
     NotificationComponent,
     SubjectComponent,
-    HomeComponent,
-    GradesComponent
-  ],
+    HomeComponent
+   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
@@ -54,7 +53,9 @@ import { FormsModule }   from '@angular/forms';
     UserModule,
     MatDialogModule,
     FormsModule,
-    CalendarComponent
+    CalendarComponent,
+    GradesComponent
+
   ],
   providers: [],
   bootstrap: [AppComponent]

@@ -136,8 +136,10 @@ addStudentsToGrade = async (request, response) => {
 
         for (let student of students) {
 
-            let { rows } = await pool.query(studentQueries.getParentById, [student?.parent_id]);
-            let parent = rows[0];
+            
+
+            // let { rows } = await pool.query(studentQueries.getParentById, [student?.parent_id]);
+            // let parent = rows[0];
 
        
             await pool.query(
@@ -145,10 +147,10 @@ addStudentsToGrade = async (request, response) => {
                 [student?.studentId, Number(student?.grade), student?.gradeDivision, student?.parent_id]
             )
 
-            await pool.query(
-                'UPDATE PROFILE SET first_name = $1, last_name = $2, email = $3 WHERE id = $4',
-                [student.parent_first_name, student.parent_last_name, student.parent_email, parent.id]
-            );
+            // await pool.query(
+            //     'UPDATE PROFILE SET first_name = $1, last_name = $2, email = $3 WHERE id = $4',
+            //     [student.parent_first_name, student.parent_last_name, student.parent_email, parent.id]
+            // );
 
         }
 

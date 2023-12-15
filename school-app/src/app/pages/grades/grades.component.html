@@ -1,4 +1,4 @@
-<!-- За учител-->
+<!-- За учител
 <!DOCTYPE html>
 <html lang="en">
 
@@ -8,7 +8,7 @@
     <title>Document</title>
 </head>
 
-<body>
+<body> -->
 
 
 
@@ -242,7 +242,7 @@
     </table>
 
 
-    <script src="grades.js"></script>
+    <!-- <script src="grades.js"></script> -->
 
 
     <div class="container" *ngIf="userType() == 'Teacher' || userType() == 'Grade teacher'">
@@ -267,9 +267,28 @@
         </form>
     </div>
 
-</body>
 
-</html>
+    <mat-card class="admin-card" *ngIf="userType() == 'Teacher' || userType() == 'Grade teacher'">
+        <h3>Генерирай файл с оценки:</h3>
+        <button mat-raised-button color="primary" (click)="downloadCsvFile()" class="generate-button">Генерирай</button>
+    
+        <mat-divider></mat-divider>
+        <h3>Прикачи файл с оценки:</h3>
+    
+        <div class="add-file-input">
+            <input type="file" name="file-input" class="file-input" accept=".xlsx" #fileUpload>
+            <button mat-raised-button color="primary" #file class="file-button"
+                (click)="fileUpload.click()"><mat-icon>attach_file</mat-icon>Прикачи</button>
+    
+            <button type="submit" mat-raised-button class="submit-data-button" color="primary"
+                (click)="sendJson()">Добави</button>
+        </div>
+    </mat-card>
+
+
+<!-- </body>
+
+</html> -->
 
 
 

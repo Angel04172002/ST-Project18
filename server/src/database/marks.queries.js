@@ -1,7 +1,7 @@
 
 const getMarksByTeacherQuery = `
 SELECT
-    rs.id,
+    rs.student_id,
     rs.first_name,
     rs.last_name,
     rs.email,
@@ -19,36 +19,36 @@ SELECT
 FROM
     (
         SELECT
-            p.id,
-            p.first_name,
-            p.last_name,
-            p.email,
-            gs.grade_id,
+              p.id as student_id,
+             p.first_name,
+             p.last_name,
+             p.email,
+             g.id as grade_id,
             s.grade_division_id,
             su.subject_name,
             sms.term_id,
-            m.mark_id AS marks,
-            tgds.teacher_id
+            m.mark_id AS marks
+		,tgds.teacher_id
         FROM
             student s
         JOIN grade g ON s.grade_id = g.id
-        JOIN students_student_marks_subjects sms ON s.id = sms.student_id
-        JOIN subject su ON sms.student_subject_id = su.subject_name
-        JOIN grades_subjects gs ON su.subject_name = gs.subject_id AND s.grade_id = gs.grade_id
-        JOIN marks m ON sms.student_mark_id = m.mark_id
+        LEFT JOIN students_student_marks_subjects sms ON s.id = sms.student_id
+        LEFT JOIN subject su ON sms.student_subject_id = su.subject_name
+        LEFT JOIN grades_subjects gs ON su.subject_name = gs.subject_id AND s.grade_id = gs.grade_id
+        LEFT JOIN marks m ON sms.student_mark_id = m.mark_id
         JOIN profile p ON s.id = p.id
-        JOIN teachers_grades_divisions_subjects tgds ON
-            s.grade_id = tgds.teacher_grade_id
+        LEFT JOIN teachers_grades_divisions_subjects tgds ON
+            g.id = tgds.teacher_grade_id
             AND s.grade_division_id = tgds.teacher_grade_division_id
-            AND gs.subject_id = tgds.teacher_subject_id
+            AND sms.student_subject_id = tgds.teacher_subject_id
       
     ) AS rs
 INNER JOIN
     profile pr ON rs.teacher_id = pr.id
 WHERE
-    tgds.teacher_id = $1
+    rs.teacher_id = $1
 GROUP BY
-    rs.id,
+    rs.student_id,
     rs.first_name,
     rs.last_name,
     rs.email,
@@ -62,7 +62,8 @@ ORDER BY
     rs.grade_id ASC,
     rs.grade_division_id ASC,
     rs.subject_name ASC;
-`
+	
+`;
 
 
 const getMarksByClassTeacherQuery = `
@@ -383,11 +384,41 @@ ORDER BY
     rs.grade_division_id ASC,
     rs.subject_name ASC;
 
-`
+`;
+
+
+const getCountOfStudentTermSubjectMarks = `    
+select COUNT(student_mark_id) from students_student_marks_subjects
+where student_id = $1 and student_subject_id = $2
+and term_id = $3
+`;
+
+
+// const getLastNStudents = `
+// SELECT sms.student_id FROM  students_student_marks_subjects sms 
+// ORDER BY sms.grade_id DESC,
+//          sms.grade_division_id DESC,
+//          sms.subject_name DESC LIMIT 10
+// WHERE `;
+
+
+const deleteNStudentMarks = `
+  DELETE FROM students_student_marks_subjects sms 
+  WHERE sms.student_id IN (
+    SELECT smss.student_id
+    FROM students_student_marks_subjects smss
+    WHERE smss.student_id = $1
+    ORDER BY smss.identity_count DESC
+    LIMIT $2
+  ) 
+`;
+
 
 module.exports = {
     getMarksByTeacherQuery,
     getMarksByClassTeacherQuery,
     getMarksByStudentQuery,
-    getMarksByParentQuery
+    getMarksByParentQuery,
+    getCountOfStudentTermSubjectMarks,
+    deleteNStudentMarks
 }

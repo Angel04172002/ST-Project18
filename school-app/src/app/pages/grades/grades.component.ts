@@ -1,14 +1,36 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { UserService } from '../../user/user.service';
 import { firstValueFrom } from 'rxjs';
 import { HttpService } from 'src/app/@backend/services/http.service';
+import { MatButtonModule } from '@angular/material/button';
+import { MatCardModule } from '@angular/material/card';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { MatIconModule } from '@angular/material/icon';
+import { MatDividerModule } from '@angular/material/divider';
+import { CommonModule } from '@angular/common';
+import { TeacherService } from '../teacher.service';
 
 @Component({
   selector: 'app-grades',
   templateUrl: './grades.component.html',
-  styleUrls: ['./grades.component.css', '../../styles/table-style.css']
+  styleUrls: ['./grades.component.css', '../../styles/table-style.css'],
+  imports: [
+    MatButtonModule,
+    MatCardModule,
+    MatFormFieldModule,
+    MatButtonModule,
+    FormsModule,
+    ReactiveFormsModule,
+    MatIconModule,
+    MatDividerModule,
+    CommonModule
+  ],
+  standalone: true
 })
 export class GradesComponent implements OnInit {
+
+  @ViewChild('fileUpload') fileInput!: ElementRef;
 
   grades: any = [];
 
@@ -22,7 +44,8 @@ export class GradesComponent implements OnInit {
   };
 
 
-  constructor(private userService: UserService, private http: HttpService) {
+  constructor(private userService: UserService, private http: HttpService,
+    private teacherService: TeacherService) {
 
   }
 
@@ -31,12 +54,13 @@ export class GradesComponent implements OnInit {
   }
 
 
+
   async getGrades() {
 
     let user = this.userService.getUser();
     let id = '';
 
-    if(user) {
+    if (user) {
       id = user.id;
     }
 
@@ -73,6 +97,24 @@ export class GradesComponent implements OnInit {
 
 
   userType() {
-    return this.userService.user?.type;
+    return this.userService.getUser().type;
+  }
+
+
+  downloadCsvFile() {
+
+    let user = this.userService.getUser();
+    let id = '';
+
+    if (user) {
+      id = user.id;
+    }
+
+    this.teacherService.getStudentMarks(id);
+  }
+
+
+  sendJson() {
+    this.teacherService.sendJsonData(this.fileInput.nativeElement.files, 'sendJsonGrades');
   }
 }
