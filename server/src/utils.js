@@ -25,3 +25,5 @@ exports.compareStudentMarks = (marks1, marks2) => {
 
   return removalIndexes;
 }
+
+

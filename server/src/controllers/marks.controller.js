@@ -8,19 +8,13 @@ addMarksByTeacher = async (request, response) => {
     try {
 
 
-
-
-
-
         for (let entry of request.body.marks) {
-
-
 
             let term1Marks = entry?.term1Marks;
             let term2Marks = entry?.term2Marks;
-            const term1Final = Number(entry?.term1Final);
-            const term2Final = Number(entry?.term2Final);
-            const termFinal = Number(entry?.termFinal);
+            const term1Final = entry?.term1Final;
+            const term2Final = entry?.term2Final;
+            const termFinal = entry?.termFinal;
             const studentId = entry.studentId;
             const subjectId = entry.subject;
 
@@ -41,87 +35,24 @@ addMarksByTeacher = async (request, response) => {
             );
 
 
-
-            // console.log(marksFirstTermQueryRes);
-
-            //from db
             const marksFirstTermDbArr = marksFirstTermQueryRes.rows;
             const marksSecondTermDbArr = marksSecondTermQueryRes.rows;
 
             const rowsFirstTerm = Number(marksFirstTermQueryRes.rowCount);
             const rowsSecondTerm = Number(marksSecondTermQueryRes.rowCount);
 
+
+            // console.log(term1Marks);
             // console.log(rowsFirstTerm);
-
-            // console.log(marksFirstTermArr);
-
-
-            // const countMarksFirstTerm = marksFirstTermQueryRes.rows[0].count;
-            // const countMarksSecondTerm = marksSecondTermQueryRes.rows[0].count;
-
-
-            // console.log(marksFirstTermArr);
-            // console.log('db');
+            // console.log(term2Marks);
+            // console.log(rowsSecondTerm);
 
 
 
 
+      
 
-
-            if (marksFirstTermDbArr !== undefined)//&& marksSecondTermArr !== undefined) 
-            {
-
-                console.log('inside');
-                console.log(Number(term1Marks.length));
-                console.log(Number(marksFirstTermDbArr.count));
-
-
-
-                //No marks to add
-                if (term1Marks.length == rowsFirstTerm) //|| term2Marks.length == marksSecondTermArr.count) 
-                {
-                    continue;
-                }
-
-
-                //Array is term1Marks
-
-
-                //Removing marks for first or second term
-                if (Number(term1Marks.length) < rowsFirstTerm) {
-
-                    term1Marks = term1Marks.map(Number);
-
-
-                    let marksArr = await pool.query(marksQueries.getStudentMarksToDelete, [studentId, subjectId, 'Първи срок']);
-                    let marksToDelete = marksArr.rows.filter(x => Number(x.row_number) > term1Marks.length)
-
-
-                    marksToDelete.forEach(async x => {
-
-                        await pool.query(marksQueries.deleteNStudentMarks, [x.identity_count]);
-
-                    })
-
-                    console.log('*****');
-                
-                    console.log('Successfully removed marks for first term');
-
-                    return response.status(200).json("Successfully removed marks for first term!")
-                }
-            }
-
-            // if (term2Marks.length < marksSecondTermArr.count) {
-            //     // let removalCountSecondTerm = countMarksSecondTerm - term2Marks.length;
-
-            //     await pool.query(marksQueries.deleteNStudentMarks, [studentId, subjectId, 'Втори срок']);
-
-            //     console.log('Successfully removed marks for second term');
-
-
-            //     return response.status(200).json("Successfully removed marks for second term!")
-            // }
-
+              
 
 
 
@@ -144,12 +75,8 @@ addMarksByTeacher = async (request, response) => {
 
 
 
-
-
-
-
             let index = term1Marks.length;
-            let counter = 0;
+            let counter = 1;
 
             // Adding marks for a student
             for (let mark of term1Marks) {
@@ -171,7 +98,7 @@ addMarksByTeacher = async (request, response) => {
                 console.log(marksFirstTermDbArr);
 
 
-                if (marksFirstTermDbArr == undefined || counter > marksFirstTermDbArr.count) {
+                if (marksFirstTermDbArr == undefined || counter > marksFirstTermDbArr.length || marksFirstTermDbArr.length == 0) {
 
                     await pool.query(
                         'insert into students_student_marks_subjects (student_id, student_subject_id, term_id, student_mark_id) VALUES ($1, $2, $3, $4)',
@@ -184,49 +111,80 @@ addMarksByTeacher = async (request, response) => {
 
                 counter++;
             }
+        
 
 
-            counter = 0;
+            counter = 1;
 
-            // for (let mark of term2Marks) {
+            console.log('***');
 
-            //     mark = mark.trim();
-
-            //     console.log(mark)
-
-            //     if (counter >= term2Marks.length) {
-
-            //         await pool.query(
-            //             'insert into students_student_marks_subjects (student_id, student_subject_id, term_id, student_mark_id) VALUES ($1, $2, $3, $4)',
-            //             [studentId, subjectId, 'Втори срок', Number(mark)]
-            //         );
-            //     };
-
-            //     counter++;
-            // }
+            console.log(term2Marks);
 
 
 
+            for (let mark of term2Marks) {
+
+                if (mark == '') continue;
+
+                mark = mark.trim();
+
+             
+
+                if (marksSecondTermDbArr == undefined || counter > marksSecondTermDbArr.length || marksSecondTermDbArr.length == 0) {
+
+                    await pool.query(
+                        'insert into students_student_marks_subjects (student_id, student_subject_id, term_id, student_mark_id) VALUES ($1, $2, $3, $4)',
+                        [studentId, subjectId, 'Втори срок', Number(mark)]
+                    );
+
+                    console.log('Successfully inserted mark');
+
+                };
+
+                counter++;
+            }
+
+            console.log(term1Final);
+            console.log(term2Final);
+            console.log(termFinal);
 
 
-            // await pool.query(
-            //     'insert into students_student_marks_subjects (student_id, student_subject_id,  term_id, student_mark_id) VALUES ($1, $2, $3, $4)',
-            //     [studentId, subjectId, 'Срочна 1', term1Final]
-            // )
 
-            // await pool.query(
-            //     'insert into students_student_marks_subjects (student_id, student_subject_id, term_id, student_mark_id) VALUES ($1, $2, $3, $4)',
-            //     [studentId, subjectId, 'Срочна 2', term2Final]
-            // )
 
-            // await pool.query(
-            //     'insert into students_student_marks_subjects (student_id,  student_subject_id, term_id, student_mark_id) VALUES ($1, $2, $3, $4)',
-            //     [studentId, subjectId, 'Годишна', termFinal]
-            // )
 
+            if (term1Final !== undefined && term1Final !== 0 && term1Final !== '') {
+
+                await pool.query(
+                    'insert into students_student_marks_subjects (student_id, student_subject_id,  term_id, student_mark_id) VALUES ($1, $2, $3, $4)',
+                    [studentId, subjectId, 'Срочна 1', Number(term1Final)]
+                )
+
+            }
+
+
+            if (term2Final !== undefined && term2Final !== 0 && term2Final !== '') {
+
+                await pool.query(
+                    'insert into students_student_marks_subjects (student_id, student_subject_id, term_id, student_mark_id) VALUES ($1, $2, $3, $4)',
+                    [studentId, subjectId, 'Срочна 2', Number(term2Final)]
+                )
+
+            }
+
+
+            if (termFinal !== undefined && termFinal !== 0 && termFinal !== '' && termFinal) {
+
+                await pool.query(
+                    'insert into students_student_marks_subjects (student_id,  student_subject_id, term_id, student_mark_id) VALUES ($1, $2, $3, $4)',
+                    [studentId, subjectId, 'Годишна', Number(termFinal)]
+                )
+
+            }
+
+        
         }
-
-
+    
+        
         return response.status(200).json("Marks added successfully!")
     }
     catch (err) {

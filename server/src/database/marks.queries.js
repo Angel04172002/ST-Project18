@@ -400,12 +400,7 @@ group by student_mark_id
 `;
 
 
-// const getStudentMarks = `
-// SELECT sms.student_id, sms.student_subject_id,  FROM  students_student_marks_subjects sms 
-// ORDER BY sms.grade_id DESC,
-//          sms.grade_division_id DESC,
-//          sms.subject_name DESC LIMIT 10
-// WHERE `;
+
 
 
 
@@ -439,6 +434,26 @@ const deleteNStudentMarks = `
 `;
 
 
+const getFinalFirstTermMark = ` 
+select * from students_student_marks_subjects
+where term_id = 'Срочна 1'  and student_id = $1
+and student_subject_id = $2
+`;
+
+const getFinalSecondTermMark = ` 
+select * from students_student_marks_subjects
+where term_id = 'Срочна 2'  and student_id = $1
+and student_subject_id = $2
+`;
+
+const getFinalMark = ` 
+select * from students_student_marks_subjects
+where term_id = 'Годишна'  and student_id = $1
+and student_subject_id = $2
+`;
+
+
+
 
 
 module.exports = {
@@ -450,5 +465,8 @@ module.exports = {
     getStudentMarksToDelete,
     deleteNStudentMarks,
     getCountOfStudentMarksRows,
-    resetIdentity
+    resetIdentity,
+    getFinalFirstTermMark,
+    getFinalSecondTermMark,
+    getFinalMark
 }
