@@ -9,3 +9,19 @@ module.exports.generateRandomString = (length) => {
 
   return result;
 }
+
+
+
+exports.compareStudentMarks = (marks1, marks2) => {
+
+  const removalIndexes = [];
+
+  for (let i = 0; i < marks1.length; i++) {
+
+    if (marks1[i] !== marks2[i]) {
+      removalIndexes.push(i + 1);
+    }
+  }
+
+  return removalIndexes;
+}

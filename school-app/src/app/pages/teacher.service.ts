@@ -33,6 +33,10 @@ export class TeacherService {
 
     await firstValueFrom(req)
       .then(data => {
+
+        // console.log(data);
+        
+
         this.excelService.downloadXLSX(data, this.studentMarksHeaders);
       })
 
@@ -48,8 +52,16 @@ export class TeacherService {
 
           let req: any = '';
 
-          jsonData[0]['term1Marks'] = jsonData[0]['term1Marks'].split(', ');
-          jsonData[0]['term2Marks'] = jsonData[0]['term2Marks'].split(', ');
+          console.log(jsonData);
+          
+          for(let i = 0; i < jsonData.length; i++) {
+            jsonData[i]['term1Marks'] = jsonData[i]['term1Marks'].toString().trim().split(',');
+            jsonData[i]['term2Marks'] = jsonData[i]['term2Marks'].toString().trim().split(',');
+          }
+
+          console.log(jsonData);
+          
+
 
           req = this.httpService.addMarksByTeacher(jsonData);
 
