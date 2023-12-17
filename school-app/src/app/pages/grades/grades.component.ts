@@ -11,11 +11,12 @@ import { MatDividerModule } from '@angular/material/divider';
 import { CommonModule } from '@angular/common';
 import { TeacherService } from '../teacher.service';
 import { MatDialog, MatDialogModule } from '@angular/material/dialog';
+import { Dialog, DialogRef } from '@angular/cdk/dialog';
 
 @Component({
   selector: 'app-grades',
   templateUrl: './grades.component.html',
-  styleUrls: ['./grades.component.css', '../../styles/table-style.css'],
+  styleUrls: ['./grades.component.css', '../../styles/table-style.css', '../../core/footer/footer.component.css'],
   imports: [
     MatButtonModule,
     MatCardModule,
@@ -42,7 +43,7 @@ export class GradesComponent implements OnInit {
     2: 'poor',
     3: 'middle',
     4: 'good',
-    5: 'very good',
+    5: 'very-good',
     6: 'excellent'
   };
 
@@ -100,13 +101,22 @@ export class GradesComponent implements OnInit {
 
   }
 
-  showDialog() {
-    this.dialog.nativeElement.show();
+  showDialog(e : Event) {
+
+    console.log(e.target);
+
+    let dialog = (e.target as HTMLElement)?.nextElementSibling;
+
+    dialog?.setAttribute('open', 'open');
+    //this.dialog.nativeElement.show();
   }
 
 
-  hideDialog() {
-    this.dialog.nativeElement.close();
+  hideDialog(e : Event) {
+
+    let dialog = (e.target as HTMLElement)?.nextElementSibling;
+
+    dialog?.removeAttribute('open');
   }
 
   userType() {

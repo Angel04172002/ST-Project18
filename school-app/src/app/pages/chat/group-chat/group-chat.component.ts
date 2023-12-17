@@ -1,7 +1,7 @@
 import { ChatService } from './../../../chat/chat.service';
 import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { FormControl } from '@angular/forms';
-import Pusher from 'pusher-js';
+// import Pusher from 'pusher-js';
 import { Router } from '@angular/router';
 
 @Component({
@@ -54,18 +54,18 @@ export class GroupChatComponent implements OnInit {
   ngOnInit(): void {
 
     // Enable pusher logging - don't include this in production
-    Pusher.logToConsole = true;
+    // Pusher.logToConsole = true;
 
-    const pusher = new Pusher('2a207a46ea3f96109427', {
-      cluster: 'mt1'
-    });
+    // const pusher = new Pusher('2a207a46ea3f96109427', {
+    //   cluster: 'mt1'
+    // });
 
-    const channel = pusher.subscribe('chat');
-    channel.bind('message', (data: any) => {
-      alert(JSON.stringify(data));
-      this.messages.push(data);
-    });
-    // this.messages$ = this.chatListControl.valueChanges.pipe(
+    // const channel = pusher.subscribe('chat');
+    // channel.bind('message', (data: any) => {
+    //   alert(JSON.stringify(data));
+    //   this.messages.push(data);
+    // });
+    // // this.messages$ = this.chatListControl.valueChanges.pipe(
     //   map((value) => value[0]),
     //   switchMap((chatId) => this.chatsService.getChatMessages$(chatId)),
     //   tap(() => {
