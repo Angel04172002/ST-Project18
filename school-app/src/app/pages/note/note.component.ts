@@ -282,21 +282,36 @@ export class NoteComponent implements OnInit{
     let user = this.userService.getUser();
     let id = '';
     let type = '';
+    let req: any;
 
     if (user) {
       id = user.id;
       type = user.type
     }
 
-    let note: AddRemarkModel = {
-      note: row.note,
-      teacher_creator_id: id,
-      note_student_id: row.studentId,
-      note_subject_id: row.subject,
-      note_term_id: this.yearTermsSelect
-    }
+    if(type === 'Teacher'){
+      let note: AddRemarkModel = {
+        note: row.note,
+        teacher_creator_id: id,
+        note_student_id: row.studentId,
+        note_subject_id: row.subject,
+        note_term_id: this.yearTermsSelect
+      }
+  
+      req = this.http.addRemark(note)
 
-    let req = this.http.addRemark(note)
+    } else if (type === 'Grade teacher'){
+      let note: AddRemarkModel = {
+        note: row.note,
+        grade_teacher_creator_id: id,
+        note_student_id: row.studentId,
+        note_subject_id: row.subject,
+        note_term_id: this.yearTermsSelect
+      }
+  
+      req = this.http.addRemark(note)
+    }
+    
 
     try {
       await firstValueFrom(req)

@@ -318,7 +318,7 @@ export class HttpService {
   // ********************************************
 
   public addEvent(event: AddEventsModel): Observable<any> {
-    return this.post("/event/add", {
+    return this.post("/events/add", {
       name: event.name,
       description: event.description,
       date: event.date,
@@ -331,17 +331,17 @@ export class HttpService {
   }
 
   public getAllEvents(): Observable<any> {
-    return this.post("/event/get", {});
+    return this.post("/events/get", {});
   }
 
   public getEventsByStudent(studentId: string): Observable<any> {
-    return this.post("/event/get/student", {
+    return this.post("/events/get/student", {
       studentId: studentId,
     });
   }
 
   public getEventsByParent(parentId: string): Observable<any> {
-    return this.post("/event/get/parent", {
+    return this.post("/events/get/parent", {
       parentId: parentId,
     });
   }

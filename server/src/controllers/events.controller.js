@@ -1,4 +1,5 @@
 const pool = require("../db")
+const utils = require("../utils");
 
 
 
@@ -37,7 +38,7 @@ addEvent = async (request, response) => {
             isPrivate
         ])
          
-        return response.status(200).send('Event added successfully!')
+        return response.status(200).json('Event added successfully!')
     }
     catch (err) {
         console.error(err.message)
@@ -85,7 +86,7 @@ getEventsByParent = async (request, response) => {
         const parentId = request.body?.parentId;
         let { rows } = await pool.query(`
             select e.*, s.grade_id, s.grade_division_id from event e
-            join teachers_grades_divisions_subjects
+            join teachers_grades_divisions_subjects tgds
             on e.teacher_creator_id = tgds.teacher_id
             join student s
             on tgds.teacher_grade_id = s.grade_id and tgds.teacher_grade_division_id = s.grade_division_id
