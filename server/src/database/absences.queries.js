@@ -34,7 +34,7 @@ from (
 	aer.reason_id as excuse_reason, 
 	aer.id as excuse_reason_id,
     par.id as parent_id,
-	tgds.teacher_id
+	a.teacher_creator_id as teacher_id
 	from absences_excuse_reasons aers
 	join absence_excuse_reason aer
 	on aers.excuse_reason_id = aer.id
@@ -143,7 +143,7 @@ s.grade_id = gtgds.grade_teacher_grade_id
 AND s.grade_division_id = gtgds.grade_teacher_grade_division_id
 AND gs.subject_id = gtgds.grade_teacher_subject_id
 JOIN profile pro
-ON tgds.teacher_id = pro.id or gtgds.grade_teacher_id = pro.id
+ON a.teacher_creator_id = pro.id or a.grade_teacher_creator_id = pro.id
 WHERE 
 s.id = $1
 ORDER BY
@@ -196,7 +196,7 @@ s.grade_id = gtgds.grade_teacher_grade_id
 AND s.grade_division_id = gtgds.grade_teacher_grade_division_id
 AND gs.subject_id = gtgds.grade_teacher_subject_id
 JOIN profile pro
-ON tgds.teacher_id = pro.id or gtgds.grade_teacher_id = pro.id
+ON a.teacher_creator_id = pro.id or a.grade_teacher_creator_id = pro.id
 WHERE 
 s.parent_id = $1
 ORDER BY

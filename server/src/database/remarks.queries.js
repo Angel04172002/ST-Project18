@@ -115,7 +115,7 @@ gs.subject_id ASC;
 
 const getRemarkByTeacherQuery = `
 select n.id, n.note, n.note_subject_id, n.note_term_id,
-p.first_name as student_first_name, p.last_name as student_last_name, p.email as student_email, s.grade_id, s.grade_division_id,
+p.id as student_id, p.first_name as student_first_name, p.last_name as student_last_name, p.email as student_email, s.grade_id, s.grade_division_id,
 n.teacher_creator_id, pro.first_name as teacher_first_name, pro.last_name as teacher_last_name, pro.email as teacher_email
 from note n
 inner join students_notes sn
@@ -134,7 +134,7 @@ order by s.grade_id, s.grade_division_id, n.note_term_id
 const getRemarkByClassTeacherQuery = `
  	
 select n.id, n.note, n.note_subject_id, n.note_term_id,
-p.first_name as student_first_name, p.last_name as student_last_name, p.email as student_email, s.grade_id, s.grade_division_id,
+p.id as student_id, p.first_name as student_first_name, p.last_name as student_last_name, p.email as student_email, s.grade_id, s.grade_division_id,
 n.grade_teacher_creator_id, pro.first_name as teacher_first_name, pro.last_name as teacher_last_name, pro.email as teacher_email
 from note n
 inner join students_notes sn
