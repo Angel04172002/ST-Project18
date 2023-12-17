@@ -322,6 +322,11 @@ table.first-term, table.second-term {
  
 
 
+.first-term .term-final span,
+.second-term .term-final span {
+    position: relative;
+}
+
 
 .final-grade td {
     position: relative;
@@ -347,17 +352,48 @@ td.term-final, .final-grade td,
 
 
 
-dialog.final-term-dialog {
+/* dialog:not(.final-term-dialog) {
+    width: 3.9em;
+    height: 1.6em;
+} */
+
+dialog {
     /* display: inline-block; */
     width: 3.9em;
     height: 1.6em;
     position: absolute;
-    left: 0;
-    bottom: 0;
+    left: 30%;
+    bottom: 50%;
+    transform: translateY(-50%);
     top: 0;
     right: 0;
-    
 }
+
+.term-dialog {
+    left: 0;
+    right: 50%;
+    transform: translateX(50%);
+    bottom: 50%;
+    transform: translateY(-50%); 
+}
+
+.final-term-dialog {
+
+    position: absolute;
+
+    /* position: relative; */
+    /* right: 20em; */
+
+
+    left: 0;
+    right: 50%;
+    transform: translateX(-50%);
+    
+    /* position: relative; */
+    /* padding-right: auto; */
+
+}
+
 
 dialog p {
     font-size: 5px;

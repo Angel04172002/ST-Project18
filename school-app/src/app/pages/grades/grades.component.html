@@ -139,14 +139,35 @@
                                     <td *ngFor="let mark of subject['term-1-marks']">
                                         <span class="term-grade {{gradesDictionary[mark]}}"
                                             (mouseenter)="showDialog($event)"
-                                            (mouseleave)="hideDialog($event)">{{mark}}</span>
+                                            (mouseleave)="hideDialog($event)">{{mark}}
+                                        
+                                       
+                                        
+                                        </span>
+
+                                         
+                                        <dialog class="term-dialog" #dialogRef>
+                                            <p>Въведена от: <br> {{subject['teacherName']}}</p>
+                                        </dialog>
+
+                                           
+
                                     </td>
 
                                     <td class="term-final">
                                         <span class="term-grade {{gradesDictionary[subject['term-1-final']]}}"
                                             (mouseenter)="showDialog($event)" (mouseleave)="hideDialog($event)">
                                             {{subject['term-1-final']}}
+                                        
                                         </span>
+
+                                        <dialog class="final-term-dialog" #dialogRef>
+                                            <p>Въведена от: <br> {{subject['teacherName']}}</p>
+                                        </dialog>
+
+                                      
+
+
                                     </td>
 
                                 </tr>
@@ -171,7 +192,7 @@
                                             (mouseenter)="showDialog($event)"
                                             (mouseleave)="hideDialog($event)">{{mark}}</span>
 
-                                        <dialog #dialogRef>
+                                        <dialog class="term-dialog" #dialogRef>
                                             <p>Въведена от: <br> {{subject['teacherName']}}</p>
                                         </dialog>
 
@@ -183,7 +204,7 @@
                                             {{subject['term-2-final']}}
                                         </span>
 
-                                        <dialog #dialogRef>
+                                        <dialog class="final-term-dialog" #dialogRef>
                                             <p>Въведена от: <br> {{subject['teacherName']}}</p>
                                         </dialog>
 
@@ -206,7 +227,7 @@
                                 class="term-grade {{gradesDictionary[subject['year-mark']]}}">{{subject['year-mark']}}
                             </span>
 
-                            <dialog class="final-term-dialog" #dialogRef>
+                            <dialog class="final-dialog" #dialogRef>
                                 <p>Въведена от: <br> {{subject['teacherName']}}</p>
                             </dialog>
 
