@@ -1,7 +1,6 @@
 import { ChatService } from './../../../chat/chat.service';
 import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { FormControl } from '@angular/forms';
-// import Pusher from 'pusher-js';
 import { Router } from '@angular/router';
 
 @Component({
@@ -9,7 +8,7 @@ import { Router } from '@angular/router';
   templateUrl: './group-chat.component.html',
   styleUrls: ['./group-chat.component.css'],
 })
-export class GroupChatComponent implements OnInit {
+export class GroupChatComponent {
   @ViewChild('endOfChat')
 
   endOfChat!: ElementRef;
@@ -50,46 +49,6 @@ export class GroupChatComponent implements OnInit {
     private router: Router,
     private chatsService: ChatService
   ) { }
-
-  ngOnInit(): void {
-
-    // Enable pusher logging - don't include this in production
-    // Pusher.logToConsole = true;
-
-    // const pusher = new Pusher('2a207a46ea3f96109427', {
-    //   cluster: 'mt1'
-    // });
-
-    // const channel = pusher.subscribe('chat');
-    // channel.bind('message', (data: any) => {
-    //   alert(JSON.stringify(data));
-    //   this.messages.push(data);
-    // });
-    // // this.messages$ = this.chatListControl.valueChanges.pipe(
-    //   map((value) => value[0]),
-    //   switchMap((chatId) => this.chatsService.getChatMessages$(chatId)),
-    //   tap(() => {
-    //     this.scrollToBottom();
-    //   })
-    // );
-  }
-
-  createChat(user: any) {
-    // this.chatsService
-    //   .isExistingChat(user.uid)
-    //   .pipe(
-    //     switchMap((chatId) => {
-    //       if (!chatId) {
-    //         return this.chatsService.createChat(user);
-    //       } else {
-    //         return of(chatId);
-    //       }
-    //     })
-    //   )
-    //   .subscribe((chatId) => {
-    //     this.chatListControl.setValue([chatId]);
-    //   });
-  }
 
   sendMessage() {
     const message = { username: this.user, message: this.message };
