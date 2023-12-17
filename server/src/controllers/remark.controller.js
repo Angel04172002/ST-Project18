@@ -1,4 +1,5 @@
 const pool = require("../db")
+const utils = require("../utils");
 
 const remarkQueries = require('../database/remarks.queries')
 
@@ -28,7 +29,7 @@ addRemark = async (request, response) => {
 
         await pool.query('insert into students_notes values ($1, $2)', [note_student_id, id]);
 
-        return response.status(200).send('Remark added successfully!')
+        return response.status(200).json('Remark added successfully!')
     }
     catch (err) {
         console.error(err.message)

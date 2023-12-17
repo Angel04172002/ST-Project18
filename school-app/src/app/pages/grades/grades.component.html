@@ -108,31 +108,11 @@
     <tbody class="grades-row">
 
         <tr>
-            <th class="subjects" *ngFor="let subject of grades">
+            <th class="subjects">
 
-                <div class="subject">
-
+                <div class="subject" *ngFor="let subject of grades">
                     <p>{{subject.subjectName}}</p>
-
                 </div>
-
-
-                <!-- <div class="subject">
-
-                        <p> Mузика </p>
-
-
-
-                    </div>
-
-
-                    <div class="subject">
-
-                        <p>ИТ </p>
-
-
-                    </div> -->
-
 
             </th>
 
@@ -157,13 +137,37 @@
 
 
                                     <td *ngFor="let mark of subject['term-1-marks']">
-                                        <span class="term-grade {{gradesDictionary[mark]}}">{{mark}}</span>
+                                        <span class="term-grade {{gradesDictionary[mark]}}"
+                                            (mouseenter)="showDialog($event)"
+                                            (mouseleave)="hideDialog($event)">{{mark}}
+                                        
+                                       
+                                        
+                                        </span>
+
+                                         
+                                        <dialog class="term-dialog" #dialogRef>
+                                            <p>Въведена от: <br> {{subject['teacherName']}}</p>
+                                        </dialog>
+
+                                           
+
                                     </td>
 
                                     <td class="term-final">
-                                        <span class="term-grade {{gradesDictionary[subject['term-1-final']]}}">
-                                            {{subject['term-1-final']}} 
+                                        <span class="term-grade {{gradesDictionary[subject['term-1-final']]}}"
+                                            (mouseenter)="showDialog($event)" (mouseleave)="hideDialog($event)">
+                                            {{subject['term-1-final']}}
+                                        
                                         </span>
+
+                                        <dialog class="final-term-dialog" #dialogRef>
+                                            <p>Въведена от: <br> {{subject['teacherName']}}</p>
+                                        </dialog>
+
+                                      
+
+
                                     </td>
 
                                 </tr>
@@ -184,13 +188,26 @@
                                 <tr class="term-grades-subject">
 
                                     <td *ngFor="let mark of subject['term-2-marks']">
-                                        <span class="term-grade {{gradesDictionary[mark]}}">{{mark}}</span>
+                                        <span class="term-grade {{gradesDictionary[mark]}}"
+                                            (mouseenter)="showDialog($event)"
+                                            (mouseleave)="hideDialog($event)">{{mark}}</span>
+
+                                        <dialog class="term-dialog" #dialogRef>
+                                            <p>Въведена от: <br> {{subject['teacherName']}}</p>
+                                        </dialog>
+
                                     </td>
 
                                     <td class="term-final">
-                                        <span class="term-grade {{gradesDictionary[subject['term-2-final']]}}">
+                                        <span class="term-grade {{gradesDictionary[subject['term-2-final']]}}"
+                                            (mouseenter)="showDialog($event)" (mouseleave)="hideDialog($event)">
                                             {{subject['term-2-final']}}
                                         </span>
+
+                                        <dialog class="final-term-dialog" #dialogRef>
+                                            <p>Въведена от: <br> {{subject['teacherName']}}</p>
+                                        </dialog>
+
                                     </td>
 
 
@@ -206,16 +223,17 @@
 
                     <tr class="final-grade" *ngFor="let subject of grades">
                         <td>
-                            <span (mouseenter) = "showDialog()" (mouseleave) = "hideDialog()"  class="term-grade {{gradesDictionary[subject['year-mark']]}}">{{subject['year-mark']}}
+                            <span (mouseenter)="showDialog($event)" (mouseleave)="hideDialog($event)"
+                                class="term-grade {{gradesDictionary[subject['year-mark']]}}">{{subject['year-mark']}}
                             </span>
 
-                            <dialog #dialogRef>
+                            <dialog class="final-dialog" #dialogRef>
                                 <p>Въведена от: <br> {{subject['teacherName']}}</p>
                             </dialog>
 
                         </td>
 
-                 
+
 
                     </tr>
                     </th>
@@ -251,7 +269,7 @@
 <!-- <script src="grades.js"></script> -->
 
 
-<div class="container" *ngIf="userType() == 'Teacher' || userType() == 'Grade teacher'">
+<!-- <div class="container" *ngIf="userType() == 'Teacher' || userType() == 'Grade teacher'">
     <h1>Въвеждане на оценки</h1>
     <form id="grade-form">
         <label for="student">Име на ученика:</label>
@@ -271,7 +289,7 @@
         </select><br><br>
         <button type="submit" class="grade-button">Запази оценка</button>
     </form>
-</div>
+</div> -->
 
 
 <mat-card class="admin-card" *ngIf="userType() == 'Teacher' || userType() == 'Grade teacher'">
@@ -290,8 +308,3 @@
             (click)="sendJson()">Добави</button>
     </div>
 </mat-card>
-
-
-
-
-           
