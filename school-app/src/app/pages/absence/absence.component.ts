@@ -414,10 +414,29 @@ export class AbsenceComponent implements OnInit {
       } catch (err) {
         console.log(err)
       }
+    } else if (type === 'Student') {
+      try {
+        await firstValueFrom(this.http.getExcuseReasonsByStudent(id))
+          .then(data => {
+
+            for (let item of data) {
+              let excuseReasonsArray = {
+                absenceId: item.id,
+                excuseReason: item.excuse_reason
+              }
+
+              this.excuseReasons.push(excuseReasonsArray);
+            }
+
+          })
+      } catch (err) {
+        console.log(err)
+      }
     } else if (type === 'Teacher') {
       try {
         await firstValueFrom(this.http.getExcuseReasonsByTeacher(id))
           .then(data => {
+            console.log(data)
 
             for (let item of data) {
               let excuseReasonsArray = {
@@ -432,7 +451,7 @@ export class AbsenceComponent implements OnInit {
       } catch (err) {
         console.log(err)
       }
-    }
+    } 
 
   }
 

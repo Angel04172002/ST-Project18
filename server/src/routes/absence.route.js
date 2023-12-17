@@ -14,6 +14,7 @@ router.post('/get-absences/parent', absencesController.getAbsencesByParent);
 router.post('/get-excuse-reasons/grade-teacher', absencesController.getExcuseReasonsByGradeTeacher);
 router.post('/get-excuse-reasons/teacher', absencesController.getExcuseReasonsByTeacher);
 router.post('/get-excuse-reasons/parent', absencesController.getExcuseReasonsByParent);
+router.post('/get-excuse-reasons/student', absencesController.getExcuseReasonsByStudent);
 
 
 

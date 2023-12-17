@@ -16,6 +16,24 @@ where par.id = $1
 
 `;
 
+const getExcuseReasonsFromStudent = `   
+
+select p.id as student_id, p.first_name, p.last_name, p.email, s.grade_id, s.grade_division_id,
+a.*, aer.id as excuse_reason_id ,aer.reason_id as excuse_reason, aer.excuse_note from absences_excuse_reasons aers
+join absence_excuse_reason aer
+on aers.excuse_reason_id = aer.id
+join parent par
+on aer.creator_id = par.id
+join student s
+on s.parent_id = par.id
+join profile p
+on s.id = p.id
+join absence a
+on aers.absence_id = a.id
+where s.id = $1
+
+`;
+
 const getExcuseReasonsFromTeacher = `  
 select rs.id as student_id, rs.first_name, rs.last_name, rs.email, rs.grade_id,
 rs.grade_division_id, rs.absence_id, rs.type_id, rs.subject_id, rs.student_id, rs.term_id, rs.excuse_reason_id,
@@ -33,7 +51,7 @@ from (
 	aer.excuse_note as excuse_note,
 	aer.reason_id as excuse_reason, 
 	aer.id as excuse_reason_id,
-    par.id as parent_id,
+    aer.creator_id as parent_id,
 	a.teacher_creator_id as teacher_id
 	from absences_excuse_reasons aers
 	join absence_excuse_reason aer
@@ -43,7 +61,7 @@ from (
 	join student s
 	on a.absence_student_id = s.id
 	join parent par
-	on s.parent_id = par.id
+	on aer.creator_id = par.id
 	join profile p
 	on s.id = p.id
 	join teachers_grades_divisions_subjects tgds
@@ -253,6 +271,7 @@ order by s.grade_id, s.grade_division_id, a.absence_term_id
 
 module.exports = {
 	getExcuseReasonsFromParent,
+	getExcuseReasonsFromStudent,
 	getExcuseReasonsFromTeacher,
 	getExcuseReasonsFromGradeTeacher,
 	getAbsencesFromStudent,

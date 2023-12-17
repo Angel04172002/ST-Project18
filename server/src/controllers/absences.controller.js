@@ -109,6 +109,26 @@ getExcuseReasonsByParent = async (request, response) => {
     }
 }
 
+getExcuseReasonsByStudent = async (request, response) => {
+    try {
+        const studentId = request.body?.id;
+
+        if (!studentId) {
+            return response.status(500).json({
+                message: "id should be provided in request body",
+            });
+        }
+
+        let { rows } = await pool.query(absencesQueries.getExcuseReasonsFromStudent, [studentId])
+
+        return response.status(200).json(rows)
+    }
+    catch (err) {
+        console.error(err.message)
+        response.status(500).send(err.message)
+    }
+}
+
 
 getExcuseReasonsByTeacher = async (request, response) => {
     try {
@@ -233,6 +253,7 @@ module.exports = {
     getAbsencesByTeacher,
     getAbsencesByGradeTeacher,
     getExcuseReasonsByParent,
+    getExcuseReasonsByStudent,
     getExcuseReasonsByGradeTeacher,
     getExcuseReasonsByTeacher,
     addExcuseReasonsByParent,

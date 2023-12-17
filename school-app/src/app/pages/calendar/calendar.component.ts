@@ -81,7 +81,8 @@ export class CalendarComponent implements OnInit{
       type = user.type
     }
 
-    console.log(event)
+    let req: any;
+
     if(type === 'Teacher'){
 
       let events: AddEventsModel = {
@@ -94,9 +95,40 @@ export class CalendarComponent implements OnInit{
         admin_creator_id: undefined,
         isPrivate: event.privacy
       }
-  
-      console.log(events)
-      let req = this.http.addEvent(events);
+
+      req = this.http.addEvent(events);
+
+    } else if(type === 'Grade teacher'){
+
+      let events: AddEventsModel = {
+        name: event.title,
+        description: event.description,
+        date: event.date,
+        place: event.place,
+        teacher_creator_id: undefined,
+        grade_teacher_creator_id: id,
+        admin_creator_id: undefined,
+        isPrivate: event.privacy
+      }
+
+      req = this.http.addEvent(events);
+
+    } else if(type === 'Admin'){
+
+      let events: AddEventsModel = {
+        name: event.title,
+        description: event.description,
+        date: event.date,
+        place: event.place,
+        teacher_creator_id: undefined,
+        grade_teacher_creator_id: undefined,
+        admin_creator_id: id,
+        isPrivate: event.privacy
+      }
+
+      req = this.http.addEvent(events);
+
+    }
 
       try {
         await firstValueFrom(req)
@@ -108,8 +140,6 @@ export class CalendarComponent implements OnInit{
       } catch (err) {
         console.log(err)
       }
-
-    } 
 
   }
 
@@ -189,8 +219,6 @@ export class CalendarComponent implements OnInit{
   }
 
   dateClass = (date: Date): MatCalendarCellCssClasses => {
-    console.log(this.events)
-    debugger;
       const highlightDate = this.events
         .map(eventDate => eventDate.date)
         .some(d => d.getFullYear() === date.getFullYear() && d.getMonth() === date.getMonth() && d.getDate() === date.getDate());
@@ -227,8 +255,7 @@ export class CalendarComponent implements OnInit{
 
   calendarRefresh() {
     if (this.calendar) {
-      this.calendar.updateTodaysDate();
-      //this.calendar.monthView._init();
+      this.calendar.monthView._init();
     }
   }
 
