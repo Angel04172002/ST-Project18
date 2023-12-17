@@ -10,11 +10,12 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatDividerModule } from '@angular/material/divider';
 import { CommonModule } from '@angular/common';
 import { TeacherService } from '../teacher.service';
+import { MatDialog, MatDialogModule } from '@angular/material/dialog';
 
 @Component({
   selector: 'app-grades',
   templateUrl: './grades.component.html',
-  styleUrls: ['./grades.component.css', '../../styles/table-style.css'],
+  styleUrls: ['./grades.component.css', '../../styles/table-style.css', '../../core/footer/footer.component.css'],
   imports: [
     MatButtonModule,
     MatCardModule,
@@ -24,6 +25,7 @@ import { TeacherService } from '../teacher.service';
     ReactiveFormsModule,
     MatIconModule,
     MatDividerModule,
+    MatDialogModule,
     CommonModule
   ],
   standalone: true
@@ -31,6 +33,7 @@ import { TeacherService } from '../teacher.service';
 export class GradesComponent implements OnInit {
 
   @ViewChild('fileUpload') fileInput!: ElementRef;
+  @ViewChild('dialogRef') dialog!: ElementRef;
 
   grades: any = [];
 
@@ -80,7 +83,9 @@ export class GradesComponent implements OnInit {
             'term-2-marks': item.term_2_marks.split(', '),
             'term-2-final': item.term_2_final_mark,
             'year-mark': item.term_final,
-            'subjectName': item.subject_name
+            'subjectName': item.subject_name,
+            'teacherName': item.teacher_first_name !== '' ? item['teacher_first_name'] + ' ' + item['teacher_last_name']
+                                                          : item['grade_teacher_first_name'] + ' ' + item['grade_teacher_last_name']
           }
 
           this.grades.push(gradesData);
@@ -95,6 +100,14 @@ export class GradesComponent implements OnInit {
 
   }
 
+  showDialog() {
+    this.dialog.nativeElement.show();
+  }
+
+
+  hideDialog() {
+    this.dialog.nativeElement.close();
+  }
 
   userType() {
     return this.userService.getUser().type;

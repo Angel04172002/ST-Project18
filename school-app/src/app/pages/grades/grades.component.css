@@ -37,7 +37,7 @@ button:hover {
     background-color: #45a049;
 }
 
-.footer {
+/* .footer {
     margin-top: 20px;
     background-color: #333;
     padding: 10px;
@@ -52,7 +52,7 @@ button:hover {
 
 .footer a:hover {
     text-decoration: underline;
-}
+} */
 
 
 .admin-card{
@@ -137,6 +137,7 @@ td.inner-cell {
     display: block;
     position: relative;
     right: 1em;
+    top: 0.5em
 }
 
 
@@ -158,13 +159,70 @@ td.inner-cell {
 .grades-table .first-term,
 .grades-table .second-term {
     border-spacing: 1em;
+    /* width: 100%; */
 }
 
+.grades-table table.first-term {
+    width: 100%;
+}
 
-.term-grades-subject {
+.grades-table table.second-term {
+    width: 100%;
+}
+
+.grades-table table.first-term td:not(.term-final) {
+    margin: 0 0.5em;
+    width: 10px;
+}
+
+.grades-table table.second-term td:not(term.final) {
+    /* margin: 0 0.em; */
+    /* padding-left: 1em    ; */
+    width: 10px;
+    position: relative;
+    left: 2.4em;
+}
+
+.second-term tr {
+    display: block;
+}
+
+.grades-table table.second-term td.term-final {
+    width: 1px;
+    height: 1px;
+    position: relative;
+    bottom: 36px;
+    left: 40px;
+}
+
+/* 
+table.first-term, table.second-term {
+    width: 100%;
+} */
+
+/* .term-final {
+    margin-left: auto;
+} */
+/* 
+.second-term {
+    width: 100%;
+} */
+
+
+/* .term-grades-subject, .second-term .term-grades-subject {
     margin: 3em 0;
-}
+    width: 100%;
+} */
 
+
+
+
+.term-grades-subject td.term-final {
+    display: block;
+    margin-left: auto;
+    margin-right: 2em;
+    width: 10px;
+}
 
 
 .term-grade {
@@ -185,7 +243,7 @@ td.inner-cell {
 .inner-cell-second {
     display: block;
     position: relative;
-    left: 15em;
+    left: 16.2em;
 }
 
 
@@ -221,7 +279,7 @@ td.inner-cell {
 .final-grade .term-grade {
     position: relative;
     right: 1em;
-    top: 2em;
+    top: 1.8em;
 }
 
 .second-term {
@@ -259,3 +317,35 @@ td.inner-cell {
 
 
 
+.final-grade td {
+    position: relative;
+    width: 5em;
+}
+
+.final-grade td span {
+    position: relative;
+    left: 1em;
+}
+
+dialog {
+    /* display: inline-block; */
+    width: 3.9em;
+    height: 1.6em;
+    position: absolute;
+    bottom: 0.25em;
+    left: 1.3em;
+}
+
+dialog p {
+    font-size: 5px;
+    width: 50px;
+    line-height: 1.3;
+    position: relative;
+    bottom: 1.7em;
+    right: 2.7em;
+}
+
+dialog span {
+    display: inline-block;
+    width: 10px;
+}

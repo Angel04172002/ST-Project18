@@ -12,112 +12,112 @@
 
 
 
-    <table class="main-table" *ngIf="userType() === 'Student' || userType() === 'Parent'">
+<table class="main-table" *ngIf="userType() === 'Student' || userType() === 'Parent'">
 
 
-        <thead>
+    <thead>
 
-            <tr>
-                <th>
-                    Предмет
-                </th>
-
-
-                <table class="terms-table">
+        <tr>
+            <th>
+                Предмет
+            </th>
 
 
-                    <thead>
-
-                        <tr class="flex-main-container">
-
-                            <th class="flex-item-1">
-                                <p class="term">Първи срок</p>
-
-                                <table class="first-term">
+            <table class="terms-table">
 
 
-                                    <tr>
+                <thead>
+
+                    <tr class="flex-main-container">
+
+                        <th class="flex-item-1">
+                            <p class="term">Първи срок</p>
+
+                            <table class="first-term">
 
 
-
-                                        <td class="inner-cell-first">Текущи</td>
-
-                                        <td class="inner-cell-second">Срочна</td>
-
-
-                                    </tr>
-
-                                </table>
-                            </th>
+                                <tr>
 
 
 
-                            <th class="flex-item-2">
+                                    <td class="inner-cell-first">Текущи</td>
 
-                                <p class="term second">Втори срок</p>
-
-                                <table class="first-term">
+                                    <td class="inner-cell-second">Срочна</td>
 
 
-                                    <tr>
+                                </tr>
 
-
-                                        <td class="inner-cell-first">Текущи</td>
-
-                                        <td class="inner-cell-second">Срочна</td>
-
-
-                                    </tr>
-
-                                </table>
-
-                            </th>
-
-
-                            <th class="flex-item-3">
-
-                                <p class="year-term">Годишна</p>
-
-                            </th>
-
-                        </tr>
+                            </table>
+                        </th>
 
 
 
-                    </thead>
+                        <th class="flex-item-2">
+
+                            <p class="term second">Втори срок</p>
+
+                            <table class="first-term">
 
 
-                    <tbody>
-
-                    </tbody>
-
-                </table>
-
-            </tr>
+                                <tr>
 
 
-        </thead>
+                                    <td class="inner-cell-first">Текущи</td>
+
+                                    <td class="inner-cell-second">Срочна</td>
+
+
+                                </tr>
+
+                            </table>
+
+                        </th>
+
+
+                        <th class="flex-item-3">
+
+                            <p class="year-term">Годишна</p>
+
+                        </th>
+
+                    </tr>
 
 
 
+                </thead>
+
+
+                <tbody>
+
+                </tbody>
+
+            </table>
+
+        </tr>
+
+
+    </thead>
 
 
 
 
 
-        <tbody class="grades-row">
-
-            <tr>
-                <th class="subjects" *ngFor="let subject of grades">
-
-                    <div class="subject">
-
-                        <p>{{subject.subjectName}}</p>
-
-                    </div>
 
 
-                    <!-- <div class="subject">
+
+    <tbody class="grades-row">
+
+        <tr>
+            <th class="subjects" *ngFor="let subject of grades">
+
+                <div class="subject">
+
+                    <p>{{subject.subjectName}}</p>
+
+                </div>
+
+
+                <!-- <div class="subject">
 
                         <p> Mузика </p>
 
@@ -134,447 +134,164 @@
                     </div> -->
 
 
-                </th>
+            </th>
 
 
-                <table class="grades-table">
+            <table class="grades-table">
 
-                    <thead class="flex-header">
+                <thead class="flex-header">
 
-                        <tr class="flex-main-container">
-
-
-                            <th class="flex-item-1 flex-grades">
-                                <p class="term"></p>
+                    <tr class="flex-main-container">
 
 
-
-                                <table class="first-term" *ngFor="let subject of grades">
+                        <th class="flex-item-1 flex-grades">
+                            <p class="term"></p>
 
 
 
-                                    <tr class="term-grades-subject">
-
-
-                                        <td *ngFor="let mark of subject['term-1-marks']">
-                                            <span class="term-grade {{gradesDictionary[mark]}}">{{mark}}</span>
-                                        </td>
-
-                                        <td class="term-final">
-                                            <span class="term-grade {{gradesDictionary[subject['term-1-final']]}}">
-                                                {{subject['term-1-final']}}
-                                            </span>
-                                        </td>
-
-                                    </tr>
+                            <table class="first-term" *ngFor="let subject of grades">
 
 
 
-                                </table>
-                            </th>
+                                <tr class="term-grades-subject">
 
 
-                            <th class="flex-item-2 flex-grades">
+                                    <td *ngFor="let mark of subject['term-1-marks']">
+                                        <span class="term-grade {{gradesDictionary[mark]}}">{{mark}}</span>
+                                    </td>
 
-                                <p class="term"></p>
+                                    <td class="term-final">
+                                        <span class="term-grade {{gradesDictionary[subject['term-1-final']]}}">
+                                            {{subject['term-1-final']}} 
+                                        </span>
+                                    </td>
 
-                                <table class="second-term" *ngFor="let subject of grades">
-
-
-                                    <tr class="term-grades-subject">
-
-
-
-                                        <td *ngFor="let mark of subject['term-2-marks']">
-                                            <span class="term-grade {{gradesDictionary[mark]}}">{{mark}}</span>
-                                        </td>
-
-                                        <td class="term-final">
-                                            <span class="term-grade {{gradesDictionary[subject['term-2-final']]}}">
-                                                {{subject['term-2-final']}}
-                                            </span>
-                                        </td>
+                                </tr>
 
 
 
-                                    </tr>
-
-
-
-                                </table>
-                            </th>
-
-                            <th class="flex-item-3 flex-grades">
-
-                        <tr class="final-grade" *ngFor="let subject of grades">
-                            <td>
-                                <span class="term-grade {{gradesDictionary[subject['year-mark']]}}">{{subject['year-mark']}}
-                                </span>
-                            </td>
-                        </tr>
+                            </table>
                         </th>
 
-            </tr>
 
+                        <th class="flex-item-2 flex-grades">
 
+                            <p class="term"></p>
 
-            </thead>
+                            <table class="second-term" *ngFor="let subject of grades">
 
 
-        <tbody>
+                                <tr class="term-grades-subject">
 
-        </tbody>
+                                    <td *ngFor="let mark of subject['term-2-marks']">
+                                        <span class="term-grade {{gradesDictionary[mark]}}">{{mark}}</span>
+                                    </td>
 
-    </table>
+                                    <td class="term-final">
+                                        <span class="term-grade {{gradesDictionary[subject['term-2-final']]}}">
+                                            {{subject['term-2-final']}}
+                                        </span>
+                                    </td>
 
-            </tr>
 
 
-    </tbody>
+                                </tr>
 
 
 
+                            </table>
+                        </th>
 
+                        <th class="flex-item-3 flex-grades">
 
+                    <tr class="final-grade" *ngFor="let subject of grades">
+                        <td>
+                            <span (mouseenter) = "showDialog()" (mouseleave) = "hideDialog()"  class="term-grade {{gradesDictionary[subject['year-mark']]}}">{{subject['year-mark']}}
+                            </span>
 
+                            <dialog #dialogRef>
+                                <p>Въведена от: <br> {{subject['teacherName']}}</p>
+                            </dialog>
 
+                        </td>
 
-    </table>
+                 
 
+                    </tr>
+                    </th>
 
-    <!-- <script src="grades.js"></script> -->
+        </tr>
 
-
-    <div class="container" *ngIf="userType() == 'Teacher' || userType() == 'Grade teacher'">
-        <h1>Въвеждане на оценки</h1>
-        <form id="grade-form">
-            <label for="student">Име на ученика:</label>
-            <select id="student" name="student" required>
-                <option value="ученик1">Ученик 1</option>
-                <option value="ученик2">Ученик 2</option>
-            </select><br><br>
-            <label for="subject">Учебен предмет:</label>
-            <input type="text" id="subject" name="subject" required><br><br>
-            <label for="grade">Оценка:</label>
-            <select id="grade" name="grade" required>
-                <option value="2">2</option>
-                <option value="3">3</option>
-                <option value="4">4</option>
-                <option value="5">5</option>
-                <option value="6">6</option>
-            </select><br><br>
-            <button type="submit" class="grade-button">Запази оценка</button>
-        </form>
-    </div>
-
-
-    <mat-card class="admin-card" *ngIf="userType() == 'Teacher' || userType() == 'Grade teacher'">
-        <h3>Генерирай файл с оценки:</h3>
-        <button mat-raised-button color="primary" (click)="downloadCsvFile()" class="generate-button">Генерирай</button>
-    
-        <mat-divider></mat-divider>
-        <h3>Прикачи файл с оценки:</h3>
-    
-        <div class="add-file-input">
-            <input type="file" name="file-input" class="file-input" accept=".xlsx" #fileUpload>
-            <button mat-raised-button color="primary" #file class="file-button"
-                (click)="fileUpload.click()"><mat-icon>attach_file</mat-icon>Прикачи</button>
-    
-            <button type="submit" mat-raised-button class="submit-data-button" color="primary"
-                (click)="sendJson()">Добави</button>
-        </div>
-    </mat-card>
-
-
-<!-- </body>
-
-</html> -->
-
-
-
-<!-- За учиеник/родител-->
-<!-- <!DOCTYPE html>
-<html lang="en">
-
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Ученически оценки</title>
-    <link rel="stylesheet" href="styles-grades-students.css">
-</head>
-
-<body>
-    <div class="container">
-        <h1>Моите оценки</h1>
-        <div id="grades"></div>
-    </div>
-    <script src="grades-student.js"></script>
-    <table class="main-table">
-
-
-        <thead>
-
-            <tr>
-                <th>
-                    Предмет
-                </th>
-
-
-                <table class="terms-table">
-
-
-                    <thead>
-
-                        <tr class="flex-main-container">
-
-                            <th class="flex-item-1">
-                                <p class="term">Първи срок</p>
-
-                                <table class="first-term">
-
-
-                                    <tr>
-
-
-
-                                        <td class="inner-cell-first">Текущи</td>
-
-                                        <td class="inner-cell-second">Срочна</td>
-
-
-                                    </tr>
-
-                                </table>
-                            </th>
-
-
-
-                            <th class="flex-item-2">
-
-                                <p class="term">Втори срок</p>
-
-                                <table class="first-term">
-
-
-                                    <tr>
-
-
-                                        <td class="inner-cell-first">Текущи</td>
-
-                                        <td class="inner-cell-second">Срочна</td>
-
-
-                                    </tr>
-
-                                </table>
-
-                            </th>
-
-
-                            <th class="flex-item-3">
-
-                                <p class="term">Годишна</p>
-
-                            </th>
-
-                        </tr>
-
-
-
-                    </thead>
-
-
-                    <tbody>
-
-                    </tbody>
-
-                </table>
-
-            </tr>
 
 
         </thead>
 
 
+    <tbody>
 
-        <tbody class="grades-row">
+    </tbody>
 
-            <tr>
-                <th class="subjects">
+</table>
 
-                    <div class="subject">
+</tr>
 
-                        <p>Математика</p>
 
+</tbody>
 
 
-                    </div>
 
 
-                    <div class="subject">
 
-                        <p> Mузика </p>
 
 
 
-                    </div>
+</table>
 
 
-                    <div class="subject">
+<!-- <script src="grades.js"></script> -->
 
-                        <p>ИТ </p>
 
+<div class="container" *ngIf="userType() == 'Teacher' || userType() == 'Grade teacher'">
+    <h1>Въвеждане на оценки</h1>
+    <form id="grade-form">
+        <label for="student">Име на ученика:</label>
+        <select id="student" name="student" required>
+            <option value="ученик1">Ученик 1</option>
+            <option value="ученик2">Ученик 2</option>
+        </select><br><br>
+        <label for="subject">Учебен предмет:</label>
+        <input type="text" id="subject" name="subject" required><br><br>
+        <label for="grade">Оценка:</label>
+        <select id="grade" name="grade" required>
+            <option value="2">2</option>
+            <option value="3">3</option>
+            <option value="4">4</option>
+            <option value="5">5</option>
+            <option value="6">6</option>
+        </select><br><br>
+        <button type="submit" class="grade-button">Запази оценка</button>
+    </form>
+</div>
 
 
+<mat-card class="admin-card" *ngIf="userType() == 'Teacher' || userType() == 'Grade teacher'">
+    <h3>Генерирай файл с оценки:</h3>
+    <button mat-raised-button color="primary" (click)="downloadCsvFile()" class="generate-button">Генерирай</button>
 
-                    </div>
+    <mat-divider></mat-divider>
+    <h3>Прикачи файл с оценки:</h3>
 
+    <div class="add-file-input">
+        <input type="file" name="file-input" class="file-input" accept=".xlsx" #fileUpload>
+        <button mat-raised-button color="primary" #file class="file-button"
+            (click)="fileUpload.click()"><mat-icon>attach_file</mat-icon>Прикачи</button>
 
-                </th>
+        <button type="submit" mat-raised-button class="submit-data-button" color="primary"
+            (click)="sendJson()">Добави</button>
+    </div>
+</mat-card>
 
 
-                <table class="grades-table">
 
-                    <thead class="flex-header">
 
-                        <tr class="flex-main-container">
-
-
-                            <th class="flex-item-1 flex-grades">
-                                <p class="term"></p>
-
-                                <table class="first-term">
-
-
-                                    <tr class="term-grades-subject">
-
-
-                                        
-                                        <td><span class="term-grade excellent">6</span></td>
-                                        <td><span class="term-grade very-good">5</span></td>
-                                        <td><span class="term-grade good">4</span></td>
-                                        <td><span class="term-grade very-good">5</span></td>
-
-                                        <td class="term-final"><span class="term-grade very-good">5</span></td>
-
-                       
-                                   
-
-
-                                    </tr>
-                                    <tr class="term-grades-subject">
-
-
-             
-                                        <td><span class="term-grade excellent">6</span></td>
-                                        <td><span class="term-grade very-good">5</span></td>
-                                        <td><span class="term-grade good">4</span></td>
-                                        <td><span class="term-grade very-good">5</span></td>
-
-                                        <td class="term-final"><span class="term-grade very-good">5</span></td>
-
-                              
-
-
-                                    </tr>
-                                    <tr class="term-grades-subject">
-             
-                                        <td><span class="term-grade excellent">6</span></td>
-                                        <td><span class="term-grade very-good">5</span></td>
-                                        <td><span class="term-grade good">4</span></td>
-                                        <td><span class="term-grade very-good">5</span></td>
-                                
-
-                                        <td class="term-final"><span class="term-grade very-good">5</span></td>
-
-
-
-
-                                    </tr>
-
-                                </table>
-                            </th>
-
-
-                            <th class="flex-item-2 flex-grades">
-
-                                <p class="term"></p>
-
-                                <table class="second-term">
-
-
-                                    <tr class="term-grades-subject">
-
-
-                                        
-                                        <td><span class="term-grade excellent">6</span></td>
-                                        <td><span class="term-grade very-good">5</span></td>
-                                        <td><span class="term-grade good">4</span></td>
-                                        <td><span class="term-grade very-good">5</span></td>
-
-
-                                        <td class="term-final"><span class="term-grade very-good">5</span></td>
-                       
-                                   
-
-
-                                    </tr>
-                                    <tr class="term-grades-subject">
-
-
-             
-                                        <td><span class="term-grade excellent">6</span></td>
-                                        <td><span class="term-grade very-good">5</span></td>
-                                        <td><span class="term-grade good">4</span></td>
-                                        <td><span class="term-grade very-good">5</span></td>
-
-                                        <td class="term-final"><span class="term-grade very-good">5</span></td>
-
-                              
-
-
-                                    </tr>
-                                    <tr class="term-grades-subject">
-             
-                                        <td><span class="term-grade excellent">6</span></td>
-                                        <td><span class="term-grade very-good">5</span></td>
-                                        <td><span class="term-grade good">4</span></td>
-                                        <td><span class="term-grade very-good">5</span></td>
-                                
-                                        <td class="term-final"><span class="term-grade very-good">5</span></td>
-
-
-
-                                    </tr>
-
-                                </table>
-                            </th>
-
-                            <th class="flex-item-3 flex-grades">
-                                <tr class="final-grade">
-                                    <td><span class= "term-grade excellent">6</span></td>
-                                </tr>
-                            </th>
-
-                        </tr>
-
-
-
-                    </thead>
-
-
-                    <tbody>
-
-                    </tbody>
-
-                </table>
-
-            </tr>
-
-
-        </tbody>
-    </table>
-</body>
-
-
-</html> -->
+           
