@@ -15,7 +15,7 @@ import { MatDialog, MatDialogModule } from '@angular/material/dialog';
 @Component({
   selector: 'app-grades',
   templateUrl: './grades.component.html',
-  styleUrls: ['./grades.component.css', '../../styles/table-style.css', '../../core/footer/footer.component.css'],
+  styleUrls: ['./grades.component.css', '../../styles/table-style.css'],
   imports: [
     MatButtonModule,
     MatCardModule,
