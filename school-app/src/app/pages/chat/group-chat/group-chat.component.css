@@ -1,0 +1,6 @@
+.main {
+  display: flex;
+  justify-content: space-around;
+  margin-top: 30px;
+  padding-bottom: 100px;
+}

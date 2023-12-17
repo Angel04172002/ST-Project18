@@ -6,6 +6,7 @@ import { GroupChatComponent } from './group-chat/group-chat.component';
 import { ChatComponent } from './chat/chat.component';
 import { JitsiComponent } from './jitsi/jitsi.component';
 import { RouterModule } from '@angular/router';
+import { MatButtonModule } from '@angular/material/button';
 
 
 
@@ -13,13 +14,14 @@ import { RouterModule } from '@angular/router';
   declarations: [
     CurrentMessageComponent,
     NewMessageComponent,
-    GroupChatComponent,
     ChatComponent,
-    JitsiComponent
+    JitsiComponent,
+    GroupChatComponent
   ],
   imports: [
     CommonModule,
-    RouterModule
+    RouterModule,
+    MatButtonModule
   ]
 })
 export class ChatModule { }
