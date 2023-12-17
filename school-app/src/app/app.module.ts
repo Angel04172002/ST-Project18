@@ -24,10 +24,9 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 import { HomeComponent } from './pages/home/home.component';
 import { ChatModule } from './pages/chat/chat.module';
-import { StudentComponent } from './user/student/student.component';
 import { AdminModule } from './admin/admin.module';
-import {MatDialogModule} from "@angular/material/dialog";
-import { FormsModule }   from '@angular/forms';
+import { MatDialogModule } from "@angular/material/dialog";
+import { FormsModule } from '@angular/forms';
 
 
 @NgModule({
@@ -37,14 +36,13 @@ import { FormsModule }   from '@angular/forms';
     NotificationComponent,
     SubjectComponent,
     HomeComponent
-   ],
+  ],
   imports: [
     BrowserModule,
     AppRoutingModule,
     RouterModule,
     CoreModule,
     HttpClientModule,
-    ChatModule,
     SharedModule,
     BrowserAnimationsModule,
     AbsenceComponent,
@@ -54,8 +52,7 @@ import { FormsModule }   from '@angular/forms';
     MatDialogModule,
     FormsModule,
     CalendarComponent,
-    GradesComponent
-
+    GradesComponent,
   ],
   providers: [],
   bootstrap: [AppComponent]
