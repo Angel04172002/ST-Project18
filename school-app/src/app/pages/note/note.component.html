@@ -113,7 +113,7 @@
         <div class="subject">
             <mat-form-field>
                 <mat-label>Избери предмет:</mat-label>
-                <mat-select #subject>
+                <mat-select [(ngModel)]="subjectSelect" (selectionChange)="applyFilter()">
                     <mat-option *ngFor="let el of subjects" [value]="el">
                         {{ el }}
                     </mat-option>

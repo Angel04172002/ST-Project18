@@ -123,6 +123,7 @@ export class NoteComponent implements OnInit{
   grades: Grade['id'][] = [];
   subjects: Subject['subjectName'][] = [];
   
+  subjectSelect: any;
   gradeSelect: any;
   gradeDivisionSelect: any;
   yearTermsSelect: any;
@@ -434,9 +435,8 @@ export class NoteComponent implements OnInit{
       });
     } else if (type === 'Student' || type === 'Parent') {
       this.dataSource.data = this.notesDataForStudents.data.filter(item => {
-        return (this.gradeSelect === undefined || item.grade === this.gradeSelect) &&
-          (this.gradeDivisionSelect === undefined || item.gradeDivision === this.gradeDivisionSelect) &&
-          (this.yearTermsSelect === undefined || item.term === this.yearTermsSelect);
+        return (this.yearTermsSelect === undefined || item.term === this.yearTermsSelect) &&
+          (this.subjectSelect === undefined || item.subject === this.subjectSelect);
       });
     }
   }
