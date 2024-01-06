@@ -1,0 +1,32 @@
+
+
+.add-post {
+    width: 50%;
+    padding: 20px 40px 20px 40px;
+    margin: 0 auto;
+}
+
+.add-post-form {
+    display: flex;
+    flex-direction: column;
+}
+
+.add-post-button {
+    width: fit-content;
+    left: 85%;
+}
+
+.formActions {
+    float: right;
+    right: 10px;
+    bottom: 10px;
+}
+
+.event-content h3 {
+    font-weight: 500;
+    color: black;
+}
+
+.event-content p {
+    color: black;
+}

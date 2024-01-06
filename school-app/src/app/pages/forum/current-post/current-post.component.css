@@ -1,0 +1,122 @@
+.post-card {
+    width: 850px;
+    height: 290px;
+    margin: 5em auto;
+}
+
+.card-header {
+    padding: 3.5em;
+    text-align: center;
+}
+
+.card-header-title {
+    text-align: center;
+    padding-bottom: 0.3em;
+    font-size: 2em;
+}
+
+.post-subtitle {
+    font-size: 1.4em;
+}
+
+.card-content {
+    display: flex;
+    /* justify-content: space-around; */
+}
+
+
+.main {
+    flex-basis: 75%;
+}
+
+.media {
+    flex-basis: 25%;
+    height: 20em;
+    position: relative;
+    bottom: 10.5em;
+
+}
+
+
+
+.media img {
+    display: block;
+    width: 100%;
+    height: 100%;
+}
+
+/* 
+.card-image {
+    margin-left: auto;
+} */
+
+.buttons {
+    display: flex;
+    justify-content: left;
+    gap: 2em;
+    height: 74%;
+   
+}
+
+
+.editBtn {
+    margin-right: 1em;
+}
+
+.editBtn,
+.deleteBtn,
+.openBtn {
+    padding: 1em;
+    border: 1px solid #CCC;
+    border-radius: 0.3em;
+    text-decoration: none;
+    background: #CCC;
+    color: black;
+
+}
+
+.editBtn:hover,
+.deleteBtn:hover,
+.openBtn:hover {
+    background: #EEE;
+}
+
+
+.openBtn {
+    margin-left: 10em;
+}
+
+
+.card-header {
+    margin: 0 auto;
+}
+
+
+.card-header-title {
+    margin-top: 0;
+    padding-top: 0;
+    font-size: 30px;    
+    font-weight: bold;
+    text-align: center;
+}
+
+
+.card-header {
+    position: relative;
+}
+
+.icon {
+    display: flex;
+    /* display: block; */
+    position: absolute;
+    bottom: 10em
+}
+
+
+ 
+.likes-count {
+    position: relative;
+    top: 0.6em;
+    font-size: 2em;
+
+}

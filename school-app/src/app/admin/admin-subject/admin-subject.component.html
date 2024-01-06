@@ -1,17 +1,6 @@
 <h2>Избор на предмет</h2>
 <form id="addSubjectForm">
     <label>Изберете предмет:</label>
-    <!-- <select #subjectSelect name="subjectSelect">
-        <option value="Математика">Математика</option>
-        <option value="Английски">Английски език</option>
-        <option value="Литература">Литература</option>
-        <option value="Музика">Музика</option>
-        <option value="Изобразително изкуство">Изобразително изкуство</option>
-        <option value="ИТ">ИТ</option>
-        <option value="Физика">Физика</option>
-        <option value="Химия">Химия</option>
-        <option value="Биология">Биология</option>
-    </select> -->
 
     <input type="text" #subjectSelect>
 
@@ -32,10 +21,7 @@
         <option value="12">12</option>
 
     </select>
-    <!-- 
-    <label for="additionalInfo">Допълнителна информация:</label>
-    <textarea id="additionalInfo" name="additionalInfo" rows="4"></textarea> -->
-
+    
     <button mat-raised-button color="primary" type="button" (click)="addSubject($event)">Добави предмет</button>
 </form>
 
@@ -46,11 +32,11 @@
 
 
 <mat-card class="admin-card">
-    <h3>Генерирай файл с учители и класове:</h3>
+    <h3>Генерирай файл с предмети и класове:</h3>
     <button mat-raised-button color="primary" (click)="downloadCsvFile()" class="generate-button">Генерирай</button>
 
     <mat-divider></mat-divider>
-    <h3>Прикачи файл с учители и класове:</h3>
+    <h3>Прикачи файл с предмети и класове:</h3>
 
     <div class="add-file-input">
         <input type="file" name="file-input" class="file-input" accept=".xlsx" #fileUpload>

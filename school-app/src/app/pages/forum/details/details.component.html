@@ -1,0 +1,38 @@
+<mat-card class="post-card">
+
+    <mat-card-header class="card-header">
+        <mat-card-title class="card-header-title">{{title}}</mat-card-title>
+        <mat-card-subtitle class="post-subtitle">{{subtitle}}</mat-card-subtitle>
+    </mat-card-header>
+
+    <mat-card-content class="card-content">
+
+        <div class="main">
+
+            <mat-card-actions class="buttons">
+                <a href="#" class="backBtn" routerLink="/forum">Назад</a>
+            </mat-card-actions>
+
+
+            <div class="description">
+                <p>{{description}}</p>
+            </div>
+
+        </div>
+
+      
+
+        <div class="media">
+            <img src="{{imageUrl}}" class="card-image" mat-card-sm-image>
+        </div>
+
+
+    </mat-card-content>
+
+
+      
+    <div class="comment-section">
+        <a href="#" class="commentBtn">Добави коментар</a>
+    </div>
+
+</mat-card>

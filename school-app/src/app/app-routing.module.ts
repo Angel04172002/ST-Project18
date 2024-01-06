@@ -11,6 +11,8 @@ import { AdminComponent } from './admin/admin/admin.component';
 import { ChatComponent } from './pages/chat/chat/chat.component';
 import { GroupChatComponent } from './pages/chat/group-chat/group-chat.component';
 import { AbsenceComponent } from './pages/absence/absence.component';
+import { ForumComponent } from './pages/forum/forum/forum.component';
+import { DetailsComponent } from './pages/forum/details/details.component';
 
 
 const routes: Routes = [
@@ -54,6 +56,14 @@ const routes: Routes = [
   {
     path: 'admin-students',
     component: AdminComponent
+  },
+  {
+    path: 'forum',
+    component: ForumComponent
+  },
+  {
+    path: 'forum/:id',
+    component: DetailsComponent
   }
 ];
 

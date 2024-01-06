@@ -27,6 +27,18 @@ export class TeacherService {
   constructor(private httpService: HttpService, private excelService: ExcelService) { }
 
 
+
+  async addPost(data: any) {
+
+    let req = this.httpService.addPost(data);
+
+    await firstValueFrom(req)
+      .then(() => {
+        alert('Успешно запазени промени');
+      })
+      .catch(err => alert(err.message));
+  }
+
   async getStudentMarks(teacherId: string) {
 
     const req = this.httpService.getMarksByTeacher(teacherId);
@@ -34,13 +46,20 @@ export class TeacherService {
     await firstValueFrom(req)
       .then(data => {
 
-        // console.log(data);
-        
-
         this.excelService.downloadXLSX(data, this.studentMarksHeaders);
       })
 
   }
+
+  async getAllPosts() {
+    const req = this.httpService.getAllPosts();
+
+    return await firstValueFrom(req)
+      .then(data => {
+        return data;
+      })
+  }
+
 
   sendJsonData(files: FileList | null, action: string) {
 
@@ -53,14 +72,14 @@ export class TeacherService {
           let req: any = '';
 
           console.log(jsonData);
-          
-          for(let i = 0; i < jsonData.length; i++) {
+
+          for (let i = 0; i < jsonData.length; i++) {
             jsonData[i]['term1Marks'] = jsonData[i]['term1Marks'].toString().trim().split(',');
             jsonData[i]['term2Marks'] = jsonData[i]['term2Marks'].toString().trim().split(',');
           }
 
           console.log(jsonData);
-          
+
 
 
           req = this.httpService.addMarksByTeacher(jsonData);

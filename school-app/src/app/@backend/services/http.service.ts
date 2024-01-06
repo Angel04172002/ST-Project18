@@ -10,6 +10,8 @@ import { AddAbsencesByTeacher } from "../models/add-absences-by-teacher";
 import { AddExcuseReasonsByParent } from "../models/add-excuse-reasons-by-parent";
 import { AddRemarkModel } from "../models/add-remarks.model";
 import { AddEventsModel } from "../models/add-event.model";
+import { AddPosts } from "../models/add-posts";
+import { LikePost } from "../models/like-post";
 
 @Injectable({
   providedIn: "root",
@@ -19,7 +21,7 @@ export class HttpService {
 
   public jwtToken: string = "";
 
-  constructor(private httpClient: HttpClient) {}
+  constructor(private httpClient: HttpClient) { }
 
   private post(endpoint: string, body: any) {
     let headers: HttpHeaders = new HttpHeaders();
@@ -349,6 +351,39 @@ export class HttpService {
   public getEventsByParent(parentId: string): Observable<any> {
     return this.post("/events/get/parent", {
       parentId: parentId,
+    });
+  }
+
+
+  public addPost(data: AddPosts): Observable<any> {
+    return this.post("/posts/post/add", {
+      title: data.title,
+      content: data.content,
+      description: data.description,
+      teacher_creator_id: data.teacher_creator_id,
+      grade_teacher_creator_id: data.grade_teacher_creator_id,
+      admin_creator_id: data.admin_creator_id,
+      imageUrl: data.imageUrl,
+      likesCount: data.likesCount
+    })
+  }
+
+
+  public getAllPosts(): Observable<any> {
+    return this.post("/posts/get", {});
+  }
+
+
+  public getPostById(id: string): Observable<any> {
+    return this.post("/posts/get/id", {
+      id: id
+    });
+  }
+
+
+  public likePost(data: LikePost): Observable<any> {
+    return this.post("/posts/like", {
+      data
     });
   }
 }

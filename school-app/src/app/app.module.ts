@@ -27,6 +27,8 @@ import { ChatModule } from './pages/chat/chat.module';
 import { AdminModule } from './admin/admin.module';
 import { MatDialogModule } from "@angular/material/dialog";
 import { FormsModule } from '@angular/forms';
+import { DetailsComponent } from './pages/forum/details/details.component';
+
 
 
 @NgModule({

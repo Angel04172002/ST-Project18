@@ -1,0 +1,39 @@
+
+
+
+<mat-card class="add-post" *ngIf = "getUserType() == 'Admin' || getUserType() == 'Teacher' 
+|| getUserType() == 'Grade teacher'">
+    <h3 style="font-size: 20px; padding-bottom: 10px; text-align: center;">Добави нов пост:</h3>
+    <form class="add-post-form">
+        <mat-form-field>
+            <mat-label>Заглавие</mat-label>
+            <input matInput #title name="title" ngModel required>
+        </mat-form-field>
+        <mat-form-field>
+            <mat-label>Подзаглавие</mat-label>
+            <input matInput #content name="content" ngModel required>
+        </mat-form-field>
+        <mat-form-field>
+            <mat-label>Описание</mat-label>
+            <textarea matInput #description name="description" ngModel required></textarea>
+        </mat-form-field>
+        <mat-form-field>
+            <mat-label>Изображение</mat-label>
+            <input matInput #image type="text" name="image" ngModel required>
+        </mat-form-field>
+
+        <button (click)="addPost()" type="submit" mat-raised-button class="add-post-button"
+            color="primary">Добави</button>
+    </form>
+</mat-card>
+
+<div *ngFor = "let post of postData">
+    <app-current-post [id] = "post.id" [title] = "post.title" [subtitle] = "post.content" [description] = "post.description" [image] = "post.imageUrl"> 
+
+    </app-current-post>
+    <!-- <app-current-post/>
+    <app-current-post/> -->
+</div>
+
+
+

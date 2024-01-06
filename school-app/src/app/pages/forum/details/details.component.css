@@ -1,0 +1,130 @@
+
+
+
+.post-card {
+    width: 142em;
+    height: 65em;
+    margin: 5em auto;
+}
+
+.card-image {
+    display: block;
+    height: 100%;
+}
+
+.card-header {
+    padding: 3.5em 90em 3.5em 0;
+    text-align: left;
+    margin-right: auto;
+
+}
+
+.card-header-title {
+    text-align: left;
+    padding-bottom: 0.3em;
+    font-size: 10em;
+}
+
+.post-subtitle {
+    font-size: 1.4em;
+    text-align: center;
+}
+
+.card-content {
+    display: flex;
+    /* justify-content: space-around; */
+}
+
+
+.main {
+    display: flex;
+    flex-basis: 75%;
+}
+
+.media {
+    flex-basis: 25%;
+    height: 20em;
+    position: relative;
+    bottom: 10.5em;
+
+}
+
+.description {
+    margin-top: 10em;
+    text-align: justify;
+    font-size: 18px;
+}
+
+
+
+.media img {
+    display: block;
+    width: 100%;
+    height: 100%;
+}
+
+/* 
+.card-image {
+    margin-left: auto;
+} */
+
+.buttons {
+    display: flex;
+    justify-content: left;
+    gap: 2em;
+    height: 74%;
+   
+}
+
+
+.editBtn {
+    margin-right: 1em;
+}
+
+.backBtn,
+.commentBtn {
+    padding: 1em;
+    border: 1px solid #CCC;
+    border-radius: 0.3em;
+    text-decoration: none;
+    background: #CCC;
+    color: black;
+
+}
+
+
+.backBtn:hover,
+.commentBtn:hover {
+    background: #EEE;
+}
+
+
+.backBtn {
+    margin-left: 1em;
+    margin-bottom: 87em;
+}
+
+
+.card-header {
+    margin: 0 auto;
+}
+
+
+.card-header-title {
+    margin-top: 0;
+    padding-top: 0;
+    font-size: 30px;    
+    font-weight: bold;
+    text-align: center;
+}
+
+
+
+.comment-section {
+    position: relative;
+    bottom: 30em;
+}
+
+
+
+
