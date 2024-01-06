@@ -11,6 +11,6 @@ router.post('/auth', profileController.auth)
 
 router.use(auth)
 
-router.post('/', profileController.getProfileById)
+router.get('/', profileController.getProfileById)
 
 module.exports = router

@@ -14,15 +14,15 @@ router.post('/add-to-grade', gradesController.addStudentsToGrade)
 
 router.post('/add-subjects-to-grade', gradesController.addSubjectsToGrade)
 
-router.post('/all', gradesController.getStudentsWithGradeAndDivison)
+router.get('/all', gradesController.getStudentsWithGradeAndDivison)
 
-router.post('/subjects/all', gradesController.getAllSubjects)
+router.get('/subjects/all', gradesController.getAllSubjects)
 
-router.post('/get/teachers/grades', gradesController.getGradesDivisionsAndSubjectsForTeacher)
-router.post('/get/grade-teachers/grades', gradesController.getGradesDivisionsAndSubjectsForGradeTeacher)
-router.post('/get/students/grades', gradesController.getGradesDivisionsAndSubjectsForStudent)
-router.post('/get/parents/grades', gradesController.getGradesDivisionsAndSubjectsForParent)
+router.get('/get/teachers/grades', gradesController.getGradesDivisionsAndSubjectsForTeacher)
+router.get('/get/grade-teachers/grades', gradesController.getGradesDivisionsAndSubjectsForGradeTeacher)
+router.get('/get/students/grades', gradesController.getGradesDivisionsAndSubjectsForStudent)
+router.get('/get/parents/grades', gradesController.getGradesDivisionsAndSubjectsForParent)
 
-router.post('/get/students/by-grades', gradesController.getStudentsByGradeAndDivision)
+router.get('/get/students/by-grades', gradesController.getStudentsByGradeAndDivision)
 
 module.exports = router

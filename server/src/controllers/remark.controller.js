@@ -42,7 +42,7 @@ addRemark = async (request, response) => {
 getRemarksByStudent = async (request, response) => {
     try {
 
-        const studentId = request.body?.studentId;
+        const studentId = request.query?.studentId;
         let { rows } = await pool.query(remarkQueries.getRemarkByStudentQuery, [studentId])
 
         return response.status(200).json(rows)
@@ -56,7 +56,7 @@ getRemarksByStudent = async (request, response) => {
 getRemarksByParent = async (request, response) => {
     try {
 
-        const parentId = request.body?.parentId;
+        const parentId = request.query?.parentId;
         let { rows } = await pool.query(remarkQueries.getRemarkByParentQuery, [parentId])
 
         return response.status(200).json(rows)
@@ -72,7 +72,7 @@ getRemarksByParent = async (request, response) => {
 getRemarksByTeacher = async (request, response) => {
     try {
 
-        const teacherId = request.body?.teacherId;
+        const teacherId = request.query?.teacherId;
         let { rows } = await pool.query(remarkQueries.getRemarkByTeacherQuery, [teacherId])
 
         return response.status(200).json(rows)
@@ -88,7 +88,7 @@ getRemarksByTeacher = async (request, response) => {
 getRemarksByClassTeacher = async (request, response) => {
     try {
 
-        const teacherId = request.body?.teacherId;
+        const teacherId = request.query?.teacherId;
         let { rows } = await pool.query(remarkQueries.getRemarkByClassTeacherQuery, [teacherId])
 
         return response.status(200).json(rows)

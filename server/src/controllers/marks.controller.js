@@ -198,7 +198,8 @@ addMarksByTeacher = async (request, response) => {
 
 getMarksByTeacher = async (request, response) => {
     try {
-        const teacherId = request.body?.teacherId;
+        const teacherId = request.query?.teacherId;
+
         if (!teacherId) {
             return response.status(500).json({
                 message: "teacher id should be provided in request body",
@@ -219,7 +220,8 @@ getMarksByTeacher = async (request, response) => {
 
 getMarksByClassTeacher = async (request, response) => {
     try {
-        const teacherId = request.body?.teacherId;
+        const teacherId = request.query?.teacherId;
+
         if (!teacherId) {
             return response.status(500).json({
                 message: "teacher id should be provided in request body",
@@ -240,7 +242,7 @@ getMarksByClassTeacher = async (request, response) => {
 
 getMarksByStudent = async (request, response) => {
     try {
-        const studentId = request.body?.studentId;
+        const studentId = request.query?.teacherId;
         if (!studentId) {
             return response.status(500).json({
                 message: "student id should be provided in request body",
@@ -261,7 +263,7 @@ getMarksByStudent = async (request, response) => {
 
 getMarksByParent = async (request, response) => {
     try {
-        const parentId = request.body?.parentId;
+        const parentId = request.query?.parentId;
         if (!parentId) {
             return response.status(500).json({
                 message: "parent id should be provided in request body",

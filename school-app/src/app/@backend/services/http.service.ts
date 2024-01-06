@@ -1,4 +1,4 @@
-import { HttpClient, HttpHeaders } from "@angular/common/http";
+import { HttpClient, HttpHeaders, HttpParams } from "@angular/common/http";
 import { Observable, empty, of } from "rxjs";
 import { AddStudentToGrade } from "../models/add-student-to-grade.model";
 import { ProfileTypes } from "../enums/profile-types.enum";
@@ -23,8 +23,30 @@ export class HttpService {
 
   private post(endpoint: string, body: any) {
     let headers: HttpHeaders = new HttpHeaders();
-    headers.append("x-access-token", this.jwtToken ? this.jwtToken : "");
+    headers = headers.append(
+      "x-access-token",
+      this.jwtToken ? this.jwtToken : ""
+    );
     return this.httpClient.post(`${this.url}${endpoint}`, body, {
+      headers: headers,
+    });
+  }
+
+  private get(endpoint: string, queryParams: any) {
+    let headers: HttpHeaders = new HttpHeaders();
+    headers = headers.append(
+      "x-access-token",
+      this.jwtToken ? this.jwtToken : ""
+    );
+    let params: HttpParams = new HttpParams();
+    if (queryParams) {
+      for (let key in queryParams) {
+        params = params.append(key, queryParams[key]);
+      }
+    }
+
+    return this.httpClient.get(`${this.url}${endpoint}`, {
+      params: queryParams,
       headers: headers,
     });
   }
@@ -42,7 +64,7 @@ export class HttpService {
   // Profile methods
 
   public getProfile(id: string): Observable<any> {
-    return this.post("/profile", {
+    return this.get("/profile", {
       id: id,
     });
   }
@@ -100,7 +122,7 @@ export class HttpService {
   }
 
   public getStudentsWithGradeAndDivison(): Observable<any> {
-    return this.post("/grades/all", {});
+    return this.get("/grades/all", {});
   }
 
   public getAllSubjects(): Observable<any> {
@@ -120,25 +142,25 @@ export class HttpService {
   }
 
   public getMarksByTeacher(teacherId: string): Observable<any> {
-    return this.post("/marks/teacher", {
+    return this.get("/marks/teacher", {
       teacherId: teacherId,
     });
   }
 
   public getMarksByClassTeacher(teacherId: string): Observable<any> {
-    return this.post("/marks/teacher/class", {
+    return this.get("/marks/teacher/class", {
       teacherId: teacherId,
     });
   }
 
   public getMarksByStudent(studentId: string): Observable<any> {
-    return this.post("/marks/student", {
+    return this.get("/marks/student", {
       studentId: studentId,
     });
   }
 
   public getMarksByClassParent(parentId: string): Observable<any> {
-    return this.post("/marks/parent/", {
+    return this.get("/marks/parent/", {
       parentId: parentId,
     });
   }
@@ -158,7 +180,7 @@ export class HttpService {
   }
 
   public getTeachersWithGradesDivisionsSubjects(): Observable<any> {
-    return this.post("/teacher/get/teacher-grades", {});
+    return this.get("/teacher/get/teacher-grades", {});
   }
 
   //Absences methods
@@ -193,43 +215,43 @@ export class HttpService {
   }
 
   public getAbsencesByStudent(studentId: string): Observable<any> {
-    return this.post("/absences/get-absences/student", {
+    return this.get("/absences/get-absences/student", {
       id: studentId,
     });
   }
 
   public getAbsencesByParent(parentId: string): Observable<any> {
-    return this.post("/absences/get-absences/parent", {
+    return this.get("/absences/get-absences/parent", {
       id: parentId,
     });
   }
 
   public getAbsencesByTeacher(teacherId: string): Observable<any> {
-    return this.post("/absences/get-absences/teacher", {
+    return this.get("/absences/get-absences/teacher", {
       id: teacherId,
     });
   }
 
   public getAbsencesByGradeTeacher(gradeTeacherId: string): Observable<any> {
-    return this.post("/absences/get-absences/grade-teacher", {
+    return this.get("/absences/get-absences/grade-teacher", {
       id: gradeTeacherId,
     });
   }
 
   public getExcuseReasonsByParent(parentId: string): Observable<any> {
-    return this.post("/absences/get-excuse-reasons/parent", {
+    return this.get("/absences/get-excuse-reasons/parent", {
       id: parentId,
     });
   }
 
   public getExcuseReasonsByStudent(studentId: string): Observable<any> {
-    return this.post("/absences/get-excuse-reasons/student", {
+    return this.get("/absences/get-excuse-reasons/student", {
       id: studentId,
     });
   }
 
   public getExcuseReasonsByTeacher(teacherId: string): Observable<any> {
-    return this.post("/absences/get-excuse-reasons/teacher", {
+    return this.get("/absences/get-excuse-reasons/teacher", {
       id: teacherId,
     });
   }
@@ -237,7 +259,7 @@ export class HttpService {
   public getExcuseReasonsByGradeTeacher(
     gradeTeacherId: string
   ): Observable<any> {
-    return this.post("/absences/get-excuse-reasons/grade-teacher", {
+    return this.get("/absences/get-excuse-reasons/grade-teacher", {
       id: gradeTeacherId,
     });
   }
@@ -246,7 +268,7 @@ export class HttpService {
   public getGradesDivisionsAndSubjectsForTeacher(
     teacherId: string
   ): Observable<any> {
-    return this.post("/grades/get/teachers/grades", {
+    return this.get("/grades/get/teachers/grades", {
       teacherId: teacherId,
     });
   }
@@ -254,7 +276,7 @@ export class HttpService {
   public getGradesDivisionsAndSubjectsForGradeTeacher(
     gradeTeacherId: string
   ): Observable<any> {
-    return this.post("/grades/get/grade-teachers/grades", {
+    return this.get("/grades/get/grade-teachers/grades", {
       gradeTeacherId: gradeTeacherId,
     });
   }
@@ -262,7 +284,7 @@ export class HttpService {
   public getGradesDivisionsAndSubjectsForStudent(
     studentId: string
   ): Observable<any> {
-    return this.post("/grades/get/students/grades", {
+    return this.get("/grades/get/students/grades", {
       studentId: studentId,
     });
   }
@@ -270,7 +292,7 @@ export class HttpService {
   public getGradesDivisionsAndSubjectsForParent(
     parentId: string
   ): Observable<any> {
-    return this.post("/grades/get/parents/grades", {
+    return this.get("/grades/get/parents/grades", {
       parentId: parentId,
     });
   }
@@ -279,7 +301,7 @@ export class HttpService {
     gradeId: number,
     gradeDivisionId: string
   ) {
-    return this.post("/grades/get/students/by-grades", {
+    return this.get("/grades/get/students/by-grades", {
       gradeId: gradeId,
       gradeDivisionId: gradeDivisionId,
     });
@@ -300,22 +322,22 @@ export class HttpService {
   }
 
   public getRemarksByStudent(studentId: string): Observable<any> {
-    return this.post("/remark/get/student", {
+    return this.get("/remark/get/student", {
       studentId: studentId,
     });
   }
   public getRemarksByParent(parentId: string): Observable<any> {
-    return this.post("/remark/get/parent", {
+    return this.get("/remark/get/parent", {
       parentId: parentId,
     });
   }
   public getRemarksByTeacher(teacherId: string): Observable<any> {
-    return this.post("/remark/get/teacher", {
+    return this.get("/remark/get/teacher", {
       teacherId: teacherId,
     });
   }
   public getRemarksByClassTeacher(teacherId: string): Observable<any> {
-    return this.post("/remark/get/class-teacher", {
+    return this.get("/remark/get/class-teacher", {
       teacherId: teacherId,
     });
   }
@@ -337,17 +359,17 @@ export class HttpService {
   }
 
   public getAllEvents(): Observable<any> {
-    return this.post("/events/get", {});
+    return this.get("/events/get", {});
   }
 
   public getEventsByStudent(studentId: string): Observable<any> {
-    return this.post("/events/get/student", {
+    return this.get("/events/get/student", {
       studentId: studentId,
     });
   }
 
   public getEventsByParent(parentId: string): Observable<any> {
-    return this.post("/events/get/parent", {
+    return this.get("/events/get/parent", {
       parentId: parentId,
     });
   }

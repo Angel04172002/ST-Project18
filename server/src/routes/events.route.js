@@ -7,10 +7,10 @@ const eventsController = require('../controllers/events.controller')
 
 router.post('/add', eventsController.addEvent)
 
-router.post('/get', eventsController.getAllEvents)
+router.get('/get', eventsController.getAllEvents)
 
-router.post('/get/student', eventsController.getEventsByStudent)
+router.get('/get/student', eventsController.getEventsByStudent)
 
-router.post('/get/parent', eventsController.getEventsByParent)
+router.get('/get/parent', eventsController.getEventsByParent)
 
 module.exports = router

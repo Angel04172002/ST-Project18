@@ -234,7 +234,7 @@ getAllSubjects = async (request, response) => {
 getGradesDivisionsAndSubjectsForTeacher = async (request, response) => {
     try {
 
-        const teacherId = request.body?.teacherId;
+        const teacherId = request.query?.teacherId;
         let { rows } = await pool.query(gradesQueries.getTeachersWithGradesDivisionsSubjectsQuery, [teacherId])
 
         return response.status(200).json(rows)
@@ -250,7 +250,7 @@ getGradesDivisionsAndSubjectsForTeacher = async (request, response) => {
 
 getGradesDivisionsAndSubjectsForGradeTeacher = async (request, response) => {
     try {
-        const gradeTeacherId = request.body?.gradeTeacherId;
+        const gradeTeacherId = request.query?.gradeTeacherId;
         let { rows } = await pool.query(gradesQueries.getGradeTeachersWithGradesDivisionsSubjectsQuery, [gradeTeacherId]);
 
         return response.status(200).json(rows);
@@ -263,7 +263,7 @@ getGradesDivisionsAndSubjectsForGradeTeacher = async (request, response) => {
 
 getGradesDivisionsAndSubjectsForStudent = async (request, response) => {
     try {
-        const studentId = request.body?.studentid;
+        const studentId = request.query?.studentid;
         let { rows } = await pool.query(gradesQueries.getStudentsWithGradesDivisionsSubjectsQuery, [studentId]);
 
         return response.status(200).json(rows);
@@ -277,7 +277,7 @@ getGradesDivisionsAndSubjectsForStudent = async (request, response) => {
 
 getGradesDivisionsAndSubjectsForParent = async (request, response) => {
     try {
-        const parentId = request.body?.parentId;
+        const parentId = request.query?.parentId;
         let { rows } = await pool.query(gradesQueries.getParentsWithGradesDivisionsSubjectsQuery, [parentId]);
 
         return response.status(200).json(rows);
@@ -291,8 +291,8 @@ getGradesDivisionsAndSubjectsForParent = async (request, response) => {
 
 getStudentsByGradeAndDivision = async (request, response) => {
     try {
-        const gradeId = request.body?.gradeId;
-        const gradeDivisionId = request.body?.gradeDivisionId;
+        const gradeId = request.query?.gradeId;
+        const gradeDivisionId = request.query?.gradeDivisionId;
 
         let { rows } = await pool.query(gradesQueries.getStudentsByGradeAndDivision, [gradeId, gradeDivisionId]);
 
