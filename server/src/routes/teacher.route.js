@@ -5,7 +5,7 @@ const teacherController = require('../controllers/teacher.controller')
 
 
 router.post('/add/subjects-and-grades', teacherController.addSubjectsAndGradesToTeacher)
-router.post('/get/teacher-grades', teacherController.getSubjectsAndGradesForTeacher)
+router.get('/get/teacher-grades', teacherController.getSubjectsAndGradesForTeacher)
 
 
 module.exports = router

@@ -62,7 +62,7 @@ getAllEvents = async (request, response) => {
 getEventsByStudent = async (request, response) => {
     try {
 
-        const studentId = request.body?.studentId;
+        const studentId = request.query?.studentId;
         let { rows } = await pool.query(`
             select e.*, s.grade_id, s.grade_division_id from event e
             join teachers_grades_divisions_subjects tgds
@@ -83,7 +83,7 @@ getEventsByStudent = async (request, response) => {
 getEventsByParent = async (request, response) => {
     try {
 
-        const parentId = request.body?.parentId;
+        const parentId = request.query?.parentId;
         let { rows } = await pool.query(`
             select e.*, s.grade_id, s.grade_division_id from event e
             join teachers_grades_divisions_subjects tgds

@@ -139,7 +139,6 @@ auth = async (request, response) => {
             const storedHashedPassword = result.password;
             const isPasswordValid = await bcrypt.compare(password, storedHashedPassword);
 
-
             if (isPasswordValid) {
 
                 const token = jwt.sign(
@@ -167,7 +166,7 @@ auth = async (request, response) => {
 
 getProfileById = async (request, response) => {
     try {
-        const id = request.body?.id;
+        const id = request.query.id;
         if (!id) {
             return response.status(500).json({
                 message: "profile id should be provided in request body",

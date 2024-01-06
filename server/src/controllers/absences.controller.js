@@ -7,7 +7,7 @@ const absencesQueries = require('../database/absences.queries');
 
 getAbsencesByStudent = async (request, response) => {
     try {
-        const studentId = request.body?.id;
+        const studentId = request.query?.id;
 
         if (!studentId) {
             return response.status(500).json({
@@ -28,7 +28,7 @@ getAbsencesByStudent = async (request, response) => {
 
 getAbsencesByParent = async (request, response) => {
     try {
-        const parentId = request.body?.id;
+        const parentId = request.query?.id;
 
         if (!parentId) {
             return response.status(500).json({
@@ -49,7 +49,7 @@ getAbsencesByParent = async (request, response) => {
 
 getAbsencesByTeacher = async (request, response) => {
     try {
-        const teacherId = request.body?.id;
+        const teacherId = request.query?.id;
 
         if (!teacherId) {
             return response.status(500).json({
@@ -70,7 +70,7 @@ getAbsencesByTeacher = async (request, response) => {
 
 getAbsencesByGradeTeacher = async (request, response) => {
     try {
-        const gradeTeacherId = request.body?.id;
+        const gradeTeacherId = request.query?.id;
 
         if (!gradeTeacherId) {
             return response.status(500).json({
@@ -91,7 +91,7 @@ getAbsencesByGradeTeacher = async (request, response) => {
 
 getExcuseReasonsByParent = async (request, response) => {
     try {
-        const parentId = request.body?.id;
+        const parentId = request.query?.id;
 
         if (!parentId) {
             return response.status(500).json({
@@ -111,7 +111,7 @@ getExcuseReasonsByParent = async (request, response) => {
 
 getExcuseReasonsByStudent = async (request, response) => {
     try {
-        const studentId = request.body?.id;
+        const studentId = request.query?.id;
 
         if (!studentId) {
             return response.status(500).json({
@@ -132,7 +132,7 @@ getExcuseReasonsByStudent = async (request, response) => {
 
 getExcuseReasonsByTeacher = async (request, response) => {
     try {
-        const teacherId = request.body?.id;
+        const teacherId = request.query?.id;
 
         if (!teacherId) {
             return response.status(500).json({
@@ -153,7 +153,7 @@ getExcuseReasonsByTeacher = async (request, response) => {
 
 getExcuseReasonsByGradeTeacher = async (request, response) => {
     try {
-        const gradeTeacherId = request.body?.id;
+        const gradeTeacherId = request.query?.id;
 
         if (!gradeTeacherId) {
             return response.status(500).json({

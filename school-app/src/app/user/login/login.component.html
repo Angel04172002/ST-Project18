@@ -1,22 +1,42 @@
 <div class="login-container">
-	<div class="login-content">
-		<mat-toolbar class="login-toolbar">Вход</mat-toolbar>
-		<mat-card>
+  <div class="login-content">
+    <mat-toolbar class="login-toolbar">Вход</mat-toolbar>
+    <mat-card>
+      <form>
+        <mat-form-field>
+          <mat-icon matPrefix>person_outline</mat-icon>
+          <input
+            autofocus
+            type="text"
+            matInput
+            placeholder="Имейл"
+            name="email"
+            #username
+          />
+        </mat-form-field>
 
-			<form>
-				<mat-form-field>
-					<mat-icon matPrefix>person_outline</mat-icon>
-					<input autofocus type="text" matInput placeholder="Имейл" name="email" #username>
-				</mat-form-field>
+        <mat-form-field>
+          <mat-icon matPrefix>lock_outline</mat-icon>
+          <input
+            type="password"
+            autocomplete="false"
+            matInput
+            placeholder="Парола"
+            name="password"
+            #password
+          />
+        </mat-form-field>
 
-				<mat-form-field>
-					<mat-icon matPrefix>lock_outline</mat-icon>
-					<input type="password" autocomplete="false" matInput placeholder="Парола" name="password" #password>
-				</mat-form-field>
-
-                <button style="width:50%" type="submit" mat-raised-button (click) = "login($event, username.value, password.value)">Вход</button>
-			</form>
-		</mat-card>
-	</div>
+        <button
+          style="width: 50%"
+          type="submit"
+          mat-raised-button
+          (click)="login($event, username.value, password.value)"
+        >
+          Вход
+        </button>
+      </form>
+    </mat-card>
+    <!-- <button (click)="test()"> test req</button> -->
+  </div>
 </div>
-

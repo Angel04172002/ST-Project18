@@ -134,6 +134,7 @@ export class AbsenceComponent implements OnInit {
   displayedColumns2: string[] = COLUMNS_SCHEMA2.map((col) => col.key);
   columnsSchema2: any = COLUMNS_SCHEMA2;
 
+  subjectSelect: any;
   gradeSelect: any;
   gradeDivisionSelect: any;
   yearTermsSelect: any;
@@ -575,9 +576,8 @@ export class AbsenceComponent implements OnInit {
       });
     } else if (type === 'Student' || type === 'Parent') {
       this.dataSource.data = this.absencesDataForStudents.data.filter(item => {
-        return (this.gradeSelect === undefined || item.grade === this.gradeSelect) &&
-          (this.gradeDivisionSelect === undefined || item.gradeDivision === this.gradeDivisionSelect) &&
-          (this.yearTermsSelect === undefined || item.term === this.yearTermsSelect);
+        return (this.yearTermsSelect === undefined || item.term === this.yearTermsSelect) &&
+          (this.subjectSelect === undefined || item.absenceSubject === this.subjectSelect);
       });
     }
   }

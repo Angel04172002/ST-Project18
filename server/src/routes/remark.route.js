@@ -7,12 +7,12 @@ const remarkController = require('../controllers/remark.controller')
 
 router.post('/add', remarkController.addRemark)
 
-router.post('/get/student', remarkController.getRemarksByStudent)
+router.get('/get/student', remarkController.getRemarksByStudent)
 
-router.post('/get/parent', remarkController.getRemarksByParent)
+router.get('/get/parent', remarkController.getRemarksByParent)
 
-router.post('/get/teacher', remarkController.getRemarksByTeacher)
+router.get('/get/teacher', remarkController.getRemarksByTeacher)
 
-router.post('/get/class-teacher', remarkController.getRemarksByClassTeacher)
+router.get('/get/class-teacher', remarkController.getRemarksByClassTeacher)
 
 module.exports = router
