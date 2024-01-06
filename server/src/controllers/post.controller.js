@@ -2,8 +2,8 @@ const pool = require("../db")
 const utils = require("../utils");
 
 const postQueries = require('../database/post.queries');
-const { response } = require("express");
-const { post } = require("../routes/post.route");
+// const { response } = require("express");
+// const { post } = require("../routes/post.route");
 
 
 
@@ -45,30 +45,45 @@ addNewPost = async (request, response) => {
 likePost = async (request, response) => {
 
     try {
+        console.log(request.body);
 
-        const id = request.body?.id;
-        const postId = request.body?.postId;
-        const studentId = request.body?.studentId;
-        const parentId = request.body?.parentId;
-        const teacherId = request.body?.teacherId;
-        const gradeTeacherId = request.body?.gradeTeacherId;
-        const adminId = request.body?.adminId;
-        const likes = request.body?.likesCount;
+        // const id = request.body?.data.id;
+        const postId = request.body?.data.postId;
+        const studentId = request.body?.data.studentId;
+        const parentId = request.body?.data.parentId;
+        const teacherId = request.body?.data.teacherId;
+        const gradeTeacherId = request.body?.data.gradeTeacherId;
+        const adminId = request.body?.data.adminId;
+        let likes = request.body?.data.likesCount;
 
 
-        if (!id) {
+        // console.log(likes);
+
+        console.log('Old likes ' + likes);
+
+        likes = likes == 0 ? 1 : 0;
+
+        console.log('New likes ' + likes);
+
+        console.log(postId);
+
+        if (!postId) {
             return response.status(500).json({
                 message: "post id should be provided in request body",
             });
         }
 
-        const { rows } = await pool.query(postQueries.likePost, [postId, studentId, parentId, teacherId, adminId, gradeTeacherId, likes]);
+        await pool.query(postQueries.likePost, [postId, studentId, parentId, teacherId, gradeTeacherId, adminId, likes]);
 
-        if (rows.length < 1) {
-            return response.status(500).send(`Post with id: ${id} not found`);
+        // if (rows.length < 1) {
+        //     return response.status(500).send(`Post with id: ${postId} not found`);
+        // }
+
+        if (likes == 1) {
+            return response.status(200).json("Successfully liked post");
+        } else {
+            return response.status(200).json("Successfully unliked post");
         }
-
-        return response.status(200).json("Successfully liked post");
 
     }
     catch (err) {
@@ -80,13 +95,23 @@ likePost = async (request, response) => {
 
 
 checkIfLiked = async (request, response) => {
+
     try {
-        const postId = request.body?.postId;
-        const studentId = request.body?.studentId;
-        const parentId = request.body?.parentId;
-        const teacherId = request.body?.teacherId;
-        const gradeTeacherId = request.body?.gradeTeacherId;
-        const adminId = request.body?.adminId;
+
+        const postId = request.body?.data?.postId;
+        const studentId = request.body?.data?.studentId;
+        const parentId = request.body?.data?.parentId;
+        const teacherId = request.body?.data?.teacherId;
+        const gradeTeacherId = request.body?.data?.gradeTeacherId;
+        const adminId = request.body?.data?.adminId;
+        // const hasLiked = request.body?.data?.likes;
+
+        console.log('request body' + postId + ' ' + studentId)
+
+        // console.log(hasLiked);
+
+        //1 - liked
+
 
         if (!postId) {
             return response.status(500).json({
@@ -94,21 +119,46 @@ checkIfLiked = async (request, response) => {
             });
         }
 
-        const { rows } = await pool.query(postQueries.checkIfLiked, [postId, studentId, parentId, teacherId, gradeTeacherId, adminId]);
+        const rows = await pool.query(postQueries.checkIfLiked, [postId, studentId, parentId, teacherId, gradeTeacherId, adminId]);
 
-        if (rows.length < 1) {
-            return response.status(500).send(`Post with id: ${id} not found`);
+
+
+
+        const likes = rows.rows[0].likes;
+
+        if (rows.length < 1 || likes == 0) {
+            //post is not already liked
+            return response.status(200).json("0");
         }
 
-        return response.status(200).json(rows[0])
+        await pool.query(postQueries.deleteLikeQuery, [postId, studentId, parentId, teacherId, gradeTeacherId, adminId]);
+
+        return response.status(200).json("1")
 
     }
     catch (err) {
         console.error(err.message)
-        
+    }
+
 }
 
 
+getLikes = async (request, response) => {
+
+    try {
+
+        const id = request.body.data.id;
+
+        console.log('ID' + id);
+
+        const { rows } = await pool.query(postQueries.getLikes, [id]);
+        return response.status(200).json(rows);
+
+    } catch (err) {
+        console.error(err.message)
+    }
+
+};
 
 getAllPosts = async (request, response) => {
     try {
@@ -149,11 +199,13 @@ openPost = async (request, response) => {
     }
 }
 
+
+
 module.exports = {
     addNewPost,
     getAllPosts,
     openPost,
     likePost,
-    checkIfLiked
-}
-
+    checkIfLiked,
+    getLikes
+};

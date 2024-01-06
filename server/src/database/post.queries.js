@@ -7,6 +7,7 @@ const getAllPostsQuery = `
     select * from post
 `;
 
+
 const getPostsFromStudent = `   
 select pt.*
 from student s 
@@ -48,21 +49,34 @@ const openPost = `
 `;
 
 const likePost = ` 
-insert into post_likes
+insert into post_likes values
 ($1, $2, $3, $4, $5, $6, $7)
-ON CONFLICT (post_id) DO UPDATE SET likes = $7 WHERE post_id = $1
+ON CONFLICT (post_id) DO UPDATE SET likes = $7 WHERE post_likes.post_id = $1
+and post_likes.student_id = $2 or post_likes.parent_id = $3 or post_likes.teacher_id = $4 or post_likes.grade_teacher_id = $5 or post_likes.admin_id = $6
 `;
 
 
 const checkIfLiked = `  
 
-select likes from post_likes
-where student_id = $1 or parent_id = $2 or teacher_id = $3 or grade_teacher_id = $4 or admin_id = $5
+select * from post_likes
+where post_id = $1 and (student_id = $2 or parent_id = $3 or teacher_id = $4 or grade_teacher_id = $5 or admin_id = $6)
 
 `;
 
 
+const getLikes =  `
+   select * from post_likes
+   where post_id = $1
+`;
 
+const deleteLikeQuery = `  
+
+   delete from post_likes
+   where post_likes.post_id = $1
+   and post_likes.student_id = $2 or post_likes.parent_id = $3 or post_likes.teacher_id = $4 or post_likes.grade_teacher_id = $5 or post_likes.admin_id = $6
+
+
+`;
 
 module.exports = {
     addNewPostQuery,
@@ -71,7 +85,9 @@ module.exports = {
     getPostsFromParent,
     openPost,
     likePost,
-    checkIfLiked
+    checkIfLiked,
+    getLikes,
+    deleteLikeQuery
 };
 
 

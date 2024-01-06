@@ -15,6 +15,8 @@ import { UserService } from 'src/app/user/user.service';
 import { CurrentPostComponent } from '../current-post/current-post.component';
 import { HttpService } from 'src/app/@backend/services/http.service';
 import { Post } from 'src/app/types/Post';
+import { LikePost } from 'src/app/@backend/models/like-post';
+import { DetailsComponent } from '../details/details.component';
 
 @Component({
   selector: 'app-forum',
@@ -35,7 +37,8 @@ import { Post } from 'src/app/types/Post';
     MatDialogModule,
     MatIconModule,
     MatCardModule,
-    CurrentPostComponent
+    CurrentPostComponent,
+    DetailsComponent
   ],
   standalone: true
 })
@@ -95,13 +98,55 @@ export class ForumComponent implements OnInit {
     this.teacherService.addPost(data);
   }
 
-  getAllPosts() {
+  async getAllPosts() {
 
-    this.teacherService.getAllPosts()
-      .then((data) => {
-        console.log(data);
-        this.postData = data;
-      });
+    // debugger;
+
+    let newData: LikePost[] = [];
+
+    const data = await this.teacherService.getAllPosts();
+
+    // this.teacherService.getAllPosts()
+    //   .then(async (data: any[]) => {
+
+    let newElement: any = {};
+
+    console.log(data.length);
+
+    let i = 0;
+
+    for (let el of data) {
+
+      newElement = el;
+
+      let dataToSend = { id: el.id };
+      console.log(dataToSend.id);
+
+      let likesData = await this.teacherService.getLikes(dataToSend);
+
+      let likes = likesData[0].likes;
+      let val = 0;
+      // let currentLikes = 
+
+      if (likes == 0) {
+        val = 1;
+      }
+
+      Object.defineProperty(newElement, 'likesCount', { value: likesData.length - val });
+
+      newData.push(newElement);
+      i++;
+
+    };
+
+
+    // })
+
+
+    this.postData = newData;
+
+
+
   }
 
 

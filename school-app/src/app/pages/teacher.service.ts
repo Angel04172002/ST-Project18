@@ -60,6 +60,15 @@ export class TeacherService {
       })
   }
 
+  async getLikes(data: any) {
+    const req = this.httpService.getLikes(data);
+
+    return await firstValueFrom(req)
+      .then(data => {
+        return data;
+      })
+  }
+
 
   sendJsonData(files: FileList | null, action: string) {
 

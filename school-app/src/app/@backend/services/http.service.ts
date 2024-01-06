@@ -408,4 +408,18 @@ export class HttpService {
       data
     });
   }
+
+
+  public checkIfLiked(data: LikePost): Observable<any> {
+    return this.post("/posts/like/check", {
+      data
+    });
+  }
+
+
+  public getLikes(data: any): Observable<any> {
+    return this.post("/posts/likes/get", {
+      data
+    });
+  }
 }

@@ -6,7 +6,7 @@ export class LikePost {
     teacherId?: string;
     gradeTeacherId?: string;
     adminId?: string;
-    likes !: Number;
+    likesCount !: Number;
   
     constructor(init?: Partial<LikePost>) {
       Object.assign(this, init);

@@ -1,6 +1,6 @@
 import { CommonModule } from '@angular/common';
 import { HttpSentEvent } from '@angular/common/http';
-import { Component, Input, OnInit } from '@angular/core';
+import { AfterContentInit, Component, Input, OnDestroy, OnInit } from '@angular/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MatButtonModule } from '@angular/material/button';
 import { MatCardModule } from '@angular/material/card';
@@ -12,9 +12,12 @@ import { MatInputModule } from '@angular/material/input';
 import { MatSelectModule } from '@angular/material/select';
 import { MatTableModule } from '@angular/material/table';
 import { Router, RouterModule } from '@angular/router';
-import { firstValueFrom } from 'rxjs';
+import { CsvWriter } from 'csv-writer/src/lib/csv-writer';
+import { first, firstValueFrom } from 'rxjs';
+import { LikePost } from 'src/app/@backend/models/like-post';
 import { HttpService } from 'src/app/@backend/services/http.service';
 import { UserService } from 'src/app/user/user.service';
+import { ForumComponent } from '../forum/forum.component';
 
 @Component({
   selector: 'app-current-post',
@@ -35,29 +38,37 @@ import { UserService } from 'src/app/user/user.service';
     MatDialogModule,
     MatIconModule,
     MatCardModule,
-    RouterModule
+    RouterModule,
+    ForumComponent
   ],
   standalone: true
 })
-export class CurrentPostComponent implements OnInit {
+export class CurrentPostComponent implements OnInit, OnDestroy, AfterContentInit {
 
   @Input() title: any;
   @Input() subtitle: any;
   @Input() description: any;
   @Input() image: any;
   @Input() id: any;
+  @Input() likesCount: any;
 
 
   constructor(private userService: UserService, private http: HttpService, private router: Router) {
 
 
   }
+  ngAfterContentInit(): void {
+    this.loadLikes();
+  }
 
-  ngOnInit() {
-    console.log(this.title);
-    console.log(this.subtitle);
-    console.log(this.description);
-    console.log(this.image);
+  ngOnInit(): void {
+    // this.loadLikes();
+  }
+
+  ngOnDestroy() {
+
+
+
   }
 
 
@@ -78,21 +89,21 @@ export class CurrentPostComponent implements OnInit {
 
   async likePost(e: Event) {
 
+
     e.preventDefault();
 
 
     let element = e.currentTarget as HTMLElement;
     let userType = this.getUserType();
     let userId = this.getUser().id;
-    let adminId = '';
-    let teacherId = '';
-    let gradeTeacherId = '';
-    let studentId = '';
-    let parentId = '';
 
-    let hasLiked = 1;
-    
+    let adminId = null;
+    let teacherId = null;
+    let gradeTeacherId = null;
+    let studentId = null;
+    let parentId = null;
 
+    let hasLiked = 0;
 
 
     if (element == null) {
@@ -100,24 +111,21 @@ export class CurrentPostComponent implements OnInit {
     }
 
     let nextElement: any = element.nextElementSibling;
-    nextElement.textContent = (Number(element.nextElementSibling?.textContent) + 1).toString();
 
     let postId = nextElement.id;
-
-    console.log(postId);
 
 
 
     if (userType == "Admin") {
-      userId = adminId;
+      adminId = userId;
     } else if (userType == "Teacher") {
-      userId = teacherId;
+      teacherId = userId;
     } else if (userType == "Grade teacher") {
-      userId = gradeTeacherId;
+      gradeTeacherId = userId;
     } else if (userType == "Student") {
-      userId = studentId;
+      studentId = userId;
     } else if (userType == "Parent") {
-      userId = parentId;
+      parentId = userId;
     }
 
     const data = {
@@ -126,12 +134,96 @@ export class CurrentPostComponent implements OnInit {
       parentId,
       teacherId,
       gradeTeacherId,
-      adminId
+      adminId,
+      likesCount: 0
     };
 
+    let checkLikesRes = this.http.checkIfLiked(data);
 
+
+    await firstValueFrom(checkLikesRes)
+      .then(data => {
+        console.log(data)
+        hasLiked = Number(data);
+      });
+
+    console.log('has liked' + hasLiked);
+    //has liked = 0;
+
+
+    data.likesCount = hasLiked;
+
+    let likesRes = this.http.likePost(data);
+
+
+    await firstValueFrom(likesRes)
+      .then(() => {
+
+        if (hasLiked == 1) {
+          nextElement.textContent = (Number(element.nextElementSibling?.textContent) - 1).toString();
+        } else if (hasLiked == 0) {
+          nextElement.textContent = (Number(element.nextElementSibling?.textContent) + 1).toString();
+        };
+      });
 
 
   }
+
+
+  async loadLikes() {
+
+    // const req = this.http.getLikes();
+
+    // await firstValueFrom(req)
+    //   .then(data => {
+
+    //     this.showLikes(data);
+
+    //   })
+
+  }
+
+
+  // showLikes(data: any) {
+
+  //   const container = document.querySelector('.post-container');
+
+  //   const children = container?.children;
+
+  //   if (children == undefined) {
+  //     return;
+  //   }
+
+  //   let i = 0;
+
+  //   for (let el of data) {
+
+  //     let element = children[i] as HTMLElement;
+
+  //     // console.log(element);
+
+  //     let childLikes : any | null = element.querySelector('.likes-count');
+
+  //     let dbLikes = el.likes;
+  //     let loadedLikes = 0;
+
+  //     if(childLikes == null) {
+  //       return;
+  //     }
+
+
+  //     console.log(childLikes);
+
+  //     if(dbLikes == 1) {
+        
+  //       childLikes.textContent = (Number(childLikes) + 1).toString();
+
+  //     }
+
+
+  //     i++;
+  //   }
+
+  // }
 
 }

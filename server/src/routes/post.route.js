@@ -7,5 +7,7 @@ router.post('/post/add', postController.addNewPost);
 router.post('/get', postController.getAllPosts);
 router.post('/get/id', postController.openPost);
 router.post('/like', postController.likePost);
+router.post('/like/check', postController.checkIfLiked);
+router.post('/likes/get', postController.getLikes);
 
 module.exports = router

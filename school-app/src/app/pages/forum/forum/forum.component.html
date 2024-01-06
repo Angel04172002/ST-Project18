@@ -27,8 +27,8 @@
     </form>
 </mat-card>
 
-<div *ngFor = "let post of postData">
-    <app-current-post [id] = "post.id" [title] = "post.title" [subtitle] = "post.content" [description] = "post.description" [image] = "post.imageUrl"> 
+<div class="post-container">
+    <app-current-post [likesCount] = "post.likesCount" [id] = "post.id" [title] = "post.title" [subtitle] = "post.content" [description] = "post.description" [image] = "post.imageUrl" *ngFor = "let post of postData"> 
 
     </app-current-post>
     <!-- <app-current-post/>
