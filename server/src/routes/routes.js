@@ -9,6 +9,7 @@ const teacherRoute = require('./teacher.route')
 const absenceRoute = require('./absence.route')
 const remarkRoute = require('./remark.route')
 const eventsRoute = require('./events.route')
+const postRoute = require('./post.route');
 
 // Add profile routing
 router.use('/profile', profileRoute);
@@ -27,6 +28,8 @@ router.use('/teacher', teacherRoute);
 router.use('/remark', remarkRoute)
 
 router.use('/events', eventsRoute)
+
+router.use('/posts', postRoute);
 
 // router.use('/calendar', calendarRoute);
 

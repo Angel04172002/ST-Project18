@@ -21,9 +21,30 @@ where par.id = $1
 `;
 
 
+const getParent = ` 
+    select p.id, p.first_name, p.last_name, p.email 
+    from parent par
+    inner join profile p 
+    on par.id = p.id
+    where p.first_name = $1 and p.last_name = $2 or p.email = $3
+`;
+
+const getStudentParents = ` 
+    select * student s
+    inner join parent par
+    on s.parent_id = par.id
+    inner join profile p
+    on par.id = p.id
+    where s.id = $1
+
+`;
+
+
 module.exports = {
     getStudentsWithParents,
-    getParentById
+    getParentById,
+    getStudentParents,
+    getParent
 };
 
 

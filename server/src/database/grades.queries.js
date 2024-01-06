@@ -43,6 +43,8 @@ on s.id = p.id
 where s.grade_id = $1 and s.grade_division_id = $2
 `;
 
+
+
 module.exports = {
     getStudentsWithGradeAndDivisonAndParentQuery,
     getTeachersWithGradesDivisionsSubjectsQuery,

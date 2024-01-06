@@ -136,21 +136,20 @@ addStudentsToGrade = async (request, response) => {
 
         for (let student of students) {
 
-            
+            let { rows } = await pool.query(studentQueries.getParent, [student?.parent_first_name, student?.parent_last_name, student?.parent_email]);
+            let parent = rows[0];
 
-            // let { rows } = await pool.query(studentQueries.getParentById, [student?.parent_id]);
-            // let parent = rows[0];
+    
 
-       
             await pool.query(
                 'INSERT INTO STUDENT (id, grade_id, grade_division_id, parent_id) VALUES ($1, $2, $3, $4) ON CONFLICT (id) DO UPDATE SET id = $1, grade_id = $2, grade_division_id = $3, parent_id = $4 WHERE student.id = $1',
-                [student?.studentId, Number(student?.grade), student?.gradeDivision, student?.parent_id]
+                [student?.studentId, student.grade ? Number(student.grade) : null, student?.gradeDivision, parent ? parent.id : '']
             )
 
-            // await pool.query(
-            //     'UPDATE PROFILE SET first_name = $1, last_name = $2, email = $3 WHERE id = $4',
-            //     [student.parent_first_name, student.parent_last_name, student.parent_email, parent.id]
-            // );
+            await pool.query(
+                'UPDATE PROFILE SET first_name = $1, last_name = $2, email = $3 WHERE id = $4',
+                [student.parent_first_name, student.parent_last_name, student.parent_email, parent ? parent.id : '']
+            );
 
         }
 
@@ -244,8 +243,6 @@ getGradesDivisionsAndSubjectsForTeacher = async (request, response) => {
         response.status(500).send(err.message)
     }
 }
-
-
 
 
 getGradesDivisionsAndSubjectsForGradeTeacher = async (request, response) => {
