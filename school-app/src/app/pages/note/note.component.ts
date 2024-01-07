@@ -138,6 +138,7 @@ export class NoteComponent implements OnInit{
       type = user.type;
     }
 
+    this.students = [];
     if (type === 'Teacher') {
 
       await firstValueFrom(this.http.getRemarksByTeacher(id))
@@ -169,6 +170,14 @@ export class NoteComponent implements OnInit{
             if (this.subjects.indexOf(item.note_subject_id) === -1) {
               this.subjects.push(item.note_subject_id);
             }
+
+            let studentDataArray = {
+              id: item.student_id,
+              firstName: item.student_first_name,
+              lastName: item.student_last_name
+            }
+
+            this.students.push(studentDataArray);
 
           }
 
@@ -204,6 +213,14 @@ export class NoteComponent implements OnInit{
             if (this.subjects.indexOf(item.note_subject_id) === -1) {
               this.subjects.push(item.note_subject_id);
             }
+
+            let studentDataArray = {
+              id: item.student_id,
+              firstName: item.student_first_name,
+              lastName: item.student_last_name
+            }
+
+            this.students.push(studentDataArray);
 
           }
 
@@ -324,6 +341,55 @@ export class NoteComponent implements OnInit{
     } catch (err) {
       console.log(err)
     }
+
+  }
+
+  async updateNotes(row: any) {
+    let user = this.userService.getUser();
+    let id = '';
+    let type = '';
+    let req: any;
+
+    if (user) {
+      id = user.id;
+      type = user.type
+    }
+
+    if(type === 'Teacher'){
+      let note: AddRemarkModel = {
+        note: row.note,
+        teacher_creator_id: id,
+        note_student_id: row.studentId,
+        note_subject_id: row.subject,
+        note_term_id: this.yearTermsSelect
+      }
+  
+      req = this.http.updateRemark(row.id, note)
+
+    } else if (type === 'Grade teacher'){
+      let note: AddRemarkModel = {
+        note: row.note,
+        grade_teacher_creator_id: id,
+        note_student_id: row.studentId,
+        note_subject_id: row.subject,
+        note_term_id: this.yearTermsSelect
+      }
+  
+      req = this.http.updateRemark(row.id, note)
+    }
+    
+
+    try {
+      await firstValueFrom(req)
+        .then(data => {
+
+          console.log(data);
+
+        })
+    } catch (err) {
+      console.log(err)
+    }
+
 
   }
 
@@ -456,13 +522,16 @@ export class NoteComponent implements OnInit{
   }
 
   addRowDone(row: any) {
-    this.addNotes(row).then(() => (row.isEdit = false));
+    if(row.id !== '0'){
+      this.updateNotes(row).then(() => (row.isEdit = false));
+    } else {
+      this.addNotes(row).then(() => (row.isEdit = false));
+    }
   }
 
   addNote() {
     const newNote = {
       id: '0',
-      studentId: '0',
       firstName: '',
       lastName: '',
       note: '',
@@ -472,7 +541,11 @@ export class NoteComponent implements OnInit{
     this.dataSource.data = [...this.dataSource.data, newNote]
   }
 
-  removeRow(id: string) {
-    this.dataSource.data = this.dataSource.data.filter((u) => u.id !== '0');
+  removeRow(row: any) {
+    if(row.id !== '0'){
+      row.isEdit = false;
+    } else {
+      this.dataSource.data = this.dataSource.data.filter((u) => u.id !== '0');
+    }
   }
 }

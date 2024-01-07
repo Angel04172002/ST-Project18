@@ -246,6 +246,42 @@ addAbsencesByTeacher = async (request, response) => {
     }
 }
 
+updateAbsencesByTeacher  = async (request, response) => {
+    try {
+        const id = request.body?.id;
+        const absences = request.body?.absences;
+        const creator = request.body?.creator;
+
+        if (!absences) {
+            return response.status(500).send(`Absences array not provided`);
+        }
+
+        if (!Array.isArray(absences)) {
+            return response.status(500).send(`Absences data of wrong type`);
+        }
+
+        if (absences.length < 1) {
+            return response.status(200).send("Data is empty. No absences added")
+        }
+
+
+        for (let absence of absences) {
+
+            await pool.query(`update absence set absence_type_id = $2, absence_subject_id = $3, 
+            absence_student_id = $4, absence_term_id = $5, teacher_creator_id = $6, 
+            grade_teacher_creator_id = $7 where id = $1`,
+                [id, absence.type, absence.subjectId, absence.studentId, absence.termId,
+                    creator.teacherId, creator.gradeTeacherId]);
+        }
+
+        return response.status(200).json("Absence updated successfully!")
+    }
+    catch (err) {
+        console.error(err.message)
+        response.status(500).send(err.message)
+    }
+}
+
 
 module.exports = {
     getAbsencesByStudent,
@@ -257,7 +293,8 @@ module.exports = {
     getExcuseReasonsByGradeTeacher,
     getExcuseReasonsByTeacher,
     addExcuseReasonsByParent,
-    addAbsencesByTeacher
+    addAbsencesByTeacher,
+    updateAbsencesByTeacher
 };
 
 

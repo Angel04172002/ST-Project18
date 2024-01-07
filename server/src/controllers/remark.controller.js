@@ -37,6 +37,28 @@ addRemark = async (request, response) => {
     }
 }
 
+updateRemark = async (request, response) => {
+    try {
+        const { id, note, teacher_creator_id, grade_teacher_creator_id, note_student_id, note_subject_id, note_term_id } = request.body;
+
+        if (note == undefined) return response.status(500).send("Note not provided!")
+        if (note_student_id == undefined) return response.status(500).send("note_student_id not provided!")
+        if (note_subject_id == undefined) return response.status(500).send("note_subject_id not provided!")
+        if (note_term_id == undefined) return response.status(500).send("note_term_id not provided!")
+
+        await pool.query(`update note set note = $2, teacher_creator_id = $3, 
+        grade_teacher_creator_id = $4, note_subject_id = $5, note_term_id = $6 where id = $1`,
+        [id, note, teacher_creator_id, grade_teacher_creator_id, note_subject_id, note_term_id]);
+
+
+        return response.status(200).json('Remark updated successfully!')
+    }
+    catch (err) {
+        console.error(err.message)
+        response.status(500).send(err.message)
+    }
+}
+
 
 
 getRemarksByStudent = async (request, response) => {
@@ -106,6 +128,7 @@ getRemarksByClassTeacher = async (request, response) => {
 
 module.exports = {
     addRemark,
+    updateRemark,
     getRemarksByStudent,
     getRemarksByParent,
     getRemarksByTeacher,

@@ -246,8 +246,8 @@ export class CalendarComponent implements OnInit{
     }
     
     this.addEvent(event).then(() => {
-      this.calendarRefresh();
       form.resetForm();
+      location.reload();
 
     });
 

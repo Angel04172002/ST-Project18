@@ -208,6 +208,18 @@ export class HttpService {
     // }
   }
 
+  public updateAbsencesByTeacher(
+    id: string,
+    absences: AddAbsencesByTeacher[],
+    creator: any
+  ): Observable<any> {
+    return this.post("/absences/update/absences", {
+      id: id,
+      absences: absences,
+      creator: creator
+    });
+  }
+
   public addExcuseReasonsByParent(
     excuseReasons: AddExcuseReasonsByParent[]
   ): Observable<any> {
@@ -317,6 +329,18 @@ export class HttpService {
       note: remark.note,
       teacher_creator_id: remark.teacher_creator_id, // This parameter is optional !!
       grade_teacher_creator_id: remark.grade_teacher_creator_id, // This parameter is optional !!
+      note_student_id: remark.note_student_id,
+      note_subject_id: remark.note_subject_id,
+      note_term_id: remark.note_term_id,
+    });
+  }
+
+  public updateRemark(id: string, remark: AddRemarkModel): Observable<any> {
+    return this.post("/remark/update/", {
+      id: id,
+      note: remark.note,
+      teacher_creator_id: remark.teacher_creator_id, 
+      grade_teacher_creator_id: remark.grade_teacher_creator_id, 
       note_student_id: remark.note_student_id,
       note_subject_id: remark.note_subject_id,
       note_term_id: remark.note_term_id,
