@@ -37,6 +37,9 @@
             <td mat-cell *matCellDef="let element">
                 <div [ngSwitch]="col.type" *ngIf="!element.isEdit">
                     <div *ngSwitchCase="'isEdit'">
+                        <button mat-raised-button color="primary" (click)="element.isEdit = !element.isEdit">
+                            Редактирай
+                        </button>
                     </div>
                     <span *ngSwitchCase="'checkbox'">
                         <mat-checkbox color="primary" #excusedCheckbox
@@ -54,7 +57,7 @@
                             Готово
                         </button>
                         <button mat-stroked-button color="primary" class="button-remove"
-                            (click)="removeRow(element.id)">
+                            (click)="removeRow(element)">
                             Отказ
                         </button>
                     </div>
@@ -75,7 +78,7 @@
                         </mat-select>
                     </mat-form-field>
                     <span *ngSwitchCase="'checkbox'">
-                        <mat-checkbox color="primary" #editCheckbox [(ngModel)]="element[col.key]"
+                        <mat-checkbox color="primary" #editCheckbox (change)="showChecked($event)"
                             [checked]="element[col.key] === 'Извинено' || element[col.key] === true">
                         </mat-checkbox>
                     </span>

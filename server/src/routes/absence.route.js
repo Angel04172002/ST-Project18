@@ -6,6 +6,8 @@ const absencesController = require('../controllers/absences.controller');
 router.post('/add/absences', absencesController.addAbsencesByTeacher);
 router.post('/add/excuse-reasons', absencesController.addExcuseReasonsByParent);
 
+router.post('/update/absences', absencesController.updateAbsencesByTeacher);
+
 router.get('/get-absences/grade-teacher', absencesController.getAbsencesByGradeTeacher);
 router.get('/get-absences/teacher', absencesController.getAbsencesByTeacher);
 router.get('/get-absences/student', absencesController.getAbsencesByStudent);

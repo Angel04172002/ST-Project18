@@ -4,7 +4,7 @@ import { UserService } from 'src/app/user/user.service';
 import { HttpService } from 'src/app/@backend/services/http.service';
 import { firstValueFrom } from 'rxjs';
 import { MatTableModule } from '@angular/material/table';
-import { MatCheckbox, MatCheckboxModule } from '@angular/material/checkbox';
+import { MatCheckbox, MatCheckboxModule, MatCheckboxChange } from '@angular/material/checkbox';
 import { MatTableDataSource } from '@angular/material/table';
 import { MatSelect, MatSelectModule } from '@angular/material/select';
 import { MatInputModule } from '@angular/material/input';
@@ -126,6 +126,7 @@ export class AbsenceComponent implements OnInit {
   gradeDivisions: GradeDivision['id'][] = [];
   grades: Grade['id'][] = [];
   subjects: Subject['subjectName'][] = [];
+  students: any;
 
   displayedColumns: string[] = COLUMNS_SCHEMA.map((col) => col.key);
   dataSource = new MatTableDataSource<any>();
@@ -138,6 +139,7 @@ export class AbsenceComponent implements OnInit {
   gradeSelect: any;
   gradeDivisionSelect: any;
   yearTermsSelect: any;
+  absenceType: any;
 
   ngOnInit(): void {
     this.getExcuseReasons().then(() => {
@@ -145,8 +147,6 @@ export class AbsenceComponent implements OnInit {
       this.getGradeDivisions();
 
     });
-
-    // this.getExcuseReasons()
 
   }
 
@@ -164,6 +164,7 @@ export class AbsenceComponent implements OnInit {
     }
 
     let excuseReason: any;
+    this.students = [];
     if (type === 'Teacher') {
 
       await firstValueFrom(this.http.getAbsencesByTeacher(id))
@@ -179,7 +180,8 @@ export class AbsenceComponent implements OnInit {
             }
 
             let absencesDataArray = {
-              id: item.absence_student_id,
+              id: item.id,
+              studentId: item.absence_student_id,
               firstName: item.student_first_name,
               lastName: item.student_last_name,
               subject: item.absence_subject_id,
@@ -203,6 +205,14 @@ export class AbsenceComponent implements OnInit {
             if (this.subjects.indexOf(item.absence_subject_id) === -1) {
               this.subjects.push(item.absence_subject_id);
             }
+
+            let studentDataArray = {
+              id: item.absence_student_id,
+              firstName: item.student_first_name,
+              lastName: item.student_last_name
+            }
+
+            this.students.push(studentDataArray);
 
           }
 
@@ -224,7 +234,8 @@ export class AbsenceComponent implements OnInit {
             }
 
             let absencesDataArray = {
-              id: item.absence_student_id,
+              id: item.id,
+              studentId: item.absence_student_id,
               firstName: item.student_first_name,
               lastName: item.student_last_name,
               subject: item.absence_subject_id,
@@ -248,6 +259,14 @@ export class AbsenceComponent implements OnInit {
             if (this.subjects.indexOf(item.absence_subject_id) === -1) {
               this.subjects.push(item.absence_subject_id);
             }
+
+            let studentDataArray = {
+              id: item.absence_student_id,
+              firstName: item.student_first_name,
+              lastName: item.student_last_name
+            }
+
+            this.students.push(studentDataArray);
 
           }
 
@@ -352,17 +371,14 @@ export class AbsenceComponent implements OnInit {
       type = user.type
     }
 
-    let absenceType;
-    if (row.absenceType === true) {
-      absenceType = AbsenceTypes.Excused;
-    } else {
-      absenceType = AbsenceTypes.Unexcused;
+    if(this.absenceType){
+      row.absenceType = this.absenceType;
     }
 
     let absences: AddAbsencesByTeacher[] = [{
-      type: absenceType,
+      type: row.absenceType,
       subjectId: row.subject,
-      studentId: row.id,
+      studentId: row.studentId,
       termId: this.yearTermsSelect
     }]
 
@@ -371,6 +387,46 @@ export class AbsenceComponent implements OnInit {
     type == "Teacher" ? creator = { teacherId: id, gradeTeacherId: null } : creator = { teacherId: null, gradeTeacherId: id };
 
     let req = this.http.addAbsencesByTeacher(absences, creator)
+
+    try {
+      await firstValueFrom(req)
+        .then(data => {
+
+          console.log(data);
+
+        })
+    } catch (err) {
+      console.log(err)
+    }
+
+  }
+
+  async updateAbsences(row: any) {
+    let user = this.userService.getUser();
+    let id = '';
+    let type = '';
+
+    if (user) {
+      id = user.id;
+      type = user.type
+    }
+
+    if(this.absenceType){
+      row.absenceType = this.absenceType;
+    }
+
+    let absences: AddAbsencesByTeacher[] = [{
+      type: row.absenceType,
+      subjectId: row.subject,
+      studentId: row.studentId,
+      termId: this.yearTermsSelect
+    }]
+
+    let creator: any;
+
+    type == "Teacher" ? creator = { teacherId: id, gradeTeacherId: null } : creator = { teacherId: null, gradeTeacherId: id };
+
+    let req = this.http.updateAbsencesByTeacher(row.id, absences, creator)
 
     try {
       await firstValueFrom(req)
@@ -456,7 +512,6 @@ export class AbsenceComponent implements OnInit {
 
   }
 
-  students: any;
   async getStudents(grade: Grade['id'], division: GradeDivision['id']) {
     let user = this.userService.getUser();
     let id = '';
@@ -479,6 +534,7 @@ export class AbsenceComponent implements OnInit {
                 firstName: value.first_name,
                 lastName: value.last_name
               }
+
               this.students.push(studentDataArray);
             }
           })
@@ -492,7 +548,7 @@ export class AbsenceComponent implements OnInit {
   getStudentIdSwitch(row: any) {
     for (let i in this.students) {
       if (row.firstName === this.students[i].firstName && row.lastName === this.students[i].lastName) {
-        row.id = this.students[i].id;
+        row.studentId = this.students[i].id;
       }
     }
   }
@@ -582,8 +638,12 @@ export class AbsenceComponent implements OnInit {
     }
   }
 
-  removeRow(id: string) {
-    this.dataSource.data = this.dataSource.data.filter((u) => u.id !== '0');
+  removeRow(row: any) {
+    if(row.id !== '0'){
+      row.isEdit = false;
+    } else {
+      this.dataSource.data = this.dataSource.data.filter((u) => u.id !== '0');
+    }
   }
 
   absenceExcuseReasons: AbsenceExcuseReason[] = [
@@ -593,7 +653,12 @@ export class AbsenceComponent implements OnInit {
   ];
 
   addRowDone(row: any) {
-    this.addAbsences(row).then(() => (row.isEdit = false));
+    debugger;
+    if(row.id !== '0'){
+      this.updateAbsences(row).then(() => (row.isEdit = false));
+    } else {
+      this.addAbsences(row).then(() => (row.isEdit = false));
+    }
   }
 
   addRow() {
@@ -610,6 +675,15 @@ export class AbsenceComponent implements OnInit {
       isEdit: true
     }
     this.dataSource.data = [...this.dataSource.data, newRow]
+  }
+
+  showChecked(event: MatCheckboxChange): void {
+    if(event.checked === true){
+      this.absenceType = AbsenceTypes.Excused;
+    } else {
+      this.absenceType = AbsenceTypes.Unexcused;
+    }
+    console.log(event.checked);
   }
 
   selectedRowIndex = '-1';

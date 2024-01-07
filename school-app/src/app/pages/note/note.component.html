@@ -36,6 +36,9 @@
             <td mat-cell *matCellDef="let element">
                 <div [ngSwitch]="col.type" *ngIf="!element.isEdit">
                     <span *ngSwitchCase="'isEdit'">
+                        <button mat-raised-button color="primary" (click)="element.isEdit = !element.isEdit">
+                            Редактирай
+                        </button>
                     </span>
                     <span *ngSwitchDefault>
                         {{ element[col.key] }}
@@ -46,7 +49,7 @@
                         <button mat-raised-button color="primary" (click)="addRowDone(element)">
                             Готово
                         </button>
-                        <button mat-stroked-button color="primary" class="button-remove" (click)="removeRow(element.id)">
+                        <button mat-stroked-button color="primary" class="button-remove" (click)="removeRow(element)">
                             Отказ
                         </button>
                     </div>

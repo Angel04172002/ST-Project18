@@ -7,6 +7,8 @@ const remarkController = require('../controllers/remark.controller')
 
 router.post('/add', remarkController.addRemark)
 
+router.post('/update', remarkController.updateRemark)
+
 router.get('/get/student', remarkController.getRemarksByStudent)
 
 router.get('/get/parent', remarkController.getRemarksByParent)
