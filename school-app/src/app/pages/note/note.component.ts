@@ -306,7 +306,6 @@ export class NoteComponent implements OnInit{
       id = user.id;
       type = user.type
     }
-    debugger;
 
     if(type === 'Teacher'){
       let note: AddRemarkModel = {

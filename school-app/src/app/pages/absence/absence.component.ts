@@ -163,7 +163,7 @@ export class AbsenceComponent implements OnInit {
       type = user.type;
     }
 
-    let excuseReason: any;
+    let excuseReason = '';
     this.students = [];
     if (type === 'Teacher') {
 
@@ -174,8 +174,6 @@ export class AbsenceComponent implements OnInit {
             for (let i of this.excuseReasons) {
               if (i.absenceId === item.id) {
                 excuseReason = i.excuseReason;
-              } else {
-                excuseReason = '';
               }
             }
 
@@ -213,6 +211,8 @@ export class AbsenceComponent implements OnInit {
             }
 
             this.students.push(studentDataArray);
+
+            excuseReason = '';
 
           }
 
@@ -227,8 +227,6 @@ export class AbsenceComponent implements OnInit {
             for (let i of this.excuseReasons) {
               if (i.absenceId === item.id) {
                 excuseReason = i.excuseReason;
-              } else {
-                excuseReason = '';
               }
 
             }
@@ -268,6 +266,8 @@ export class AbsenceComponent implements OnInit {
 
             this.students.push(studentDataArray);
 
+            excuseReason = '';
+
           }
 
         })
@@ -280,8 +280,6 @@ export class AbsenceComponent implements OnInit {
             for (let i of this.excuseReasons) {
               if (i.absenceId === item.absence_id) {
                 excuseReason = i.excuseReason;
-              } else {
-                excuseReason = '';
               }
             }
 
@@ -309,6 +307,8 @@ export class AbsenceComponent implements OnInit {
             if (this.subjects.indexOf(item.absence_subject_id) === -1) {
               this.subjects.push(item.absence_subject_id);
             }
+
+            excuseReason = '';
 
           }
 
@@ -322,8 +322,6 @@ export class AbsenceComponent implements OnInit {
             for (let i of this.excuseReasons) {
               if (i.absenceId === item.absence_id) {
                 excuseReason = i.excuseReason;
-              } else {
-                excuseReason = '';
               }
             }
 
@@ -351,6 +349,8 @@ export class AbsenceComponent implements OnInit {
             if (this.subjects.indexOf(item.absence_subject_id) === -1) {
               this.subjects.push(item.absence_subject_id);
             }
+
+            excuseReason = '';
 
           }
 
@@ -451,6 +451,7 @@ export class AbsenceComponent implements OnInit {
       id = user.id;
       type = user.type;
     }
+    
 
     if (type === 'Parent') {
 
@@ -463,6 +464,8 @@ export class AbsenceComponent implements OnInit {
                 absenceId: item.id,
                 excuseReason: item.excuse_reason
               }
+
+              console.log(item)
 
               this.excuseReasons.push(excuseReasonsArray);
             }
@@ -653,7 +656,6 @@ export class AbsenceComponent implements OnInit {
   ];
 
   addRowDone(row: any) {
-    debugger;
     if(row.id !== '0'){
       this.updateAbsences(row).then(() => (row.isEdit = false));
     } else {
@@ -689,10 +691,10 @@ export class AbsenceComponent implements OnInit {
   selectedRowIndex = '-1';
   excused: boolean = false;
 
-  highlight(row: Absence) {
+  highlight(row: any) {
     this.selectedRowIndex = row.id;
 
-    if (row.absenceTypeId == AbsenceTypes.Excused) {
+    if (row.absenceType == AbsenceTypes.Excused) {
       this.excused = true;
       return true;
     } else {
@@ -706,7 +708,6 @@ export class AbsenceComponent implements OnInit {
   dialogRef: any;
 
   openDialog() {
-
     const dialogConfig = new MatDialogConfig();
     dialogConfig.autoFocus = true;
 
@@ -748,6 +749,7 @@ export class AbsenceComponent implements OnInit {
       type = user.type;
     }
 
+
     let excuseReasons: AddExcuseReasonsByParent[] = [{
       reason: this.excuseReason,
       parentId: id,
@@ -773,5 +775,6 @@ export class AbsenceComponent implements OnInit {
   onSend(form: NgForm) {
     this.addExcuseReasons();
     this.dialogRef.close();
+    location.reload();
   }
 }
