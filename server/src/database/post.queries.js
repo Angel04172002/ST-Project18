@@ -64,7 +64,7 @@ where post_id = $1 and (student_id = $2 or parent_id = $3 or teacher_id = $4 or 
 `;
 
 
-const getLikes =  `
+const getLikes = `
    select * from post_likes
    where post_id = $1
 `;
@@ -78,16 +78,63 @@ const deleteLikeQuery = `
 
 `;
 
+//post id, comment id, text, admin, teacher, gradeteacher, parent, student
+const addCommentToPostQuery = `  
+insert into posts_comments
+values ($1, $2);
+`;
+
+const addCommentQuery = `  
+   insert into comment
+   values ($1, $2, $3, $4,  $5, $6, $7);
+`;
+
+//post id
+const getCommentsForAPostQuery = `  
+   
+   select c.* from posts_comments pc
+   join comment c
+   on pc.comment_id = c.id
+   where pc.post_id = $1
+
+`;
+
+
+
+const deletePostFromPostLikes = ` 
+   delete from post_likes
+   where post_likes.post_id = $1
+`;
+
+const deletePost = ` 
+   delete from post
+   where post.id = $1
+`;
+
+
+const deleteComments = `   
+   delete from posts_comments
+   where posts_comments.post_id = $1
+`;
+
+
 module.exports = {
-    addNewPostQuery,
-    getAllPostsQuery,
-    getPostsFromStudent,
-    getPostsFromParent,
-    openPost,
-    likePost,
-    checkIfLiked,
-    getLikes,
-    deleteLikeQuery
+   addNewPostQuery,
+   getAllPostsQuery,
+   getPostsFromStudent,
+   getPostsFromParent,
+   openPost,
+   likePost,
+   checkIfLiked,
+   getLikes,
+   deleteLikeQuery,
+   addCommentQuery,
+   getAllPostsQuery,
+   addCommentToPostQuery,
+   getCommentsForAPostQuery,
+   deletePost,
+   deletePostFromPostLikes,
+   deleteComments
 };
 
 

@@ -25,9 +25,9 @@ export class JitsiComponent implements OnInit, AfterViewInit {
   ) { }
 
   ngOnInit(): void {
-    this.room = 'jitsiMeetingAPIExample';
+    this.room = 'Room 1';
     this.user = {
-      name: ' Coding Wall'
+      name: ''
     }
   }
 

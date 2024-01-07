@@ -18,6 +18,7 @@ import { LikePost } from 'src/app/@backend/models/like-post';
 import { HttpService } from 'src/app/@backend/services/http.service';
 import { UserService } from 'src/app/user/user.service';
 import { ForumComponent } from '../forum/forum.component';
+import { ProfileTypes } from 'src/app/@backend/enums/profile-types.enum';
 
 @Component({
   selector: 'app-current-post',
@@ -43,7 +44,7 @@ import { ForumComponent } from '../forum/forum.component';
   ],
   standalone: true
 })
-export class CurrentPostComponent implements OnInit, OnDestroy, AfterContentInit {
+export class CurrentPostComponent {
 
   @Input() title: any;
   @Input() subtitle: any;
@@ -57,19 +58,8 @@ export class CurrentPostComponent implements OnInit, OnDestroy, AfterContentInit
 
 
   }
-  ngAfterContentInit(): void {
-    this.loadLikes();
-  }
-
-  ngOnInit(): void {
-    // this.loadLikes();
-  }
-
-  ngOnDestroy() {
 
 
-
-  }
 
 
   getUserType() {
@@ -94,7 +84,7 @@ export class CurrentPostComponent implements OnInit, OnDestroy, AfterContentInit
 
 
     let element = e.currentTarget as HTMLElement;
-    let userType = this.getUserType();
+    let userType: any = this.getUserType();
     let userId = this.getUser().id;
 
     let adminId = null;
@@ -135,7 +125,8 @@ export class CurrentPostComponent implements OnInit, OnDestroy, AfterContentInit
       teacherId,
       gradeTeacherId,
       adminId,
-      likesCount: 0
+      likesCount: 0,
+      userType
     };
 
     let checkLikesRes = this.http.checkIfLiked(data);
@@ -170,18 +161,29 @@ export class CurrentPostComponent implements OnInit, OnDestroy, AfterContentInit
   }
 
 
-  async loadLikes() {
 
-    // const req = this.http.getLikes();
+  async deletePost(e: Event) {
 
-    // await firstValueFrom(req)
-    //   .then(data => {
+    e.preventDefault();
 
-    //     this.showLikes(data);
+    let element = e.target as HTMLElement;
+    let id = element.id;
 
-    //   })
+    let data = { postId: id }
+
+
+    let res = this.http.deletePost(data);
+
+    await firstValueFrom(res)
+      .then(() => {
+        location.reload();
+
+      })
 
   }
+
+
+
 
 
   // showLikes(data: any) {
@@ -215,7 +217,7 @@ export class CurrentPostComponent implements OnInit, OnDestroy, AfterContentInit
   //     console.log(childLikes);
 
   //     if(dbLikes == 1) {
-        
+
   //       childLikes.textContent = (Number(childLikes) + 1).toString();
 
   //     }

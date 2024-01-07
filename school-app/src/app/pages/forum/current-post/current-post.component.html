@@ -14,8 +14,8 @@
 
                 <div class="admin-buttons"
                     *ngIf="getUserType() == 'Admin' || getUserType() == 'Teacher' || getUserType() == 'Grade teacher'">
-                    <a href="#" class="editBtn">Редактирай</a>
-                    <a href="#" class="deleteBtn">Изтрий</a>
+                    <!-- <a href="#"  class="editBtn">Редактирай</a> -->
+                    <a href="#"  id = "{{id}}" (click) = "deletePost($event)" class="deleteBtn">Изтрий</a>
                 </div>
 
                 <a href="#" class="openBtn" id="{{id}}" routerLink="/forum/{{id}}" (click)="openPost($event)">Отвори</a>
@@ -37,7 +37,7 @@
         </div>
 
         <div class="media">
-            <!-- <img src="{{image}}" class="card-image" mat-card-sm-image> -->
+            <img src="{{image}}" class="card-image" mat-card-sm-image>
         </div>
     </mat-card-content>
 

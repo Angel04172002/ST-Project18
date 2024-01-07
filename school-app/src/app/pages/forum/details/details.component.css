@@ -1,8 +1,5 @@
-
-
-
 .post-card {
-    width: 142em;
+    width: 60vw;
     height: 65em;
     margin: 5em auto;
 }
@@ -13,21 +10,27 @@
 }
 
 .card-header {
-    padding: 3.5em 90em 3.5em 0;
+    padding: 5em 90em 5em 0;
     text-align: left;
-    margin-right: auto;
-
+    /* margin: 0 auto; */
 }
 
 .card-header-title {
+    display: block;
     text-align: left;
     padding-bottom: 0.3em;
-    font-size: 10em;
+    font-size: 30em;
+    /* margin: 0 auto; */
+    margin-left: 10em;
 }
+
+
+
 
 .post-subtitle {
     font-size: 1.4em;
     text-align: center;
+    margin-left: 14em;
 }
 
 .card-content {
@@ -52,7 +55,7 @@
 .description {
     margin-top: 10em;
     text-align: justify;
-    font-size: 18px;
+    font-size: 19px;
 }
 
 
@@ -73,7 +76,7 @@
     justify-content: left;
     gap: 2em;
     height: 74%;
-   
+
 }
 
 
@@ -113,7 +116,7 @@
 .card-header-title {
     margin-top: 0;
     padding-top: 0;
-    font-size: 30px;    
+    font-size: 30px;
     font-weight: bold;
     text-align: center;
 }
@@ -128,3 +131,74 @@
 
 
 
+
+.add-comment {
+    width: 50%;
+    padding: 20px 40px 20px 40px;
+    margin: 0 auto;
+    /* margin-bottom: 5em; */
+    /* background-color: aqua; */
+}
+
+.add-comment-form {
+    display: flex;
+    flex-direction: column;
+}
+
+.add-comment-button {
+    width: fit-content;
+    left: 85%;
+}
+
+.formActions {
+    float: right;
+    right: 10px;
+    bottom: 10px;
+}
+
+.event-content h3 {
+    font-weight: 500;
+    color: black;
+}
+
+.event-content p {
+    color: black;
+}
+
+
+
+.add-comment {
+    width: 50em;
+    height: 40em;
+    display: inline-block;
+}
+
+.comment-section {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5em;
+    margin-right: auto;
+    width: 30em;
+    height: 40em;
+    margin-top: 11em;
+    /* font-size: 50px; */
+    /* border: 2em solid #CCC; */
+}
+
+
+
+.comment {
+    margin-top: 1em;
+    border: 2px solid grey;
+    display: inline-block;
+    /* overflow: hidden; */
+}
+
+.commentBtn {
+    width: 10em;
+    margin-left: 2em;
+}
+
+.comments {
+    margin-top: 40em;
+}

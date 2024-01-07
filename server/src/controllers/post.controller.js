@@ -200,6 +200,79 @@ openPost = async (request, response) => {
 }
 
 
+addComment = async (request, response) => {
+    try {
+
+        console.log(request.body.data);
+
+        const {
+            postId,
+            text,
+            teacher_creator_id,
+            grade_teacher_creator_id,
+            admin_creator_id,
+            student_creator_id,
+            parent_id
+
+        } = request.body.data;
+
+        const commentId = utils.generateRandomString(40)
+
+        if (postId == undefined) return response.status(500).send("post id not provided!")
+        if (text == undefined) return response.status(500).send("text not provided!")
+
+
+        console.log(postId);
+
+        await pool.query(postQueries.addCommentQuery,
+            [commentId, text, admin_creator_id, teacher_creator_id, grade_teacher_creator_id, parent_id, student_creator_id]);
+
+
+        await pool.query(postQueries.addCommentToPostQuery,
+            [postId, commentId]);
+
+
+        return response.status(200).json('Comment added successfully!')
+    }
+    catch (err) {
+        console.error(err.message)
+        response.status(500).send(err.message)
+    }
+}
+
+
+getCommentsForAPost = async (request, response) => {
+
+    try {
+        const id = request.body.data.postId;
+
+        const { rows } = await pool.query(postQueries.getCommentsForAPostQuery, [id]);
+        return response.status(200).json(rows);
+
+    } catch (err) {
+        console.error(err.message)
+    }
+
+};
+
+
+deletePost = async (request, response) => {
+
+    try {
+        const id = request.body.data.postId;
+
+        await pool.query(postQueries.deletePostFromPostLikes, [id]);
+        await pool.query(postQueries.deleteComments, [id]);
+        await pool.query(postQueries.deletePost, [id]);
+
+
+
+        return response.status(200).json("");
+
+    } catch (err) {
+        console.error(err.message)
+    }
+}
 
 module.exports = {
     addNewPost,
@@ -207,5 +280,8 @@ module.exports = {
     openPost,
     likePost,
     checkIfLiked,
-    getLikes
+    getLikes,
+    addComment,
+    getCommentsForAPost,
+    deletePost
 };

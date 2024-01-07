@@ -28,6 +28,8 @@ import { AdminModule } from './admin/admin.module';
 import { MatDialogModule } from "@angular/material/dialog";
 import { FormsModule } from '@angular/forms';
 import { DetailsComponent } from './pages/forum/details/details.component';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatInputModule } from '@angular/material/input';
 
 
 
@@ -55,6 +57,8 @@ import { DetailsComponent } from './pages/forum/details/details.component';
     FormsModule,
     CalendarComponent,
     GradesComponent,
+    MatFormFieldModule,
+    MatInputModule
   ],
   providers: [],
   bootstrap: [AppComponent]

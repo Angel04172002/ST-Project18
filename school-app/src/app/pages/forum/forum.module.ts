@@ -30,7 +30,8 @@ import { Router, RouterModule } from '@angular/router';
     MatCardTitle,
     MatCardActions,
     RouterModule,
-    Router
+    Router,
+    CurrentCommentComponent
 
   ]
 })

@@ -5,6 +5,7 @@ export interface Profile {
     firstName: string,
     lastName: string,
     email: string,
+    token: string,
     type: ProfileTypes
 }
 

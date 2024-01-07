@@ -17,6 +17,7 @@ import { HttpService } from 'src/app/@backend/services/http.service';
 import { Post } from 'src/app/types/Post';
 import { LikePost } from 'src/app/@backend/models/like-post';
 import { DetailsComponent } from '../details/details.component';
+import { CurrentCommentComponent } from '../current-comment/current-comment.component';
 
 @Component({
   selector: 'app-forum',
@@ -38,7 +39,9 @@ import { DetailsComponent } from '../details/details.component';
     MatIconModule,
     MatCardModule,
     CurrentPostComponent,
-    DetailsComponent
+    DetailsComponent,
+    ForumComponent,
+    CurrentCommentComponent
   ],
   standalone: true
 })
@@ -124,7 +127,10 @@ export class ForumComponent implements OnInit {
 
       let likesData = await this.teacherService.getLikes(dataToSend);
 
-      let likes = likesData[0].likes;
+      console.log(likesData);
+
+
+      let likes = likesData[0]?.likes;
       let val = 0;
       // let currentLikes = 
 
@@ -148,8 +154,6 @@ export class ForumComponent implements OnInit {
 
 
   }
-
-
 
   getUserType() {
     return this.userService.user?.type;

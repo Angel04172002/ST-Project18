@@ -422,4 +422,21 @@ export class HttpService {
       data
     });
   }
+
+
+
+
+  public addComment(data: any): Observable<any> {
+    return this.post("/posts/comment/add", {
+      data: data
+    })
+  }
+
+  public getComments(data: any): Observable<any> {
+    return this.post("/posts/comment/get", { data });
+  }
+
+  public deletePost(data: any): Observable<any> {
+    return this.post("/posts/post/delete", { data });
+  }
 }

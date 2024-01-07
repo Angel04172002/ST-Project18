@@ -1,0 +1,23 @@
+.comment {
+    padding: 5em;
+    margin: 0 auto;
+    border: 0.4em solid #CCC;
+    border-radius: 0.5em;
+    width: 75em;
+    margin-top: 12em;
+}
+
+.text {
+    margin-top: 0;
+    font-size: 25px;
+    line-height: 1.5;
+    text-align: center;
+}
+
+.author {
+    font-size: 18px;
+    position: relative;
+    top: 3em;
+    left: 2em;
+    text-align: right;
+}

@@ -20,7 +20,7 @@
 
         </div>
 
-      
+
 
         <div class="media">
             <img src="{{imageUrl}}" class="card-image" mat-card-sm-image>
@@ -30,9 +30,38 @@
     </mat-card-content>
 
 
-      
+
     <div class="comment-section">
-        <a href="#" class="commentBtn">Добави коментар</a>
+
+
+
+        <div class="add-comment">
+
+            <form class="comment-section">
+
+                <mat-form-field>
+                    <mat-label>Коментар</mat-label>
+                    <textarea matInput #desc name="desc" ngModel required></textarea>
+
+                </mat-form-field>
+
+                <a (click)="addComment($event)" href="#" class="commentBtn">Добави коментар</a>
+
+            </form>
+
+        </div>
+
     </div>
 
 </mat-card>
+
+
+<div class="comments">
+
+    <app-current-comment *ngFor="let comment of commentData" [text]="comment.text"></app-current-comment>
+    <!-- <app-current-comment></app-current-comment>
+    <app-current-comment></app-current-comment>
+    <app-current-comment></app-current-comment> -->
+
+
+</div>

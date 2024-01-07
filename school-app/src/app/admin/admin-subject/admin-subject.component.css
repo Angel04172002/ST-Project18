@@ -103,3 +103,13 @@ input, select {
     margin-bottom: 16px;
     box-sizing: border-box;
 }
+
+
+.admin-card {
+    margin: 5em auto;
+}
+
+h2 {
+    margin-left: 42.2em;
+    margin-top: 2em;
+}
