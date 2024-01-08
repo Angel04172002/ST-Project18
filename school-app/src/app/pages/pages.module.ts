@@ -5,6 +5,7 @@ import { CalendarComponent } from './calendar/calendar.component';
 import { GradesComponent } from './grades/grades.component';
 import { HomeComponent } from './home/home.component';
 import { NoteComponent } from './note/note.component';
+import { ProfileComponent } from './profile/profile.component';
 
 
 
@@ -14,7 +15,8 @@ import { NoteComponent } from './note/note.component';
     CalendarComponent,
     GradesComponent,
     HomeComponent,
-    NoteComponent
+    NoteComponent,
+    ProfileComponent
   ],
   imports: [
     CommonModule

@@ -91,6 +91,15 @@ export class HttpService {
     });
   }
 
+
+  public updateUser(id: string, email: string, password: string) {
+    return this.post("/profile/update", {
+      id,
+      email,
+      password
+    })
+  }
+
   public login(email: string, password: string): Observable<any> {
     return this.post("/profile/auth", {
       email: email,
@@ -343,8 +352,8 @@ export class HttpService {
     return this.post("/remark/update/", {
       id: id,
       note: remark.note,
-      teacher_creator_id: remark.teacher_creator_id, 
-      grade_teacher_creator_id: remark.grade_teacher_creator_id, 
+      teacher_creator_id: remark.teacher_creator_id,
+      grade_teacher_creator_id: remark.grade_teacher_creator_id,
       note_student_id: remark.note_student_id,
       note_subject_id: remark.note_subject_id,
       note_term_id: remark.note_term_id,

@@ -3,7 +3,7 @@ import { RouterModule, Routes } from '@angular/router';
 import { HomeComponent } from './pages/home/home.component';
 import { CalendarComponent } from './pages/calendar/calendar.component';
 import { GradesComponent } from './pages/grades/grades.component';
-import { StudentComponent } from './user/student/student.component';
+import { StudentComponent } from './user/details/student.component';
 import { LoginComponent } from './user/login/login.component';
 import { RegisterComponent } from './user/register/register.component';
 import { NoteComponent } from './pages/note/note.component';
@@ -13,6 +13,7 @@ import { GroupChatComponent } from './pages/chat/group-chat/group-chat.component
 import { AbsenceComponent } from './pages/absence/absence.component';
 import { ForumComponent } from './pages/forum/forum/forum.component';
 import { DetailsComponent } from './pages/forum/details/details.component';
+import { ProfileComponent } from './pages/profile/profile.component';
 
 
 const routes: Routes = [
@@ -50,10 +51,6 @@ const routes: Routes = [
     component: GroupChatComponent
   },
   {
-    path: 'student-profile',
-    component: StudentComponent
-  },
-  {
     path: 'admin-students',
     component: AdminComponent
   },
@@ -64,6 +61,10 @@ const routes: Routes = [
   {
     path: 'forum/:id',
     component: DetailsComponent
+  },
+  {
+    path: 'details',
+    component: ProfileComponent
   }
 ];
 

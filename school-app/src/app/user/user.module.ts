@@ -8,7 +8,7 @@ import { RegisterComponent } from './register/register.component';
 import { ParentComponent } from './parent/parent.component';
 import { TeacherComponent } from './teacher/teacher.component';
 import { AppRoutingModule } from '../app-routing.module';
-import { StudentComponent } from './student/student.component';
+import { StudentComponent } from './details/student.component';
 
 
 

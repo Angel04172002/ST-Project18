@@ -22,9 +22,10 @@
                     <a routerLink="/chat">Чат</a>
                     <a routerLink="/group-chat">Групов чат</a>
                     <a routerLink="/forum">Форум</a>
+                    <a routerLink="/details">Профил</a>
                 </div>
 
-                <a routerLink="/student-profile" *ngIf="userType() === 'Student'">Профил на ученик</a>
+                <!-- <a routerLink="/student-profile" *ngIf="userType() === 'Student'">Профил на ученик</a> -->
 
                 <div *ngIf = "userType() === 'Admin'">
                     <a routerLink="/admin-subjects">Предмети</a>
@@ -35,6 +36,7 @@
                     <a routerLink="/chat">Видеочат</a>
                     <a routerLink="/group-chat">Групов чат</a>
                     <a routerLink="/forum">Форум</a>
+                    <a routerLink="/details">Профил</a>
 
                 </div>
 

@@ -1,0 +1,25 @@
+<div class="login-container">
+    <div class="login-content">
+        <mat-toolbar class="login-toolbar">Детайли</mat-toolbar>
+        <mat-card>
+            <form>
+                <mat-form-field>
+                    <mat-icon matPrefix>person_outline</mat-icon>
+                    <input autofocus type="text" matInput placeholder="Имейл" value = "{{currentEmail}}" name="email" #email />
+                </mat-form-field>
+
+                <mat-form-field>
+                    <mat-icon matPrefix>lock_outline</mat-icon>
+                    <input type="password" autocomplete="false" matInput placeholder="Парола" name="password"
+                        #password />
+                </mat-form-field>
+
+                <button style="width: 50%" type="submit" mat-raised-button
+                    (click)="update($event, email.value, password.value)">
+                    Промени
+                </button>
+            </form>
+        </mat-card>
+        <!-- <button (click)="test()"> test req</button> -->
+    </div>
+</div>

@@ -8,6 +8,7 @@ const profileController = require('../controllers/profile.controller');
 router.post('/create', profileController.createProfile)
 
 router.post('/auth', profileController.auth)
+router.post('/update', profileController.updateUser)
 
 router.use(auth)
 

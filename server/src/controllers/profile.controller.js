@@ -24,7 +24,7 @@ createProfile = async (request, response) => {
 
         const hashedPassword = await bcrypt.hash(password, salt);
 
-    
+
         let { rows } = await pool.query("SELECT * FROM PROFILE WHERE email = $1", [email])
 
         if (rows.length > 0) {
@@ -34,8 +34,8 @@ createProfile = async (request, response) => {
         // ujas ;(
         const id = utils.generateRandomString(40)
 
-        
-        if(type == 'Parent' || type == 'Student') {
+
+        if (type == 'Parent' || type == 'Student') {
             creatorId = id;
         }
 
@@ -83,11 +83,11 @@ createProfile = async (request, response) => {
             // )
         }
 
-    
+
 
         const token = jwt.sign(
             { user_id: id, email: email },
-                process.env.TOKENKEY,
+            process.env.TOKENKEY,
             {
                 expiresIn: "2h",
             }
@@ -143,7 +143,7 @@ auth = async (request, response) => {
 
                 const token = jwt.sign(
                     { user_id: result.id, email: result.email },
-                        process.env.TOKENKEY,
+                    process.env.TOKENKEY,
                     {
                         expiresIn: "2h",
                     }
@@ -188,6 +188,38 @@ getProfileById = async (request, response) => {
 }
 
 
-module.exports = { createProfile, auth, getProfileById }
+
+updateUser = async (request, response) => {
+
+    console.log(request.body);
+    const salt = await bcrypt.genSalt(10);
+
+
+    try {
+        const id = request?.body.id;
+        const email = request?.body.email;
+        const password = request?.body.password;
+
+        const hashedPassword = await bcrypt.hash(password, salt);
+
+        if (!id) {
+            return response.status(500).json({
+                message: "profile id should be provided in request body",
+            });
+        }
+
+        await pool.query("UPDATE PROFILE SET email = $2, password = $3 WHERE id = $1", [id, email, hashedPassword])
+      
+        return response.status(200).json("Successfully updated email or password");
+
+    }
+    catch (err) {
+        console.error(err.message)
+        response.status(500).send(err.message)
+    }
+}
+
+
+module.exports = { createProfile, auth, getProfileById, updateUser }
 
 
