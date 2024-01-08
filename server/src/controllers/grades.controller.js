@@ -140,6 +140,7 @@ addStudentsToGrade = async (request, response) => {
             let parent = rows[0];
 
     
+            console.log(student.gradeDivision);
 
             await pool.query(
                 'INSERT INTO STUDENT (id, grade_id, grade_division_id, parent_id) VALUES ($1, $2, $3, $4) ON CONFLICT (id) DO UPDATE SET id = $1, grade_id = $2, grade_division_id = $3, parent_id = $4 WHERE student.id = $1',

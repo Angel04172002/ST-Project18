@@ -101,8 +101,6 @@ export class HttpService {
   // Grades methods
 
   public addStudentsToGrade(students: AddStudentToGrade[]): Observable<any> {
-    console.log(this);
-    console.log(students);
 
     if (!students || students.length < 1) {
       console.error("Students not provided");
@@ -128,7 +126,7 @@ export class HttpService {
   }
 
   public getAllSubjects(): Observable<any> {
-    return this.post("/grades/subjects/all", {});
+    return this.get("/grades/subjects/all", {});
   }
 
   // Marks methods
@@ -156,6 +154,9 @@ export class HttpService {
   }
 
   public getMarksByStudent(studentId: string): Observable<any> {
+
+    console.log(studentId);
+
     return this.get("/marks/student", {
       studentId: studentId,
     });
