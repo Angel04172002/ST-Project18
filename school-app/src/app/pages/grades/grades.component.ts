@@ -63,15 +63,26 @@ export class GradesComponent implements OnInit {
 
     let user = this.userService.getUser();
     let id = '';
+    let req: any = '';
 
     if (user) {
       id = user.id;
     }
 
+    if (user.type == "Student") {
+      req = this.http.getMarksByStudent(id);
+    } else if (user.type == "Parent") {
+      console.log('inside');
+      req = this.http.getMarksByParent(id);
+    }
+
+    console.log(user.type);
+
+
     this.grades = [];
 
-    await firstValueFrom(this.http.getMarksByStudent(id))
-      .then(data => {
+    await firstValueFrom(req)
+      .then((data : any) => {
 
         console.log(id);
 
@@ -86,7 +97,7 @@ export class GradesComponent implements OnInit {
             'year-mark': item.term_final,
             'subjectName': item.subject_name,
             'teacherName': item.teacher_first_name !== '' ? item['teacher_first_name'] + ' ' + item['teacher_last_name']
-                                                          : item['grade_teacher_first_name'] + ' ' + item['grade_teacher_last_name']
+              : item['grade_teacher_first_name'] + ' ' + item['grade_teacher_last_name']
           }
 
           this.grades.push(gradesData);
@@ -101,7 +112,7 @@ export class GradesComponent implements OnInit {
 
   }
 
-  showDialog(e : Event) {
+  showDialog(e: Event) {
 
     console.log(e.target);
 
@@ -112,7 +123,7 @@ export class GradesComponent implements OnInit {
   }
 
 
-  hideDialog(e : Event) {
+  hideDialog(e: Event) {
 
     let dialog = (e.target as HTMLElement)?.nextElementSibling;
 

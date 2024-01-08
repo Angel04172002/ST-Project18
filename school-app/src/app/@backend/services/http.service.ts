@@ -174,6 +174,15 @@ export class HttpService {
     });
   }
 
+  public getMarksByParent(parentId: string): Observable<any> {
+
+    console.log(parentId);
+
+    return this.get("/marks/parent", {
+      parentId: parentId,
+    });
+  }
+
   public getMarksByClassParent(parentId: string): Observable<any> {
     return this.get("/marks/parent/", {
       parentId: parentId,

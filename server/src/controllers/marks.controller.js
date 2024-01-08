@@ -263,7 +263,8 @@ getMarksByStudent = async (request, response) => {
 
 getMarksByParent = async (request, response) => {
     try {
-        const parentId = request.body?.parentId;
+        const parentId = request.query?.parentId;
+        console.log('parent' + parentId);
         if (!parentId) {
             return response.status(500).json({
                 message: "parent id should be provided in request body",
