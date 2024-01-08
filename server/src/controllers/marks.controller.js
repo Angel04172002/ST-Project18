@@ -198,7 +198,7 @@ addMarksByTeacher = async (request, response) => {
 
 getMarksByTeacher = async (request, response) => {
     try {
-        const teacherId = request.body?.teacherId;
+        const teacherId = request.query?.teacherId;
 
         if (!teacherId) {
             return response.status(500).json({
@@ -220,7 +220,7 @@ getMarksByTeacher = async (request, response) => {
 
 getMarksByClassTeacher = async (request, response) => {
     try {
-        const teacherId = request.body?.teacherId;
+        const teacherId = request.query?.teacherId;
 
         if (!teacherId) {
             return response.status(500).json({

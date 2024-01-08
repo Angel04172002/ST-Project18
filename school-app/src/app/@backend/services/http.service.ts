@@ -142,6 +142,9 @@ export class HttpService {
   }
 
   public getMarksByTeacher(teacherId: string): Observable<any> {
+
+    console.log(teacherId);
+
     return this.get("/marks/teacher", {
       teacherId: teacherId,
     });
