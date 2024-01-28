@@ -12,7 +12,7 @@ import { Subject } from '../types/Subject';
 import { AddStudentToGrade } from '../@backend/models/add-student-to-grade.model';
 
 
-const BASE_URL = 'http://localhost:3000';
+const BASE_URL = 'http://localhost:3001';
 
 @Injectable({
   providedIn: 'root'

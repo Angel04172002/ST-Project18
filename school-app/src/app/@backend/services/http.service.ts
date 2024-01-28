@@ -17,7 +17,7 @@ import { LikePost } from "../models/like-post";
   providedIn: "root",
 })
 export class HttpService {
-  private readonly url = "http://localhost:3000";
+  private readonly url = "http://localhost:3001";
 
   public jwtToken: string = "";
 
@@ -242,13 +242,11 @@ export class HttpService {
     });
   }
 
-  public addExcuseReasonsByParent(
-    excuseReasons: AddExcuseReasonsByParent[]
-  ): Observable<any> {
-    return this.post("/absences/add/excuse-reasons", {
-      excuseReasons: excuseReasons,
-    });
+  //here
+  public addExcuseReasonsByParent(formData: FormData): Observable<any> {
+    return this.post("/absences/add/excuse-reasons", formData);
   }
+  
 
   public getAbsencesByStudent(studentId: string): Observable<any> {
     return this.get("/absences/get-absences/student", {

@@ -6,7 +6,7 @@ import { HttpClient } from '@angular/common/http';
 })
 export class ChatService {
   constructor(private http: HttpClient) { }
-  private url = 'http://localhost:3000/chat/messages';
+  private url = 'http://localhost:3001/chat/messages';
 
   sendMessage(message: any) {
     return this.http.post(this.url, message);

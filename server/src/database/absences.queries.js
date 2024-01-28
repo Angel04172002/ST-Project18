@@ -247,7 +247,7 @@ order by s.grade_id, s.grade_division_id, a.absence_term_id
 
 const getAbsencesFromGradeTeacher = ` 
 
-select a.id, a.absence_type_id, a.absence_subject_id, a.absence_term_id, a.absence_student_id,
+select ar.image_url, a.id, a.absence_type_id, a.absence_subject_id, a.absence_term_id, a.absence_student_id,
 p.first_name as student_first_name, p.last_name as student_last_name, p.email as student_email, s.grade_id, s.grade_division_id,
 case 
 	when a.teacher_creator_id is null
@@ -263,6 +263,8 @@ inner join grade_teachers_grades_divisions_subjects gtgds
 on s.grade_id = gtgds.grade_teacher_grade_id and s.grade_division_id = gtgds.grade_teacher_grade_division_id
 left join profile pro
 on a.teacher_creator_id = pro.id or a.grade_teacher_creator_id = pro.id
+left join absence_excuse_reason AS ar
+on (a.id=ar.id)
 where gtgds.grade_teacher_id  = $1
 order by s.grade_id, s.grade_division_id, a.absence_term_id
 

@@ -1,10 +1,16 @@
-<div class="teacherview" *ngIf="userType() === 'Teacher' || userType() === 'Grade teacher'">
+<div
+    class="teacherview"
+    *ngIf="userType() === 'Teacher' || userType() === 'Grade teacher'"
+>
     <h1 class="title">Отсъствия</h1>
 
     <div class="gradesSelect">
         <mat-form-field>
             <mat-label>Избери клас:</mat-label>
-            <mat-select [(ngModel)]="gradeSelect" (selectionChange)="applyFilter()">
+            <mat-select
+                [(ngModel)]="gradeSelect"
+                (selectionChange)="applyFilter()"
+            >
                 <mat-option *ngFor="let el of grades" [value]="el">
                     {{ el }}
                 </mat-option>
@@ -13,7 +19,10 @@
 
         <mat-form-field>
             <mat-label>Избери паралелка:</mat-label>
-            <mat-select [(ngModel)]="gradeDivisionSelect" (selectionChange)="applyFilter()">
+            <mat-select
+                [(ngModel)]="gradeDivisionSelect"
+                (selectionChange)="applyFilter()"
+            >
                 <mat-option *ngFor="let el of gradeDivisions" [value]="el">
                     {{ el }}
                 </mat-option>
@@ -22,7 +31,10 @@
 
         <mat-form-field>
             <mat-label>Избери срок:</mat-label>
-            <mat-select [(ngModel)]="yearTermsSelect" (selectionChange)="applyFilter()">
+            <mat-select
+                [(ngModel)]="yearTermsSelect"
+                (selectionChange)="applyFilter()"
+            >
                 <mat-option *ngFor="let el of yearTerms" [value]="el">
                     {{ el }}
                 </mat-option>
@@ -31,112 +43,194 @@
     </div>
 
     <table mat-table [dataSource]="dataSource" class="mat-elevation-z8">
-
-        <ng-container [matColumnDef]="col.key" *ngFor="let col of columnsSchema">
-            <th mat-header-cell *matHeaderCellDef> {{col.label}} </th>
+        <ng-container
+            [matColumnDef]="col.key"
+            *ngFor="let col of columnsSchema"
+        >
+            <th mat-header-cell *matHeaderCellDef>{{ col.label }}</th>
             <td mat-cell *matCellDef="let element">
                 <div [ngSwitch]="col.type" *ngIf="!element.isEdit">
                     <div *ngSwitchCase="'isEdit'">
-                        <button mat-raised-button color="primary" (click)="element.isEdit = !element.isEdit">
+                        <button
+                            mat-raised-button
+                            color="primary"
+                            (click)="element.isEdit = !element.isEdit"
+                        >
                             Редактирай
                         </button>
                     </div>
                     <span *ngSwitchCase="'checkbox'">
-                        <mat-checkbox color="primary" #excusedCheckbox
-                            [checked]="element[col.key] === 'Извинено' || element[col.key] === true"
-                            (click)="$event.preventDefault()">
+                        <mat-checkbox
+                            color="primary"
+                            #excusedCheckbox
+                            [checked]="
+                                element[col.key] === 'Извинено' ||
+                                element[col.key] === true
+                            "
+                            (click)="$event.preventDefault()"
+                        >
                         </mat-checkbox>
                     </span>
+
+                    <span *ngSwitchCase="'selectAbsenceReason'">
+                        <ng-container
+                        *ngIf="element[col.key] &&
+                            element[col.key].startsWith('http');
+                            else textContent
+                        "
+                    >
+                            <a target="_blank" [href]="element[col.key]"
+                                >File</a
+                            >
+                    </ng-container>
+                    <ng-template #textContent>
+                            {{ element[col.key] }}
+                    </ng-template>
+                    </span>
+
                     <span *ngSwitchDefault>
                         {{ element[col.key] }}
                     </span>
                 </div>
-                <div class="edit-view" [ngSwitch]="col.type" *ngIf="element.isEdit">
+                <div
+                    class="edit-view"
+                    [ngSwitch]="col.type"
+                    *ngIf="element.isEdit"
+                >
                     <div class="buttons-edit" *ngSwitchCase="'isEdit'">
-                        <button mat-raised-button color="primary" (click)="addRowDone(element)">
+                        <button
+                            mat-raised-button
+                            color="primary"
+                            (click)="addRowDone(element)"
+                        >
                             Готово
                         </button>
-                        <button mat-stroked-button color="primary" class="button-remove"
-                            (click)="removeRow(element)">
+                        <button
+                            mat-stroked-button
+                            color="primary"
+                            class="button-remove"
+                            (click)="removeRow(element)"
+                        >
                             Отказ
                         </button>
                     </div>
                     <mat-form-field *ngSwitchCase="'selectFirstName'">
-                        <mat-select #editSelect [(ngModel)]="element[col.key]"
-                            (selectionChange)="getStudentIdSwitch(element)">
-                            <mat-option *ngFor="let el of students" [value]="el.firstName">
+                        <mat-select
+                            #editSelect
+                            [(ngModel)]="element[col.key]"
+                            (selectionChange)="getStudentIdSwitch(element)"
+                        >
+                            <mat-option
+                                *ngFor="let el of students"
+                                [value]="el.firstName"
+                            >
                                 {{ el.firstName }}
                             </mat-option>
                         </mat-select>
                     </mat-form-field>
                     <mat-form-field *ngSwitchCase="'selectLastName'">
-                        <mat-select #editSelect [(ngModel)]="element[col.key]"
-                            (selectionChange)="getStudentIdSwitch(element)">
-                            <mat-option *ngFor="let el of students" [value]="el.lastName">
+                        <mat-select
+                            #editSelect
+                            [(ngModel)]="element[col.key]"
+                            (selectionChange)="getStudentIdSwitch(element)"
+                        >
+                            <mat-option
+                                *ngFor="let el of students"
+                                [value]="el.lastName"
+                            >
                                 {{ el.lastName }}
                             </mat-option>
                         </mat-select>
                     </mat-form-field>
                     <span *ngSwitchCase="'checkbox'">
-                        <mat-checkbox color="primary" #editCheckbox (change)="showChecked($event)"
-                            [checked]="element[col.key] === 'Извинено' || element[col.key] === true">
+                        <mat-checkbox
+                            color="primary"
+                            #editCheckbox
+                            (change)="showChecked($event)"
+                            [checked]="
+                                element[col.key] === 'Извинено' ||
+                                element[col.key] === true
+                            "
+                        >
                         </mat-checkbox>
                     </span>
                     <mat-form-field *ngSwitchCase="'selectAbsenceReason'">
                         <mat-select #editSelect [(ngModel)]="element[col.key]">
-                            <mat-option *ngFor="let el of absenceExcuseReasons" [value]="el">
+                            <mat-option
+                                *ngFor="let el of absenceExcuseReasons"
+                                [value]="el"
+                            >
                                 {{ el }}
                             </mat-option>
                         </mat-select>
                     </mat-form-field>
                     <mat-form-field *ngSwitchCase="'selectSubject'">
                         <mat-select #editSelect [(ngModel)]="element[col.key]">
-                            <mat-option *ngFor="let el of subjects" [value]="el">
+                            <mat-option
+                                *ngFor="let el of subjects"
+                                [value]="el"
+                            >
                                 {{ el }}
                             </mat-option>
                         </mat-select>
                     </mat-form-field>
                     <mat-form-field *ngSwitchCase="'selectGrade'">
-                        <mat-select #editSelect [(ngModel)]="element[col.key]"
-                            (selectionChange)="getStudentsSwitch(element)">
+                        <mat-select
+                            #editSelect
+                            [(ngModel)]="element[col.key]"
+                            (selectionChange)="getStudentsSwitch(element)"
+                        >
                             <mat-option *ngFor="let el of grades" [value]="el">
                                 {{ el }}
                             </mat-option>
                         </mat-select>
                     </mat-form-field>
                     <mat-form-field *ngSwitchCase="'selectGradeDivision'">
-                        <mat-select #editSelect [(ngModel)]="element[col.key]"
-                            (selectionChange)="getStudentsSwitch(element)">
-                            <mat-option *ngFor="let el of gradeDivisions" [value]="el">
+                        <mat-select
+                            #editSelect
+                            [(ngModel)]="element[col.key]"
+                            (selectionChange)="getStudentsSwitch(element)"
+                        >
+                            <mat-option
+                                *ngFor="let el of gradeDivisions"
+                                [value]="el"
+                            >
                                 {{ el }}
                             </mat-option>
                         </mat-select>
                     </mat-form-field>
-
                 </div>
             </td>
         </ng-container>
 
         <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-        <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+        <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
     </table>
 
-    <button class="button-add-row" mat-raised-button color="primary" (click)="addRow()">
+    <button
+        class="button-add-row"
+        mat-raised-button
+        color="primary"
+        (click)="addRow()"
+    >
         Добави ново отсъствие
     </button>
 </div>
 
-
-
-
-<div class="studentview" *ngIf="userType() === 'Student' || userType() === 'Parent'">
+<div
+    class="studentview"
+    *ngIf="userType() === 'Student' || userType() === 'Parent'"
+>
     <h1 class="title">Моите отсъствия</h1>
 
     <div class="form-options">
         <div class="subject">
             <mat-form-field>
                 <mat-label>Избери предмет:</mat-label>
-                <mat-select [(ngModel)]="subjectSelect" (selectionChange)="applyFilter()">
+                <mat-select
+                    [(ngModel)]="subjectSelect"
+                    (selectionChange)="applyFilter()"
+                >
                     <mat-option *ngFor="let el of subjects" [value]="el">
                         {{ el }}
                     </mat-option>
@@ -147,7 +241,10 @@
         <div class="term">
             <mat-form-field>
                 <mat-label>Избери срок:</mat-label>
-                <mat-select [(ngModel)]="yearTermsSelect" (selectionChange)="applyFilter()">
+                <mat-select
+                    [(ngModel)]="yearTermsSelect"
+                    (selectionChange)="applyFilter()"
+                >
                     <mat-option *ngFor="let el of yearTerms" [value]="el">
                         {{ el }}
                     </mat-option>
@@ -157,62 +254,117 @@
     </div>
 
     <table mat-table [dataSource]="dataSource" class="mat-elevation-z8">
-        <ng-container [matColumnDef]="col.key" *ngFor="let col of columnsSchema2">
-            <th mat-header-cell *matHeaderCellDef> {{col.label}} </th>
+        <ng-container
+            [matColumnDef]="col.key"
+            *ngFor="let col of columnsSchema2"
+        >
+            <th mat-header-cell *matHeaderCellDef>{{ col.label }}</th>
             <td mat-cell *matCellDef="let element">
                 <div [ngSwitch]="col.type">
                     <span *ngSwitchCase="'checkbox'">
-                        <mat-checkbox color="primary" #excusedCheckbox
-                            [checked]="element[col.key] === 'Извинено' || element[col.key] === true"
-                            (click)="$event.preventDefault()">
+                        <mat-checkbox
+                            color="primary"
+                            #excusedCheckbox
+                            [checked]="
+                                element[col.key] === 'Извинено' ||
+                                element[col.key] === true
+                            "
+                            (click)="$event.preventDefault()"
+                        >
                         </mat-checkbox>
                     </span>
                     <span *ngSwitchDefault>
                         {{ element[col.key] }}
                     </span>
                 </div>
-        </ng-container>
-
+            </td></ng-container
+        >
 
         <tr mat-header-row *matHeaderRowDef="displayedColumns2"></tr>
-        <tr mat-row *matRowDef="let row; columns: displayedColumns2;"
-            [ngClass]="{'highlight': selectedRowIndex == row.id && userType() === 'Parent'}" (click)="highlight(row)">
-        </tr>
+        <tr
+            mat-row
+            *matRowDef="let row; columns: displayedColumns2"
+            [ngClass]="{
+                highlight: selectedRowIndex == row.id && userType() === 'Parent'
+            }"
+            (click)="highlight(row)"
+        ></tr>
     </table>
 
-
-
     <div *ngIf="userType() === 'Parent'">
-        <button class="button-excuse" mat-raised-button color='primary' (click)="openDialog()"
-            *ngIf="selectedRowIndex != '-1' && excused === false">
+        <button
+            class="button-excuse"
+            mat-raised-button
+            color="primary"
+            (click)="openDialog()"
+            *ngIf="selectedRowIndex != '-1' && excused === false"
+        >
             Извини отсъствие
         </button>
 
         <ng-template #callDialog>
-            <form id="excuseForm" #excuseForm="ngForm" (ngSubmit)="onSend(excuseForm)">
-                <h2 matDialogTitle style="text-align: center;">Форма за извинение от родител</h2>
+            <form
+                id="excuseForm"
+                #excuseForm="ngForm"
+                (ngSubmit)="onSend(excuseForm)"
+            >
+                <h2 matDialogTitle style="text-align: center">
+                    Форма за извинение от родител
+                </h2>
                 <mat-form-field>
                     <mat-label>Изберете причина за отсъствието:</mat-label>
-                    <mat-select #excuseReason (selectionChange)="getExcuseReasonSwitch($event.value)">
-                        <mat-option *ngFor="let el of absenceExcuseReasons" [value]="el">
+                    <mat-select
+                        #excuseReason
+                        (selectionChange)="getExcuseReasonSwitch($event.value)"
+                    >
+                        <mat-option
+                            *ngFor="let el of absenceExcuseReasons"
+                            [value]="el"
+                        >
                             {{ el }}
                         </mat-option>
                     </mat-select>
                 </mat-form-field>
-                <mat-label>Прикачете извинителни бележки тук (снимка):</mat-label>
+                <mat-label
+                    >Прикачете извинителни бележки тук (снимка):</mat-label
+                >
                 <div class="file-upload">
-                    <input type="file" class="notes-input" name="notes" accept="image/*" #fileUpload
-                        (change)="onFileSelected($event)">
-                    <button mat-raised-button #file class="file-button"
-                        (click)="fileUpload.click(); $event.preventDefault()"><mat-icon>attach_file</mat-icon>Прикачи</button>
+                    <input
+                        type="file"
+                        class="notes-input"
+                        name="notes"
+                        accept="image/*"
+                        #fileUpload
+                        (change)="onFileSelected($event)"
+                    />
+                    <button
+                        mat-raised-button
+                        #file
+                        class="file-button"
+                        (click)="fileUpload.click(); $event.preventDefault()"
+                    >
+                        <mat-icon>attach_file</mat-icon>Прикачи
+                    </button>
                     <p>{{ fileMessage }}</p>
                 </div>
                 <mat-dialog-actions class="formActions">
-                    <button type="submit" mat-raised-button color="primary" matDialogClose="yes">Изпрати</button>
-                    <button mat-raised-button color="primary" matDialogClose="no">Откажи</button>
+                    <button
+                        type="submit"
+                        mat-raised-button
+                        color="primary"
+                        matDialogClose="yes"
+                    >
+                        Изпрати
+                    </button>
+                    <button
+                        mat-raised-button
+                        color="primary"
+                        matDialogClose="no"
+                    >
+                        Откажи
+                    </button>
                 </mat-dialog-actions>
             </form>
         </ng-template>
-
     </div>
 </div>

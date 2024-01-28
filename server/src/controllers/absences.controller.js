@@ -3,6 +3,17 @@ const utils = require("../utils");
 
 const absencesQueries = require('../database/absences.queries');
 
+const cloudinary = require('cloudinary').v2;
+
+
+cloudinary.config({ 
+  cloud_name: process.env.CLOUDINARY_CLOUD_NAME, 
+  api_key: process.env.CLOUDINARY_API_KEY, 
+  api_secret: process.env.CLOUDINARY_API_SECRET,
+  secure: true
+});
+
+
 
 
 getAbsencesByStudent = async (request, response) => {
@@ -171,9 +182,14 @@ getExcuseReasonsByGradeTeacher = async (request, response) => {
     }
 }
 
-addExcuseReasonsByParent = async (request, response) => {
+const addExcuseReasonsByParent = async (request, response) => {
     try {
-        const excuseReasons = request.body?.excuseReasons;
+        let excuseReasons;
+        try {
+            excuseReasons = JSON.parse(request.body.excuseReasons);
+        } catch (parseError) {
+            return response.status(400).send('Invalid JSON format for excuse reasons.');
+        }
 
         if (!excuseReasons) {
             return response.status(500).send(`Excuse reasons array not provided`);
@@ -184,32 +200,34 @@ addExcuseReasonsByParent = async (request, response) => {
         }
 
         if (excuseReasons.length < 1) {
-            return response.status(200).send("Data is empty. No excuse reasons  added")
+            return response.status(200).send("Data is empty. No excuse reasons added");
         }
-
 
         for (let excuseReason of excuseReasons) {
+            let imageUrl = null;
 
-            let id = utils.generateRandomString(40);
+            // Handle file upload and get the image URL
+            if (request.file) {
+                const uploadResult = await cloudinary.uploader.upload(request.file.path);
+                imageUrl = uploadResult.url; // URL from Cloudinary upload
+            }
 
+            // Include the imageUrl in your database query
             await pool.query(
-                'insert into absence_excuse_reason values ($1, $2, $3, $4)',
-                [excuseReason.reason, excuseReason.parentId, excuseReason.noteId, id]
+                'insert into absence_excuse_reason (creator_id, id, image_url, reason_id) values ($1, $2, $3, $4)',
+                [excuseReason.parentId, excuseReason.absenceId, imageUrl, excuseReason.reason]
             );
 
-            await pool.query(
-                'insert into absences_excuse_reasons values ($1, $2)',
-                [excuseReason.absenceId, id]
-            );
+            //save the absenceId
         }
 
-        return response.status(200).json("Excuse reasons added successfully!")
+        return response.status(200).json("Excuse reasons added successfully!");
     }
     catch (err) {
-        console.error(err.message)
-        response.status(500).send(err.message)
+        console.error(err.message);
+        response.status(500).send(err.message);
     }
-}
+};
 
 addAbsencesByTeacher = async (request, response) => {
     try {
